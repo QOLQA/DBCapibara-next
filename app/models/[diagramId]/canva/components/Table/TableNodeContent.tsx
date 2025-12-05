@@ -64,7 +64,7 @@ const AttributeNode = React.memo(
 				// If the table is at the first nested level, delete the column directly
 				if (numLayers === 2) {
 					editableNode.data.columns = editableNode.data.columns.filter(
-						(col) => col.id !== column.id,
+						(col: Column) => col.id !== column.id,
 					);
 					editNode(editableNode.id, editableNode);
 					return;
@@ -81,7 +81,7 @@ const AttributeNode = React.memo(
 
 					if (layer === numLayers - 1) {
 						nestedTables.columns = nestedTables.columns.filter(
-							(col) => col.id !== column.id,
+							(col: Column) => col.id !== column.id,
 						);
 						return nestedTables;
 					}
@@ -89,7 +89,7 @@ const AttributeNode = React.memo(
 					const nestedTableResultId = getKeySegment(columnId, layer + 1);
 
 					const nestedTableResult = nestedTables.nestedTables?.map(
-						(nestedTable) =>
+						(nestedTable: TableData) =>
 							nestedTable.id === nestedTableResultId
 								? recursiveDeleteColumn(nestedTable, layer + 1)
 								: nestedTable,
@@ -228,7 +228,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 	const handleAddAtribute = useCallback(
 		(newAtributes: TableAttribute[], typeModal: "create" | "update") => {
 			const generateNewAtributes = (newAtributes: TableAttribute[]) => {
-				return newAtributes.map((atribute) => ({
+				return newAtributes.map((atribute: TableAttribute) => ({
 					id: `${idNestedTableSelected}-${generateRandomId()}`,
 					name: atribute.name,
 					type: atribute.type,
@@ -240,16 +240,16 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 					? generateNewAtributes(newAtributes)
 					: newAtributes;
 
-			setNodes((nodes: Node[]) => {
-				return nodes?.map((node: Node) => {
+			setNodes((nodes: Node<TableData>[]) => {
+				return nodes?.map((node: Node<TableData>) => {
 					if (node.id === id) {
-						const tableData = node.data as TableData;
+						const tableData = node.data;
 
 						// Recursive function to add attribute in nested tables
 						const addAttributeToNested = (
 							nestedTables: TableData[],
 						): TableData[] => {
-							return nestedTables?.map((table) => {
+							return nestedTables?.map((table: TableData) => {
 								if (table.id === idNestedTableSelected) {
 									return {
 										...table,
@@ -319,16 +319,16 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 				submodelIndex: data.submodelIndex,
 			};
 
-			setNodes((nodes: Node[]) => {
-				return nodes?.map((node: Node) => {
+			setNodes((nodes: Node<TableData>[]) => {
+				return nodes?.map((node: Node<TableData>) => {
 					if (node.id === id) {
-						const tableData = node.data as TableData;
+						const tableData = node.data;
 
 						// Recursive function to add nested table to nested tables
 						const addNestedTableToNested = (
 							nestedTables: TableData[],
 						): TableData[] => {
-							return nestedTables?.map((table) => {
+							return nestedTables?.map((table: TableData) => {
 								if (table.id === idNestedTableSelected) {
 									// If we find the table, add the new nested table
 									return {
@@ -417,14 +417,14 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 			): TableData => {
 				if (layer === numLayers - 1) {
 					nestedTables.nestedTables = nestedTables.nestedTables?.filter(
-						(nestedTable) => nestedTable.id !== tableId,
+						(nestedTable: TableData) => nestedTable.id !== tableId,
 					);
 					return nestedTables;
 				}
 
 				const nestedTableResultId = getKeySegment(tableId, layer + 1);
 				const nestedTableResult = nestedTables.nestedTables?.map(
-					(nestedTable) =>
+					(nestedTable: TableData) =>
 						nestedTable.id === nestedTableResultId
 							? recursiveDeleteTable(nestedTable, layer + 1)
 							: nestedTable,
@@ -446,7 +446,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 		(tableId: string) => {
 			const numLayers = tableId.split("-").length;
 			let k = 1;
-			const node = nodes?.find((node: Node) => node.id === id);
+			const node = nodes?.find((node: Node<TableData>) => node.id === id);
 			let table = node?.data;
 			while (k < numLayers) {
 				k = k + 1;
@@ -456,7 +456,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 				);
 			}
 			// add an atribute to each column called "ableToEdit" and set it to true
-			const columns = table?.columns?.map((column) => ({
+			const columns = table?.columns?.map((column: Column) => ({
 				...column,
 				ableToEdit:
 					column.type !== "PRIMARY_KEY" &&
@@ -473,7 +473,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 		(selectedColumn: Column) => {
 			const numLayers = selectedColumn.id.split("-").length;
 			let k = 1;
-			const node = nodes?.find((node: Node) => node.id === id);
+			const node = nodes?.find((node: Node<TableData>) => node.id === id);
 			let table = node?.data;
 			while (k < numLayers - 1) {
 				k = k + 1;
@@ -483,7 +483,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 				) as TableData;
 			}
 			// add an atribute to each column called "ableToEdit" and set it to true
-			const columns = table?.columns?.map((column) => ({
+			const columns = table?.columns?.map((column: Column) => ({
 				...column,
 				ableToEdit: column.id === selectedColumn.id,
 			}));
@@ -528,7 +528,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 
 	const attributeNodes = useMemo(
 		() =>
-			data.columns?.map((column, index) => (
+			data.columns?.map((column: Column, index: number) => (
 				<React.Fragment key={column.id}>
 					<AttributeNode
 						column={column}
@@ -545,7 +545,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 
 	const nestedTableNodes = useMemo(
 		() =>
-			data.nestedTables?.map((nestedTable) => (
+			data.nestedTables?.map((nestedTable: TableData) => (
 				<TableNodeContent key={nestedTable.id} data={nestedTable} id={id} />
 			)),
 		[data.nestedTables, id],
