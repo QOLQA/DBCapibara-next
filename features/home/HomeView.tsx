@@ -1,4 +1,4 @@
-export default function HomePage() {
+export default function HomeView() {
 	return (
 		<>
 			<header>Header home view</header>
