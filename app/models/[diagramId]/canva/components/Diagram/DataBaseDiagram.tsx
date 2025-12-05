@@ -9,7 +9,7 @@ import {
 	MarkerType,
 } from "@xyflow/react";
 import type { Node } from "@xyflow/react";
-import type { TableData } from "../types";
+import type { TableData } from "../../types";
 
 import { nodeTypes } from "../Table/TableNode";
 import "@xyflow/react/dist/style.css";

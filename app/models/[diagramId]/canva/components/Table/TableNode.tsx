@@ -3,7 +3,7 @@
 import { Handle, Position } from "@xyflow/react";
 import type { NodeTypes } from "@xyflow/react";
 
-import type { TableNodeProps } from "../types";
+import type { TableNodeProps } from "../../types";
 import { TableNodeContent } from "./TableNodeContent";
 
 // Custom node types

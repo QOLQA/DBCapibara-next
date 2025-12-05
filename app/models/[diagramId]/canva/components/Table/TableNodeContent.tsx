@@ -9,7 +9,7 @@ import type {
 	TableData,
 	TableNodeProps,
 	Column,
-} from "../types";
+} from "../../types";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
@@ -240,10 +240,10 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 					? generateNewAtributes(newAtributes)
 					: newAtributes;
 
-			setNodes((nodes: Node<TableData>[]) => {
-				return nodes?.map((node: Node<TableData>) => {
+setNodes((nodes: Node[]) => {
+return nodes?.map((node: Node) => {
 					if (node.id === id) {
-						const tableData = node.data;
+const tableData = node.data as TableData;
 
 						// Recursive function to add attribute in nested tables
 						const addAttributeToNested = (
@@ -319,10 +319,10 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 				submodelIndex: data.submodelIndex,
 			};
 
-			setNodes((nodes: Node<TableData>[]) => {
-				return nodes?.map((node: Node<TableData>) => {
+			setNodes((nodes: Node[]) => {
+				return nodes?.map((node: Node) => {
 					if (node.id === id) {
-						const tableData = node.data;
+						const tableData = node.data as TableData;
 
 						// Recursive function to add nested table to nested tables
 						const addNestedTableToNested = (
