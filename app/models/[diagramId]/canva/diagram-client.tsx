@@ -3,7 +3,7 @@
 import { useCanvasStore } from "@/state/canvaStore";
 import { DataBaseDiagram } from "./components/Diagram";
 import { LayoutDiagram } from "./LayoutDiagram";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { VersionFrontend } from "./types";
 
 interface DiagramClientProps {
@@ -17,6 +17,8 @@ interface DiagramClientProps {
 }
 
 export default function DiagramClient({ loaderData }: DiagramClientProps) {
+	const [isHydrated, setIsHydrated] = useState(false);
+
 	const {
 		id,
 		setNodes,
@@ -25,26 +27,27 @@ export default function DiagramClient({ loaderData }: DiagramClientProps) {
 		setId,
 		setVersions,
 		setSelectedVersionId,
-		_hasHydrated,
-	} = useCanvasStore.getState();
+	} = useCanvasStore();
 
 	const versionId = loaderData.versions.findIndex(
 		(version: VersionFrontend) => loaderData.last_version_saved === version._id,
 	);
 
 	useEffect(() => {
-		if (_hasHydrated) {
-			if (id !== loaderData.solutionId) {
-				setId(loaderData.solutionId);
-				setNodes(loaderData.versions[versionId].nodes);
-				setEdges(loaderData.versions[versionId].edges);
-				setQueries(loaderData.queries);
-				setVersions(loaderData.versions);
-				setSelectedVersionId(loaderData.versions[versionId]._id);
-			}
+		setIsHydrated(true);
+	}, []);
+
+	useEffect(() => {
+		if (isHydrated && id !== loaderData.solutionId) {
+			setId(loaderData.solutionId);
+			setNodes(loaderData.versions[versionId].nodes);
+			setEdges(loaderData.versions[versionId].edges);
+			setQueries(loaderData.queries);
+			setVersions(loaderData.versions);
+			setSelectedVersionId(loaderData.versions[versionId]._id);
 		}
 	}, [
-		_hasHydrated,
+		isHydrated,
 		loaderData,
 		versionId,
 		setEdges,
@@ -56,13 +59,9 @@ export default function DiagramClient({ loaderData }: DiagramClientProps) {
 		id,
 	]);
 
-	if (!_hasHydrated) {
-		return null;
-	}
-
 	return (
 		<LayoutDiagram title={loaderData.name}>
-			<DataBaseDiagram />
+			{isHydrated ? <DataBaseDiagram /> : <div className="h-full w-full" />}
 		</LayoutDiagram>
 	);
 }
