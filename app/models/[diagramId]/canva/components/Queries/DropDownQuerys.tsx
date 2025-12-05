@@ -7,7 +7,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreButton } from "../MoreButton";
+import { MoreButton } from "../Diagram/MoreButton";
 import { useState } from "react";
 import { ModalNewQuery } from "./ModalNewQuery";
 import type { Query } from "../../types";

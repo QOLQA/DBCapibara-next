@@ -1,6 +1,6 @@
 import { useCanvasStore } from "@/state/canvaStore";
 import { transformSolutionModel } from "./solutionConversion";
-import type { VersionFrontend } from "@/features/modals/canva/types";
+import type { VersionFrontend } from "@/app/models/[diagramId]/canva/types";
 
 const backendUrl = "http://localhost:8000";
 

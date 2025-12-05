@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Plus, User } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import AddSolutionModal from "@/features/modals/views/AddSolutionModal";
-import type { SolutionModel } from "@/features/modals/canva/types";
+import AddSolutionModal from "./components/AddSolutionModal";
+import type { SolutionModel } from "./[diagramId]/canva/types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 

@@ -1,5 +1,5 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/features/modals/canva/components/Sidebar/AppSidebar";
+import { AppSidebar } from "./components/Sidebar/AppSidebar";
 import { AppHeader } from "./components/header/AppHeader";
 
 export function LayoutDiagram({

@@ -1,5 +1,5 @@
 import type { Node, Edge } from "@xyflow/react";
-import type { Query, TableData } from "@/features/modals/canva/types";
+import type { Query, TableData } from "@/app/models/[diagramId]/canva/types";
 
 // Cache to avoid unnecessary recalculations
 let cachedResult: number | null = null;

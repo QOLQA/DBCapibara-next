@@ -1,4 +1,4 @@
-import type { Query, VersionBackend } from "@/features/modals/canva/types";
+import type { Query, VersionBackend } from "@/app/models/[diagramId]/canva/types";
 import { loadCanva } from "./loadCanva";
 
 const backendUrl = "http://localhost:8000";

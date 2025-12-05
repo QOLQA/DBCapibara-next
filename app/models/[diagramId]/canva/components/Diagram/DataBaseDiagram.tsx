@@ -11,13 +11,13 @@ import {
 import type { Node } from "@xyflow/react";
 import type { TableData } from "../types";
 
-import { nodeTypes } from "./TableNode";
+import { nodeTypes } from "../Table/TableNode";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
-import ShowErrorModal from "./ShowErrorModal";
+import ShowErrorModal from "../Modals/ShowErrorModal";
 import { edgeTypes } from "./FloatingEdge";
 import { useTableConnections } from "@/hooks/use-node-connections";
-import ModalAddCollection from "./ModalAddCollection";
+import ModalAddCollection from "../Modals/ModalAddCollection";
 import { canvaSelector, useCanvasStore } from "@/state/canvaStore";
 import { useShallow } from "zustand/shallow";
 import { useUniqueId } from "@/hooks/use-unique-id";
@@ -157,3 +157,4 @@ const DatabaseDiagram = () => {
 };
 
 export default DatabaseDiagram;
+export { DatabaseDiagram as DataBaseDiagram };

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import type { Edge, Connection, Node } from "@xyflow/react";
-import type { TableData } from "@/features/modals/canva/types";
+import type { TableData } from "@/app/models/[diagramId]/canva/types";
 
 export const existsConnection = (
 	sourceTable: TableData,

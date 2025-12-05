@@ -7,7 +7,7 @@ import type {
 	NestedNode,
 	Submodel,
 	EdgeBackend,
-} from "@/features/modals/canva/types";
+} from "@/app/models/[diagramId]/canva/types";
 
 function tableDataToNodeBackend(node: Node<TableData>): NodeBackend {
 	const convertNestedTablesToNestedNodes = (

@@ -7,7 +7,7 @@ import type {
 	Query,
 	TableData,
 	VersionFrontend,
-} from "@/features/modals/canva/types";
+} from "@/app/models/[diagramId]/canva/types";
 import {
 	applyEdgeChanges,
 	applyNodeChanges,

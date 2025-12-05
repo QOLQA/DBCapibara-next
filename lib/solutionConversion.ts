@@ -6,7 +6,7 @@ import type {
 	SolutionModel,
 	TableData,
 	VersionFrontend,
-} from "@/features/modals/canva/types";
+} from "@/app/models/[diagramId]/canva/types";
 
 /**
  * Transforms a SolutionModel into an object with:

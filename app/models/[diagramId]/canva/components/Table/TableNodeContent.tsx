@@ -16,13 +16,13 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreButton } from "./MoreButton";
-// import AtributesModal from "./AtributesModal";
-import ModalDocument from "./ModalDocument";
+import { MoreButton } from "../Diagram/MoreButton";
+// import AtributesModal from "./AtributesModal"
+import ModalDocument from "../Modals/ModalDocument";
 
 import { useCanvasStore } from "@/state/canvaStore";
 import getKeySegment from "@/lib/getKeySegment";
-import ModalAtributes from "./ModalAtributes";
+import ModalAtributes from "../Modals/ModalAtributes";
 import { getSubmodelColor } from "@/lib/submodelColors";
 
 import {

@@ -1,5 +1,5 @@
 import type { Node, Edge } from "@xyflow/react";
-import type { TableData } from "@/features/modals/canva/types";
+import type { TableData } from "@/app/models/[diagramId]/canva/types";
 import { getAccessPattern } from "./getAccessPattern";
 
 // Cache to avoid unnecessary recalculations

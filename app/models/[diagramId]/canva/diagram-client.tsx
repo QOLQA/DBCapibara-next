@@ -1,10 +1,10 @@
 'use client'
 
 import { useCanvasStore } from "@/state/canvaStore";
-import DatabaseDiagram from "@/features/modals/canva/components/DataBaseDiagram";
-import { LayoutDiagram } from "@/features/modals/canva/LayoutDiagram";
+import { DataBaseDiagram } from "./components/Diagram";
+import { LayoutDiagram } from "./LayoutDiagram";
 import { useEffect } from "react";
-import type { VersionFrontend } from "@/features/modals/canva/types";
+import type { VersionFrontend } from "./types";
 
 interface DiagramClientProps {
 	loaderData: {
@@ -62,7 +62,7 @@ export default function DiagramClient({ loaderData }: DiagramClientProps) {
 
 	return (
 		<LayoutDiagram title={loaderData.name}>
-			<DatabaseDiagram />
+			<DataBaseDiagram />
 		</LayoutDiagram>
 	);
 }
