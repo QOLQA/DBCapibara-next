@@ -10,19 +10,22 @@
 	--breakpoint-desktop: 1440px;
 
 	/* Custom Colors */
-	--color-blue: #0052cc;
 	--color-black: #0f0f0f;
 	--color-primary-gray: #171717;
 	--color-secondary-gray: #1e1e1e;
 	--color-terciary-gray: #232323;
-	--color-white: #dfdfdf;
-	--color-secondary-white: #9d9d9d;
-	--color-lighter-gray: #747474;
-	--color-gray: #363636;
 	--color-cuartenary-gray: #292929;
+	--color-gray: #363636;
+	--color-semilighter-gray: #4a4a4a;
+	--color-lighter-gray: #747474;
+	--color-secondary-white: #9d9d9d;
+	--color-white: #dfdfdf;
+
+	--color-blue: #0052cc;
 	--color-red: #e93544;
 	--color-green: #006239;
 	--color-edge: #4e4e4e;
+
 	--color-red-dark: #8c111d;
 	--color-green-dark: #003d24;
 	--color-blue-dark: #00317a;

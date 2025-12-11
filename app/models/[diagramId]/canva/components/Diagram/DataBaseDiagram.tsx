@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useCallback, useState, useMemo } from "react";
 import {
@@ -43,7 +43,7 @@ const DatabaseDiagram = () => {
 		onNodesChange,
 		onEdgesChange,
 	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
-		useShallow(canvaSelector),
+		useShallow(canvaSelector)
 	);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,7 +57,7 @@ const DatabaseDiagram = () => {
 			addEdge,
 			onError: () => setShowError(true),
 		}),
-		[nodes, editNode, addEdge],
+		[nodes, editNode, addEdge]
 	);
 
 	const { handleConnect } = useTableConnections(connectionConfig);
@@ -68,9 +68,10 @@ const DatabaseDiagram = () => {
 
 			// Calculate the next available submodelIndex
 			const existingIndices = nodes
-				.map(node => node.data.submodelIndex ?? 0)
-				.filter(index => index !== undefined);
-			const maxIndex = existingIndices.length > 0 ? Math.max(...existingIndices) : -1;
+				.map((node) => node.data.submodelIndex ?? 0)
+				.filter((index) => index !== undefined);
+			const maxIndex =
+				existingIndices.length > 0 ? Math.max(...existingIndices) : -1;
 			const newSubmodelIndex = maxIndex + 1;
 
 			const newNode: Node<TableData> = {
@@ -93,7 +94,7 @@ const DatabaseDiagram = () => {
 
 			addNode(newNode);
 		},
-		[addNode, generateId, nodes],
+		[addNode, generateId, nodes]
 	);
 
 	const handleOpenModal = useCallback(() => {
@@ -121,11 +122,11 @@ const DatabaseDiagram = () => {
 			defaultEdgeOptions,
 			fitView: true,
 		}),
-		[nodes, edges, onNodesChange, onEdgesChange, handleConnect],
+		[nodes, edges, onNodesChange, onEdgesChange, handleConnect]
 	);
 
 	return (
-		<div className="w-full h-full relative pb-[16px] pl-[5px] pr-[16px] pt-[2px]">
+		<div className="w-full h-full relative pb-[16px] pr-[16px] bg-secondary-gray">
 			<Button
 				type="button"
 				onClick={handleOpenModal}

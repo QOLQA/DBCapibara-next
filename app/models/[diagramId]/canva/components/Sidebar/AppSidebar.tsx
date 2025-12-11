@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Sidebar, useSidebar } from "@/components/ui/sidebar";
 import { Calendar, Database, DataPie } from "@/components/icons/SidebarIcons";
@@ -29,7 +29,7 @@ const data = {
 		{
 			title: "Estadísticas",
 			icon: <DataPie />,
-			content: <AppStatistics/>
+			content: <AppStatistics />,
 		},
 	],
 };
@@ -40,7 +40,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar
 			collapsible="icon"
-			className=" overflow-hidden h-full [&>[data-sidebar=sidebar]]:flex-row [&>[data-sidebar=sidebar]]:bg-secondary-gray py-5 bg-secondary-gray"
+			className=" overflow-hidden h-full [&>[data-sidebar=sidebar]]:flex-row [&>[data-sidebar=sidebar]]:bg-secondary-gray pb-5 bg-secondary-gray"
 			{...props}
 		>
 			<SidebarIcons

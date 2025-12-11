@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
 	Sidebar,
@@ -18,7 +18,7 @@ export const SidebarContentPrinc = ({
 	return (
 		<Sidebar
 			collapsible="none"
-			className="hidden flex-1 md:flex bg-cuartenary-gray rounded-2xl p-[36px] text-white	"
+			className="hidden flex-1 md:flex bg-cuartenary-gray rounded-2xl p-[36px] text-white gap-y-[16px] "
 		>
 			<SidebarHeader className="gap-3.5 border-b border-lighter-gray p-4">
 				<div className="flex w-full items-center justify-center">
