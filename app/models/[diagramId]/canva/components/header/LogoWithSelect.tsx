@@ -35,8 +35,8 @@ export const LogoWithSelect = () => {
 	};
 
 	return (
-		<div className="flex items-center gap-8 bg-red">
-			<div onClick={() => router.push("/models")}>
+		<div className="flex items-center gap-8">
+			<div onClick={() => router.push("/models")} className="cursor-pointer">
 				<Logo className="text-blue" />
 			</div>
 			<Select value={selectedVersionId} onValueChange={onVersionChange}>

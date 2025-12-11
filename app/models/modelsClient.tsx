@@ -11,6 +11,7 @@ import Image from "next/image";
 import { api } from "@/lib/api";
 import { useAuth } from "@/hooks/use-auth";
 import { Logo } from "@/components/icons/HeaderIcons";
+import { cn } from "@/lib/utils";
 
 interface ModelProps {
 	name: string;
@@ -20,17 +21,66 @@ interface ModelProps {
 	src_img: string;
 }
 
+// Componente de imagen con mejor manejo de errores
+const ModelImage = ({
+	src,
+	alt,
+	className,
+}: {
+	src: string;
+	alt: string;
+	className: string;
+}) => {
+	const [imageError, setImageError] = useState(false);
+	const [imageLoading, setImageLoading] = useState(true);
+
+	if (imageError) {
+		return (
+			<div
+				className={`${className} bg-primary-gray flex items-center justify-center text-gray-400`}
+			>
+				Sin imagen
+			</div>
+		);
+	}
+
+	return (
+		<div className="relative w-full h-full">
+			<Image
+				src={src}
+				alt={alt}
+				className={cn(className, "object-cover")}
+				width={300}
+				height={198}
+				onError={() => {
+					setImageError(true);
+					setImageLoading(false);
+				}}
+				onLoad={() => {
+					setImageLoading(false);
+				}}
+				onLoadingComplete={() => {
+					setImageLoading(false);
+				}}
+			/>
+			{imageLoading && (
+				<div className="absolute inset-0 bg-primary-gray flex items-center justify-center">
+					<div className="text-gray-400 text-sm">Cargando...</div>
+				</div>
+			)}
+		</div>
+	);
+};
+
 const Model = ({ _id, name, src_img }: ModelProps) => {
 	return (
 		<li className="model">
 			<Link href={`/models/${_id}/canva`} className="focus:rounded-2xl">
 				<div className="model__thumbnail">
-					<Image
+					<ModelImage
 						src={src_img}
 						alt="Model thumbnail"
 						className="model__thumbnail-img"
-						width={300}
-						height={198}
 					/>
 				</div>
 				<div className="model__info">

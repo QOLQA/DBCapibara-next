@@ -18,41 +18,85 @@ export const ButtonSave = () => {
 	const queries = useCanvasStore((state) => state.queries);
 
 	const handleSave = async () => {
-		const versionActual = versions.filter(
-			(version) => version._id === versionId,
-		);
-		const diagram = transformVersionToBackend(
-			versionActual[0],
-			nodes,
-			edges,
-		);
+		try {
+			const versionActual = versions.filter(
+				(version) => version._id === versionId
+			);
+			const diagram = transformVersionToBackend(versionActual[0], nodes, edges);
 
-		const secureUrl = await generateImage();
-		saveSolution(Id, queries, secureUrl);
-		saveCanvas(Id, versionId, diagram);
+			let secureUrl: string;
+			try {
+				secureUrl = await generateImage();
+			} catch (imageError) {
+				console.error("Error generating image:", imageError);
+				// Si falla la subida de imagen, usar una URL placeholder o la existente
+				secureUrl = ""; // O podrías usar la URL existente del modelo
+				alert(
+					"Error to update the image. The diagram will be saved without updating the image."
+				);
+			}
 
+			// Guardar solución y canvas en paralelo
+			await Promise.all([
+				secureUrl ? saveSolution(Id, queries, secureUrl) : Promise.resolve(),
+				saveCanvas(Id, versionId, diagram),
+			]);
+
+			alert("Saved successfully");
+		} catch (error) {
+			console.error("Error saving:", error);
+			alert(
+				`Error to save: ${
+					error instanceof Error ? error.message : "Unknown error"
+				}`
+			);
+		}
 	};
 
 	const generateImage = async () => {
-		const nodesBounds = getNodesBounds(nodes)
-		const viewport = getViewportForBounds(nodesBounds, imageWidth, imageHeight, 0.5, 2, 0)
+		const nodesBounds = getNodesBounds(nodes);
 
-		const pngString = await toJpeg(document.querySelector('.react-flow__viewport') as HTMLElement, {
-			backgroundColor: '#171717',
-			width: imageWidth,
-			height: imageHeight,
-			style: {
-				width: `${imageWidth}px`,
-				height: `${imageHeight}px`,
-				transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
-				aspectRatio: `${imageWidth} / ${imageHeight}`,
-			},
-			skipFonts: true
-		})
+		// Agregar padding alrededor de los nodos para que no choquen con los bordes
+		// El padding es un porcentaje del tamaño de la imagen (15% en cada lado)
+		const paddingX = imageWidth * 0.25; // 15% de padding horizontal
+		const paddingY = imageHeight * 0.25; // 15% de padding vertical
+
+		// Expandir los bounds con el padding
+		const paddedBounds = {
+			x: nodesBounds.x - paddingX,
+			y: nodesBounds.y - paddingY,
+			width: nodesBounds.width + paddingX * 2,
+			height: nodesBounds.height + paddingY * 2,
+		};
+
+		const viewport = getViewportForBounds(
+			paddedBounds,
+			imageWidth,
+			imageHeight,
+			0.5,
+			2,
+			0
+		);
+
+		const pngString = await toJpeg(
+			document.querySelector(".react-flow__viewport") as HTMLElement,
+			{
+				backgroundColor: "#171717",
+				width: imageWidth,
+				height: imageHeight,
+				style: {
+					width: `${imageWidth}px`,
+					height: `${imageHeight}px`,
+					transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
+					aspectRatio: `${imageWidth} / ${imageHeight}`,
+				},
+				skipFonts: true,
+			}
+		);
 
 		const imageUrl = await uploadImage(pngString, Id);
 		return imageUrl;
-	}
+	};
 
 	return (
 		<button type="button" className="group cursor-pointer" onClick={handleSave}>
