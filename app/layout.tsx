@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { DropdownProvider } from "@/contexts/dropdown-context";
+import { AuthProvider } from "@/contexts/auth-context";
+import { AuthTokenSync } from "@/components/authTokenSync";
 
 export const metadata: Metadata = {
 	title: "DBCapibara - Database Modeling Tool",
@@ -19,7 +21,10 @@ export default function RootLayout({
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			</head>
 			<body className="font-OpenSans">
-				<DropdownProvider>{children}</DropdownProvider>
+				<AuthProvider>
+					<AuthTokenSync />
+					<DropdownProvider>{children}</DropdownProvider>
+				</AuthProvider>
 			</body>
 		</html>
 	);

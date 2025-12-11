@@ -1,7 +1,7 @@
 'use client'
 
 import { Modal } from "@/components/ui/modal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { ModalSelectDocs } from "./ModalSelectDocs";
 import type { Query } from "../../types";
 
@@ -23,10 +23,13 @@ export const ModalNewQuery = ({
 	setQueryText,
 }: ModalProps) => {
 	const [showSelectDocs, setShowSelectDocs] = useState(false);
+	const [isPending, startTransition] = useTransition();
 
 	const handleSubmit = () => {
-		setOpen(false);
-		setShowSelectDocs(true);
+		startTransition(() => {
+			setOpen(false);
+			setShowSelectDocs(true);
+		});
 	};
 
 	useEffect(() => {
@@ -59,9 +62,15 @@ export const ModalNewQuery = ({
 							id="docName"
 							value={queryText}
 							onChange={(e) => setQueryText(e.target.value)}
-							className="text-h4 w-full h-36 py-3 px-5 border border-gray rounded-md bg-terciary-gray focus:outline-none text-white placeholder:text-lighter-gray"
+							disabled={isPending}
+							className="text-h4 w-full h-36 py-3 px-5 border border-gray rounded-md bg-terciary-gray focus:outline-none text-white placeholder:text-lighter-gray disabled:opacity-50 disabled:cursor-not-allowed"
 						/>
 					</div>
+					{isPending && (
+						<div className="text-center text-sm text-gray-400">
+							Procesando...
+						</div>
+					)}
 				</>
 			</Modal>
 			<ModalSelectDocs
