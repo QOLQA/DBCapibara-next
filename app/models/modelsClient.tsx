@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Plus, LogOut } from "lucide-react";
@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { api } from "@/lib/api";
 import { useAuth } from "@/hooks/use-auth";
+import { Logo } from "@/components/icons/HeaderIcons";
 
 interface ModelProps {
 	name: string;
@@ -41,7 +42,11 @@ const Model = ({ _id, name, src_img }: ModelProps) => {
 	);
 };
 
-export default function ModelsClient({ initialModels }: { initialModels: any[] }) {
+export default function ModelsClient({
+	initialModels,
+}: {
+	initialModels: any[];
+}) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const router = useRouter();
 	const { user, logout } = useAuth();
@@ -57,16 +62,16 @@ export default function ModelsClient({ initialModels }: { initialModels: any[] }
 		setIsModalOpen(false);
 
 		try {
-			const data = await api.post<SolutionModel>('/solutions', {
+			const data = await api.post<SolutionModel>("/solutions", {
 				name: name,
 			});
 
-			console.log('Modelo creado:', data);
-			
+			console.log("Modelo creado:", data);
+
 			// Navigate to the new model's canvas
 			router.push(`/models/${data._id}/canva`);
 		} catch (error) {
-			console.error('Error creating solution:', error);
+			console.error("Error creating solution:", error);
 			// No rethrow - el manejo de auth está en fetchWithAuth
 		}
 	};
@@ -74,15 +79,17 @@ export default function ModelsClient({ initialModels }: { initialModels: any[] }
 	const handleLogout = () => {
 		startTransition(() => {
 			logout();
-			router.push('/login');
+			router.push("/login");
 		});
 	};
 
 	return (
 		<>
 			<header className="bg-secondary-gray pt-[27px] pb-16">
-				<div className="max-w-[1330px] mx-auto flex justify-between items-start">
-					<div>Logo</div>
+				<div className="max-w-[1330px] mx-auto flex justify-between items-center">
+					<Link href="/models">
+						<Logo className="text-blue" />
+					</Link>
 					<div className="flex gap-[68px] items-center">
 						<Button
 							type="button"
@@ -95,9 +102,7 @@ export default function ModelsClient({ initialModels }: { initialModels: any[] }
 						</Button>
 						<div className="flex items-center gap-3">
 							{user && (
-								<span className="text-white text-sm">
-									{user.username}
-								</span>
+								<span className="text-white text-sm">{user.username}</span>
 							)}
 							<Button
 								className="rounded-full"
@@ -114,7 +119,7 @@ export default function ModelsClient({ initialModels }: { initialModels: any[] }
 			<main className="bg-secondary-gray pb-36 min-h-[90vh]">
 				<div className="max-w-[1330px] mx-auto">
 					<h1 className="text-center text-white text-h2">Tus modelos</h1>
-					<hr className="mt-[33px] mb-10 border-gray-400" />
+					<hr className="mt-[33px] mb-20 border-gray" />
 
 					{isPending && (
 						<div className="text-center text-white mb-4">

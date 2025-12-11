@@ -29,10 +29,10 @@
 
 	/* Radius */
 	--radius: 0.625rem;
-	
+
 	/* Font family */
 	--font-family-sans: "DM Sans", sans-serif;
-	
+
 	/* Shadcn theme colors */
 	--color-background: oklch(0.147 0.004 49.25);
 	--color-foreground: oklch(0.985 0.001 106.423);
@@ -65,48 +65,48 @@
 	--color-sidebar-accent-foreground: oklch(0.985 0.001 106.423);
 	--color-sidebar-border: oklch(1 0 0 / 10%);
 	--color-sidebar-ring: oklch(0.553 0.013 58.071);
-	
+
 	/* Typography sizes */
 	--font-size-h1-mobile: 2.25rem;
 	--font-size-h1-tablet: 2.6875rem;
 	--font-size-h1-desktop: 3rem;
-	
+
 	--font-size-h2-mobile: 1.6875rem;
 	--font-size-h2-tablet: 2rem;
 	--font-size-h2-desktop: 2.25rem;
-	
+
 	--font-size-h3-mobile: 1.125rem;
 	--font-size-h3-tablet: 1.375rem;
 	--font-size-h3-desktop: 1.5rem;
-	
+
 	--font-size-h4-mobile: 0.9375rem;
 	--font-size-h4-tablet: 1.125rem;
 	--font-size-h4-desktop: 1.25rem;
-	
+
 	--font-size-h5-mobile: 0.75rem;
 	--font-size-h5-tablet: 0.875rem;
 	--font-size-h5-desktop: 1rem;
-	
+
 	--font-size-h6-mobile: 0.6875rem;
 	--font-size-h6-tablet: 0.8125rem;
 	--font-size-h6-desktop: 0.875rem;
-	
+
 	--font-size-h7-mobile: 0.5625rem;
 	--font-size-h7-tablet: 0.6875rem;
 	--font-size-h7-desktop: 0.75rem;
-	
+
 	--font-size-p-lg-mobile: 0.9375rem;
 	--font-size-p-lg-tablet: 1.125rem;
 	--font-size-p-lg-desktop: 1.25rem;
-	
+
 	--font-size-p-mobile: 0.6875rem;
 	--font-size-p-tablet: 0.8125rem;
 	--font-size-p-desktop: 0.875rem;
-	
+
 	--font-size-p-sm-mobile: 0.5625rem;
 	--font-size-p-sm-tablet: 0.6875rem;
 	--font-size-p-sm-desktop: 0.75rem;
-	
+
 	--font-size-p-xs-mobile: 0.5rem;
 	--font-size-p-xs-tablet: 0.5625rem;
 	--font-size-p-xs-desktop: 0.625rem;
@@ -262,7 +262,7 @@
 	.max-w-pantalla {
 		max-width: 1400px;
 	}
-	
+
 	.font-OpenSans {
 		font-family: var(--font-family-sans);
 	}
@@ -330,13 +330,13 @@
 /* Modal styles */
 .model__thumbnail {
 	height: 198px;
-	background-color: var(--color-primary-gray);
+	background-color: var(--color-gray);
 	border-radius: 0.75rem 0.75rem 0 0;
 	border: 1px solid rgb(156 163 175);
 }
 
 .model__info {
-	background-color: var(--color-secondary-gray);
+	background-color: var(--color-gray);
 	border: 1px solid rgb(156 163 175);
 	padding: 1.25rem;
 	border-radius: 0 0 0.75rem 0.75rem;
