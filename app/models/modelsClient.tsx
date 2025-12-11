@@ -1,13 +1,15 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { Plus, User } from "lucide-react";
+import { Plus, LogOut } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useOptimistic, useTransition } from "react";
 import AddSolutionModal from "./components/AddSolutionModal";
 import type { SolutionModel } from "./[diagramId]/canva/types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { api } from "@/lib/api";
+import { useAuth } from "@/hooks/use-auth";
 
 interface ModelProps {
 	name: string;
@@ -42,25 +44,38 @@ const Model = ({ _id, name, src_img }: ModelProps) => {
 export default function ModelsClient({ initialModels }: { initialModels: any[] }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const router = useRouter();
+	const { user, logout } = useAuth();
+	const [isPending, startTransition] = useTransition();
+
+	// Optimistic updates for models
+	const [optimisticModels, addOptimisticModel] = useOptimistic<any[], any>(
+		initialModels,
+		(state, newModel) => [...state, newModel]
+	);
 
 	const handleAddSolution = async (name: string) => {
-		const response = await fetch('http://localhost:8000/solutions', {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
+		setIsModalOpen(false);
+
+		try {
+			const data = await api.post<SolutionModel>('/solutions', {
 				name: name,
-			}),
-		});
+			});
 
-		if (!response.ok) {
-			const errorData = await response.json();
-			throw new Error(errorData.detail || "Failed to add solution");
+			console.log('Modelo creado:', data);
+			
+			// Navigate to the new model's canvas
+			router.push(`/models/${data._id}/canva`);
+		} catch (error) {
+			console.error('Error creating solution:', error);
+			// No rethrow - el manejo de auth está en fetchWithAuth
 		}
+	};
 
-		const data = (await response.json()) as SolutionModel;
-		router.push(`/models/${data._id}/canva`);
+	const handleLogout = () => {
+		startTransition(() => {
+			logout();
+			router.push('/login');
+		});
 	};
 
 	return (
@@ -68,7 +83,7 @@ export default function ModelsClient({ initialModels }: { initialModels: any[] }
 			<header className="bg-secondary-gray pt-[27px] pb-16">
 				<div className="max-w-[1330px] mx-auto flex justify-between items-start">
 					<div>Logo</div>
-					<div className="flex gap-[68px]">
+					<div className="flex gap-[68px] items-center">
 						<Button
 							type="button"
 							onClick={() => {
@@ -78,9 +93,21 @@ export default function ModelsClient({ initialModels }: { initialModels: any[] }
 						>
 							<Plus /> Nuevo Modelo
 						</Button>
-						<Button className="rounded-full" size="icon">
-							<User />
-						</Button>
+						<div className="flex items-center gap-3">
+							{user && (
+								<span className="text-white text-sm">
+									{user.username}
+								</span>
+							)}
+							<Button
+								className="rounded-full"
+								size="icon"
+								onClick={handleLogout}
+								title="Cerrar sesión"
+							>
+								<LogOut className="h-4 w-4" />
+							</Button>
+						</div>
 					</div>
 				</div>
 			</header>
@@ -88,8 +115,15 @@ export default function ModelsClient({ initialModels }: { initialModels: any[] }
 				<div className="max-w-[1330px] mx-auto">
 					<h1 className="text-center text-white text-h2">Tus modelos</h1>
 					<hr className="mt-[33px] mb-10 border-gray-400" />
+
+					{isPending && (
+						<div className="text-center text-white mb-4">
+							<p className="text-sm">Cargando...</p>
+						</div>
+					)}
+
 					<ul className="models grid grid-cols-3 gap-10">
-						{initialModels.map((model) => (
+						{optimisticModels.map((model) => (
 							<Model {...model} key={model._id} />
 						))}
 					</ul>
