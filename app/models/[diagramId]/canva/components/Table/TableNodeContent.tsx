@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { type Node, useReactFlow } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
-import { ManagedDropdownMenu } from "@/components/managed-dropdown-menu";
+import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
 import type {
 	AttributeNodeProps,
 	TableData,
@@ -240,10 +240,10 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 					? generateNewAtributes(newAtributes)
 					: newAtributes;
 
-setNodes((nodes: Node[]) => {
-return nodes?.map((node: Node) => {
+			setNodes((nodes: Node[]) => {
+				return nodes?.map((node: Node) => {
 					if (node.id === id) {
-const tableData = node.data as TableData;
+						const tableData = node.data as TableData;
 
 						// Recursive function to add attribute in nested tables
 						const addAttributeToNested = (

@@ -1,6 +1,6 @@
 'use client'
 
-import { ManagedDropdownMenu } from "@/components/managed-dropdown-menu";
+import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,

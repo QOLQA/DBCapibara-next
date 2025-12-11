@@ -1,30 +1,26 @@
 import { useCanvasStore } from "@/state/canvaStore";
 import { transformSolutionModel } from "./solutionConversion";
 import type { VersionFrontend } from "@/app/models/[diagramId]/canva/types";
-
-const backendUrl = "http://localhost:8000";
+import { api } from "./api";
 
 export async function loadCanva(diagramId: string, versionId: string) {
-	const url = `${backendUrl}/solutions/${diagramId}`;
+	try {
+		const data = await api.get(`/solutions/${diagramId}`);
+		const transformed = transformSolutionModel(data);
 
-	const response = await fetch(url, { method: "GET" });
-	const data = await response.json();
+		const { setNodes, setEdges, setQueries, setVersions } =
+			useCanvasStore.getState();
 
-	if (!response.ok) {
-		throw new Error(data.detail);
+		const indexVersion = transformed.versions.findIndex(
+			(version: VersionFrontend) => versionId === version._id,
+		);
+
+		setNodes(transformed.versions[indexVersion].nodes);
+		setEdges(transformed.versions[indexVersion].edges);
+		setQueries(transformed.queries);
+		setVersions(transformed.versions);
+	} catch (error) {
+		console.error("Error loading canvas:", error);
+		throw error;
 	}
-
-	const transformed = transformSolutionModel(data);
-
-	const { setNodes, setEdges, setQueries, setVersions } =
-		useCanvasStore.getState();
-
-	const indexVersion = transformed.versions.findIndex(
-		(version: VersionFrontend) => versionId === version._id,
-	);
-
-	setNodes(transformed.versions[indexVersion].nodes);
-	setEdges(transformed.versions[indexVersion].edges);
-	setQueries(transformed.queries);
-	setVersions(transformed.versions);
 }

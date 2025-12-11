@@ -1,21 +1,20 @@
-import ModelsClient from "./models-client";
-
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+import ModelsClient from "./modelsClient";
+import { getAuthenticatedSolutions } from "@/lib/apiServer";
+import { redirect } from "next/navigation";
 
 async function getModels() {
-	const response = await fetch(`${backendUrl}/solutions`, {
-		cache: 'no-store'
-	});
-	
-	if (!response.ok) {
-		throw new Error('Failed to fetch models');
+	try {
+		return await getAuthenticatedSolutions();
+	} catch (error) {
+		if (error instanceof Error && error.message === 'UNAUTHORIZED') {
+			redirect('/login');
+		}
+		throw error;
 	}
-	
-	return response.json();
 }
 
 export default async function ModelsPage() {
 	const models = await getModels();
-	
+
 	return <ModelsClient initialModels={models} />;
 }

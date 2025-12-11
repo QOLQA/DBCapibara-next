@@ -1,28 +1,32 @@
 import { transformSolutionModel } from "@/lib/solutionConversion";
 import DiagramClient from "./diagram-client";
-
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+import { getAuthenticatedSolution } from "@/lib/apiServer";
+import { redirect } from "next/navigation";
 
 async function getDiagram(diagramId: string) {
-	const response = await fetch(`${backendUrl}/solutions/${diagramId}`, {
-		cache: 'no-store'
-	});
-	
-	if (!response.ok) {
-		throw new Error('Failed to fetch diagram');
+	try {
+		const data = await getAuthenticatedSolution(diagramId);
+		return transformSolutionModel(data);
+	} catch (error) {
+		if (error instanceof Error) {
+			if (error.message === 'UNAUTHORIZED') {
+				redirect('/login');
+			}
+			if (error.message === 'FORBIDDEN') {
+				redirect('/models');
+			}
+		}
+		throw error;
 	}
-	
-	const data = await response.json();
-	return transformSolutionModel(data);
 }
 
-export default async function DiagramPage({ 
-	params 
-}: { 
-	params: Promise<{ diagramId: string }> 
+export default async function DiagramPage({
+	params
+}: {
+	params: Promise<{ diagramId: string }>
 }) {
 	const { diagramId } = await params;
 	const loaderData = await getDiagram(diagramId);
-	
+
 	return <DiagramClient loaderData={loaderData} />;
 }

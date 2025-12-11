@@ -1,8 +1,8 @@
 interface InputFieldProps {
 	label: string;
 	name: string;
-	value: string | number;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	value?: string | number;
+	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	type?: string;
 	placeholder?: string;
 	required?: boolean;
@@ -11,6 +11,7 @@ interface InputFieldProps {
 	max?: string;
 	step?: string;
 	className?: string;
+	defaultValue?: string | number;
 }
 
 export default function InputField({
@@ -25,7 +26,8 @@ export default function InputField({
 	min,
 	max,
 	step,
-	className = ''
+	className = '',
+	defaultValue
 }: InputFieldProps) {
 	return (
 		<div className={`flex flex-col gap-2 ${className}`}>
@@ -37,6 +39,7 @@ export default function InputField({
 				name={name}
 				value={value}
 				onChange={onChange}
+				defaultValue={defaultValue}
 				required={required}
 				disabled={disabled}
 				placeholder={placeholder}
