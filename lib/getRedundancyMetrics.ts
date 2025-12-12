@@ -9,11 +9,13 @@ let lastNodeHash: string | null = null;
  * Generates a hash for nodes excluding x,y positions to avoid recalculation on movement
  */
 function generateNodeHashWithoutPosition(nodes: Node<TableData>[]): string {
-	return JSON.stringify(nodes.map(node => ({
-		id: node.id,
-		data: node.data,
-		type: node.type
-	})));
+	return JSON.stringify(
+		nodes.map((node) => ({
+			id: node.id,
+			data: node.data,
+			type: node.type,
+		}))
+	);
 }
 
 /**
@@ -28,13 +30,13 @@ function getAllTableNames(nodes: Node<TableData>[]): string[] {
 
 		// Process nested tables if they exist
 		if (table.nestedTables && table.nestedTables.length > 0) {
-			table.nestedTables.forEach(nestedTable => {
+			table.nestedTables.forEach((nestedTable) => {
 				collectNamesRecursively(nestedTable);
 			});
 		}
 	};
 
-	nodes.forEach(node => {
+	nodes.forEach((node) => {
 		collectNamesRecursively(node.data);
 	});
 
@@ -49,7 +51,7 @@ function countDuplicateNames(names: string[]): number {
 	let totalDuplications = 0;
 
 	// Count occurrences of each name
-	names.forEach(name => {
+	names.forEach((name) => {
 		const currentCount = nameCountMap.get(name) || 0;
 		nameCountMap.set(name, currentCount + 1);
 	});
@@ -57,7 +59,7 @@ function countDuplicateNames(names: string[]): number {
 	// Calculate total duplications (occurrences - 1 for each duplicated name)
 	nameCountMap.forEach((count) => {
 		if (count > 1) {
-			totalDuplications += (count - 1); // Each extra occurrence is a duplication
+			totalDuplications += count - 1; // Each extra occurrence is a duplication
 		}
 	});
 
@@ -71,7 +73,7 @@ function calculateRedundancyMetricsPure(nodes: Node<TableData>[]): number {
 	const allTableNames = getAllTableNames(nodes);
 	const totalDuplications = countDuplicateNames(allTableNames);
 
-	return totalDuplications;
+	return parseFloat(totalDuplications.toFixed(2));
 }
 
 /**
@@ -85,10 +87,7 @@ function withCacheValidation(
 	const currentNodeHash = generateNodeHashWithoutPosition(nodes);
 
 	// If there are no relevant changes, return cached result
-	if (
-		cachedRedundancyMetrics !== null &&
-		lastNodeHash === currentNodeHash
-	) {
+	if (cachedRedundancyMetrics !== null && lastNodeHash === currentNodeHash) {
 		return cachedRedundancyMetrics;
 	}
 
