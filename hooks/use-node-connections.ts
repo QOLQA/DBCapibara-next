@@ -4,7 +4,7 @@ import type { TableData } from "@/app/models/[diagramId]/canva/types";
 
 export const existsConnection = (
 	sourceTable: TableData,
-	targetTable: TableData,
+	targetTable: TableData
 ) => {
 	const sourceColumns = sourceTable.columns.map((col) => col.name);
 	const targetColumns = targetTable.columns.map((col) => col.name);
@@ -31,10 +31,10 @@ export const useTableConnections = ({
 	const handleConnect = useCallback(
 		(params: Connection) => {
 			const sourceNode = nodes.find(
-				(node) => node.id === params.source,
+				(node) => node.id === params.source
 			) as Node<TableData>;
 			const targetNode = nodes.find(
-				(node) => node.id === params.target,
+				(node) => node.id === params.target
 			) as Node<TableData>;
 
 			if (!sourceNode || !targetNode) return;
@@ -63,7 +63,9 @@ export const useTableConnections = ({
 						updatedNode.data.submodelIndex = sourceSubmodelIndex;
 
 						// Update nested tables recursively
-						const updateNestedSubmodelIndex = (tables: TableData[] | undefined): TableData[] | undefined => {
+						const updateNestedSubmodelIndex = (
+							tables: TableData[] | undefined
+						): TableData[] | undefined => {
 							return tables?.map((table) => ({
 								...table,
 								submodelIndex: sourceSubmodelIndex,
@@ -71,13 +73,17 @@ export const useTableConnections = ({
 							}));
 						};
 
-						updatedNode.data.nestedTables = updateNestedSubmodelIndex(updatedNode.data.nestedTables);
+						updatedNode.data.nestedTables = updateNestedSubmodelIndex(
+							updatedNode.data.nestedTables
+						);
 						editNode(node.id, updatedNode);
 					}
 				});
 
 				// Update nested tables of the target node
-				const updateNestedSubmodelIndex = (tables: TableData[] | undefined): TableData[] | undefined => {
+				const updateNestedSubmodelIndex = (
+					tables: TableData[] | undefined
+				): TableData[] | undefined => {
 					return tables?.map((table) => ({
 						...table,
 						submodelIndex: sourceSubmodelIndex,
@@ -85,7 +91,9 @@ export const useTableConnections = ({
 					}));
 				};
 
-				updatedTargetNode.data.nestedTables = updateNestedSubmodelIndex(updatedTargetNode.data.nestedTables);
+				updatedTargetNode.data.nestedTables = updateNestedSubmodelIndex(
+					updatedTargetNode.data.nestedTables
+				);
 				editNode(targetNode.id, updatedTargetNode);
 
 				// Crear la arista
@@ -100,7 +108,7 @@ export const useTableConnections = ({
 				onError?.();
 			}
 		},
-		[addEdge, nodes, editNode, onError],
+		[addEdge, nodes, editNode, onError]
 	);
 
 	return { handleConnect };

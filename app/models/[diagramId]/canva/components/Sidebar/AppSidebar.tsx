@@ -6,10 +6,10 @@ import { SidebarIcons } from "./SidebarIcons";
 import { useState } from "react";
 import { SidebarContentPrinc } from "./SidebarContent";
 import { AppQueries } from "../Queries/AppQueries";
-import type { NavItem } from "./types";
+import type { Data, NavItem } from "./types";
 import { AppStatistics } from "../Statistics/AppStatistics";
 
-const data = {
+const data: Data = {
 	user: {
 		name: "shadcn",
 		email: "m@example.com",
@@ -30,6 +30,7 @@ const data = {
 			title: "Estadísticas",
 			icon: <DataPie />,
 			content: <AppStatistics />,
+			aditionalToTitle: "button",
 		},
 	],
 };
@@ -40,7 +41,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar
 			collapsible="icon"
-			className=" overflow-hidden h-full [&>[data-sidebar=sidebar]]:flex-row [&>[data-sidebar=sidebar]]:bg-secondary-gray pb-5 bg-secondary-gray"
+			className=" overflow-hidden h-full  [&>[data-sidebar=sidebar]]:flex-row [&>[data-sidebar=sidebar]]:bg-secondary-gray pb-5 bg-secondary-gray"
 			{...props}
 		>
 			<SidebarIcons

@@ -5,6 +5,7 @@ export type NavItem = {
 	icon: ReactElement;
 	isActive?: boolean;
 	content?: ReactElement;
+	aditionalToTitle?: "expand" | "button";
 };
 
 export type User = {
@@ -14,6 +15,6 @@ export type User = {
 };
 
 export type Data = {
-  navMain: NavItem[];
+	navMain: NavItem[];
 	user: User;
-}
+};
