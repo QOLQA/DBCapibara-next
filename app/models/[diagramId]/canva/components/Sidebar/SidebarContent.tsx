@@ -26,14 +26,14 @@ export const SidebarContentPrinc = ({
 					<div className="text-base font-medium text-white text-h3 ">
 						{activeItem?.title}
 					</div>
-					{activeItem?.aditionalToTitle === "button" && (
+					{activeItem?.aditionalToTitle?.type === "button" && (
 						<Button
 							variant={"outline"}
 							type="button"
-							onClick={() => {}}
+							onClick={activeItem?.aditionalToTitle?.onClick}
 							className="w-[6rem] cursor-pointer border-none text-h3 text-white bg-gray hover:bg-semilighter-gray hover:text-white w-fit"
 						>
-							Compare schemas
+							{activeItem?.aditionalToTitle?.titleButton}
 						</Button>
 					)}
 				</div>

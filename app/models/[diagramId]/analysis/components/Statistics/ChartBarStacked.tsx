@@ -1,24 +1,6 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
-
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import {
-	ChartConfig,
-	ChartContainer,
-	ChartLegend,
-	ChartLegendContent,
-	ChartTooltip,
-	ChartTooltipContent,
-} from "@/components/ui/chart";
+import { ChartConfig } from "@/components/ui/chart";
 import { useCanvasStore } from "@/state/canvaStore";
 import { getAccessPattern } from "@/lib/getAccessPattern";
 import { getRedundancyMetrics } from "@/lib/getRedundancyMetrics";
@@ -28,6 +10,9 @@ import { calculateHandledQueriesPercentage } from "@/lib/getHandledQueries";
 import MetricsChart from "./MetricsChart";
 import CompletudeChart from "./CompletudeChart";
 import { TableMetrics } from "./TableMetrics";
+
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const description = "A stacked bar chart with a legend";
 
@@ -47,6 +32,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function ChartBarStacked() {
+	const router = useRouter();
 	const versions = useCanvasStore((state) => state.versions);
 	const queries = useCanvasStore((state) => state.queries);
 	const [metricsChartData, setMetricsChartData] = useState<any[]>([]);
@@ -99,7 +85,13 @@ export function ChartBarStacked() {
 	return (
 		<div className="flex flex-col w-full h-auto overflow-y-auto justify-start items-center gap-12 custom-scrollbar ">
 			<div className="flex flex-col w-full justify-start items-start gap-4 p-4">
-				<h1 className="text-h3 font-normal">Estadísticas</h1>
+				<div className="flex flex-row items-center gap-6">
+					<ArrowLeft
+						className="text-white cursor-pointer hover:text-secondary-white transition-all duration-300"
+						onClick={() => router.back()}
+					/>
+					<h1 className="text-h3 font-normal">Estadísticas</h1>
+				</div>
 				<div className="w-full h-[2px] bg-gray" />
 			</div>
 
