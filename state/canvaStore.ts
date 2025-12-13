@@ -24,12 +24,14 @@ export type CanvasState = {
 	edges: Edge[];
 	queries: Query[];
 	id: string;
+	isChangingVersion: boolean;
 	setId: (id: string) => void;
 	setQueries: (queries: Query[]) => void;
 	setNodes: (nodes: Node<TableData>[]) => void;
 	setEdges: (edges: Edge[]) => void;
 	setVersions: (versions: VersionFrontend[]) => void;
 	setSelectedVersionId: (id: string) => void;
+	setIsChangingVersion: (isChanging: boolean) => void;
 	getQueryById: (queryId: string) => Query | undefined;
 	addNode: (node: Node<TableData>) => void;
 	addEdge: (edge: Edge) => void;
@@ -54,9 +56,15 @@ export const useCanvasStore = create<CanvasState>()(
 			id: "",
 			versions: [],
 			selectedVersionId: "",
+			isChangingVersion: false,
 			setSelectedVersionId: (id) => {
 				set((state) => {
 					state.selectedVersionId = id;
+				});
+			},
+			setIsChangingVersion: (isChanging) => {
+				set((state) => {
+					state.isChangingVersion = isChanging;
 				});
 			},
 			setId: (id) => {
@@ -181,4 +189,5 @@ export const canvaSelector = (state: CanvasState) => ({
 	setNodes: state.setNodes,
 	setEdges: state.setEdges,
 	setQueries: state.setQueries,
+	setVersions: state.setVersions,
 });

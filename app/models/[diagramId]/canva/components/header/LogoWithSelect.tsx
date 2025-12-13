@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { canvaSelector, useCanvasStore } from "@/state/canvaStore";
 import { useShallow } from "zustand/shallow";
+import { saveCanvas } from "@/lib/saveCanvas";
 
 // components/header/LogoWithSelect.tsx
 export const LogoWithSelect = () => {
@@ -22,14 +23,36 @@ export const LogoWithSelect = () => {
 	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
 		useShallow(canvaSelector),
 	);
+	const Id = useCanvasStore((state) => state.id);
+	const setIsChangingVersion = useCanvasStore((state) => state.setIsChangingVersion);
 
-	const onVersionChange = (newVersionId: string) => {
-		const versionIndex = versions.findIndex(
+	const onVersionChange = async (newVersionId: string) => {
+		// Mostrar loader
+		setIsChangingVersion(true);
+
+		try {
+			// saveCanvas usa hash para evitar guardados innecesarios
+			await saveCanvas(Id, selectedVersionId, undefined, false);
+		} catch (error) {
+			console.error("Error al guardar antes de cambiar de versión:", error);
+			// Continuar con el cambio aunque falle el guardado
+		}
+
+		// DESPUÉS de guardar, cambiar a la nueva versión
+		const updatedVersions = useCanvasStore.getState().versions;
+		const versionIndex = updatedVersions.findIndex(
 			(version) => version._id === newVersionId,
 		);
-		setNodes(versions[versionIndex].nodes);
-		setEdges(versions[versionIndex].edges);
+
+		// Cambiar UI
+		setNodes(updatedVersions[versionIndex].nodes);
+		setEdges(updatedVersions[versionIndex].edges);
 		setSelectedVersionId(newVersionId);
+
+		// Ocultar loader después de un pequeño delay para que React Flow renderice
+		setTimeout(() => {
+			setIsChangingVersion(false);
+		}, 100);
 	};
 
 	return (

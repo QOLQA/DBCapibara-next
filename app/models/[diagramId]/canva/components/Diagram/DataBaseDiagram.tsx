@@ -45,6 +45,7 @@ const DatabaseDiagram = () => {
 	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
 		useShallow(canvaSelector),
 	);
+	const isChangingVersion = useCanvasStore((state) => state.isChangingVersion);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [showError, setShowError] = useState(false);
@@ -126,6 +127,16 @@ const DatabaseDiagram = () => {
 
 	return (
 		<div className="w-full h-full relative pb-[16px] pl-[5px] pr-[16px] pt-[2px]">
+			{/* Loader mientras cambia de versión */}
+			{isChangingVersion && (
+				<div className="absolute inset-0 bg-terciary-gray/80 backdrop-blur-sm z-9999 flex items-center justify-center rounded-xl">
+					<div className="flex flex-col items-center gap-4">
+						<div className="w-12 h-12 border-4 border-blue border-t-transparent rounded-full animate-spin" />
+						<p className="text-white text-lg font-medium">Cambiando versión...</p>
+					</div>
+				</div>
+			)}
+
 			<Button
 				type="button"
 				onClick={handleOpenModal}
