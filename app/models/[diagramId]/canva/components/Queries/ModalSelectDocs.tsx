@@ -1,12 +1,15 @@
 'use client'
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { ArrowLeft } from "lucide-react";
 import { useCanvasStore } from "@/state/canvaStore";
 import { useUniqueId } from "@/hooks/use-unique-id";
-import clsx from "clsx";
+import { getUniqueTableNames } from "@/lib/getHandledQueries";
+import { useTableSelection } from "@/hooks/use-table-selection";
+import { WordToggleButtons } from "./WordToggleButtons";
+import { SelectedTablesList } from "./SelectedTablesList";
+import { AddDocumentSection } from "./AddDocumentSection";
 import type { Query } from "../../types";
 
 type ModalProps = {
@@ -28,43 +31,44 @@ export const ModalSelectDocs = ({
 	setQueryText,
 	onReturn,
 }: ModalProps) => {
-	const words = queryText.trim().split(/\s+/);
-	const [selectedWords, setSelectedWords] = useState<string[]>([]);
-	const [error, setError] = useState(false);
-
-	const { addQuery, editQuery } = useCanvasStore();
+	const { addQuery, editQuery, nodes } = useCanvasStore();
 	const generateId = useUniqueId();
 
-	const toggleWord = (word: string) => {
-		setSelectedWords((prev) =>
-			prev.includes(word) ? prev.filter((w) => w !== word) : [...prev, word],
-		);
-		setError(false);
-	};
+	// Get all available table names from nodes
+	const availableTableNames = getUniqueTableNames(nodes);
+
+	// Use custom hook for table selection logic
+	const {
+		selectedTables,
+		error,
+		words,
+		addTable,
+		removeTable,
+		toggleWord,
+		clearSelection,
+		validateSelection,
+	} = useTableSelection(queryText, availableTableNames, open);
 
 	const handleClose = () => {
 		setOpen(false);
 		setQueryText("");
-		setSelectedWords([]);
-		setError(false);
+		clearSelection();
 	};
 
 	const handleReturnModal = () => {
-		setSelectedWords([]);
-		setError(false);
+		clearSelection();
 		onReturn();
 	};
 
 	const handleSubmitQuery = () => {
-		if (!queryText.trim() || selectedWords.length === 0) {
-			setError(true);
+		if (!queryText.trim() || !validateSelection()) {
 			return;
 		}
 
 		const queryData = {
 			id: mode === "create" ? generateId() : queryEdit?.id || "",
 			full_query: queryText,
-			collections: selectedWords,
+			collections: selectedTables,
 		};
 
 		mode === "create"
@@ -75,9 +79,9 @@ export const ModalSelectDocs = ({
 	};
 
 	return (
-		<Modal 
-			title="Nueva Consulta" 
-			open={open} 
+		<Modal
+			title="Nueva Consulta"
+			open={open}
 			setOpen={setOpen}
 			onSubmit={handleSubmitQuery}
 			type={mode === "edit" ? "update" : "create"}
@@ -88,29 +92,33 @@ export const ModalSelectDocs = ({
 						Escoge tus colecciones
 					</p>
 
-					<div className="flex flex-wrap gap-3">
-						{words.map((word, index) => (
-							<button
-								key={`${index}-${word}`}
-								type="button"
-								onClick={() => toggleWord(word)}
-								className={clsx(
-									"cursor-pointer px-4 py-2 rounded-lg border border-gray transition-colors duration-200",
-									selectedWords.includes(word)
-										? "bg-gray text-white"
-										: "bg-transparent text-secondary-white",
-								)}
-								aria-pressed={selectedWords.includes(word)}
-								aria-label={`Seleccionar colección ${word}`}
-							>
-								{word}
-							</button>
-						))}
+					<WordToggleButtons
+						words={words}
+						availableTableNames={availableTableNames}
+						selectedTables={selectedTables}
+						onToggle={toggleWord}
+					/>
+
+					<p className="text-h3 text-secondary-white mb-2 mt-4">
+						Selected Collections
+					</p>
+
+					<div className="w-full flex flex-col gap-2">
+						<SelectedTablesList
+							selectedTables={selectedTables}
+							onRemove={removeTable}
+						/>
+
+						<AddDocumentSection
+							availableTableNames={availableTableNames}
+							selectedTables={selectedTables}
+							onAddTable={addTable}
+						/>
 					</div>
 
 					{error && (
 						<p className="text-red-500 mt-4 text-sm">
-							Debes seleccionar al menos una palabra y escribir una consulta.
+							You must select at least one table and write a query.
 						</p>
 					)}
 
