@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
 	Sidebar,
@@ -7,6 +7,7 @@ import {
 	SidebarHeader,
 } from "@/components/ui/sidebar";
 import type { NavItem } from "./types";
+import { Button } from "@/components/ui/button";
 
 type SidebarContentPrincProps = {
 	activeItem: NavItem;
@@ -18,13 +19,23 @@ export const SidebarContentPrinc = ({
 	return (
 		<Sidebar
 			collapsible="none"
-			className="hidden flex-1 md:flex bg-cuartenary-gray rounded-2xl p-[36px] text-white	"
+			className="hidden flex-1 md:flex bg-cuartenary-gray rounded-2xl p-[36px] text-white gap-y-[16px]  "
 		>
-			<SidebarHeader className="gap-3.5 border-b border-lighter-gray p-4">
-				<div className="flex w-full items-center justify-center">
-					<div className="text-base font-medium text-white text-h3">
+			<SidebarHeader className="gap-3.5 border-b-2 border-semilighter-gray py-4 px-0 ">
+				<div className="flex w-full items-center justify-between ">
+					<div className="text-base font-medium text-white text-h3 ">
 						{activeItem?.title}
 					</div>
+					{activeItem?.aditionalToTitle?.type === "button" && (
+						<Button
+							variant={"outline"}
+							type="button"
+							onClick={activeItem?.aditionalToTitle?.onClick}
+							className="w-[6rem] cursor-pointer border-none text-h3 text-white bg-gray hover:bg-semilighter-gray hover:text-white w-fit"
+						>
+							{activeItem?.aditionalToTitle?.titleButton}
+						</Button>
+					)}
 				</div>
 			</SidebarHeader>
 			<SidebarGroupContent className="h-full overflow-hidden rounded-2xl">

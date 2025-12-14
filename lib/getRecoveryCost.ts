@@ -11,11 +11,13 @@ let lastEdgeHash: string | null = null;
  * Generates a hash for nodes excluding x,y positions to avoid recalculation on movement
  */
 function generateNodeHashWithoutPosition(nodes: Node<TableData>[]): string {
-	return JSON.stringify(nodes.map(node => ({
-		id: node.id,
-		data: node.data,
-		type: node.type
-	})));
+	return JSON.stringify(
+		nodes.map((node) => ({
+			id: node.id,
+			data: node.data,
+			type: node.type,
+		}))
+	);
 }
 
 /**
@@ -24,12 +26,14 @@ function generateNodeHashWithoutPosition(nodes: Node<TableData>[]): string {
 function generateEdgeHash(edges: Edge[]): string {
 	if (!edges || edges.length === 0) return "[]";
 
-	return JSON.stringify(edges.map(edge => ({
-		id: edge.id,
-		source: edge.source,
-		target: edge.target,
-		type: edge.type
-	})));
+	return JSON.stringify(
+		edges.map((edge) => ({
+			id: edge.id,
+			source: edge.source,
+			target: edge.target,
+			type: edge.type,
+		}))
+	);
 }
 
 /**
@@ -43,7 +47,7 @@ function getTotalAttributes(nodes: Node<TableData>[]): number {
 
 		// Process nested tables if they exist
 		if (table.nestedTables && table.nestedTables.length > 0) {
-			table.nestedTables.forEach(nestedTable => {
+			table.nestedTables.forEach((nestedTable) => {
 				count += countAttributesRecursively(nestedTable);
 			});
 		}
@@ -51,7 +55,7 @@ function getTotalAttributes(nodes: Node<TableData>[]): number {
 		return count;
 	};
 
-	nodes.forEach(node => {
+	nodes.forEach((node) => {
 		totalAttributes += countAttributesRecursively(node.data);
 	});
 
@@ -72,7 +76,7 @@ function getTotalNestedTables(nodes: Node<TableData>[]): number {
 			count += table.nestedTables.length;
 
 			// Recursively count nested tables within nested tables
-			table.nestedTables.forEach(nestedTable => {
+			table.nestedTables.forEach((nestedTable) => {
 				count += countNestedTablesRecursively(nestedTable);
 			});
 		}
@@ -80,7 +84,7 @@ function getTotalNestedTables(nodes: Node<TableData>[]): number {
 		return count;
 	};
 
-	nodes.forEach(node => {
+	nodes.forEach((node) => {
 		totalNestedTables += countNestedTablesRecursively(node.data);
 	});
 
@@ -90,14 +94,19 @@ function getTotalNestedTables(nodes: Node<TableData>[]): number {
 /**
  * Pure function to calculate recovery cost without caching
  */
-function calculateRecoveryCostPure(nodes: Node<TableData>[], edges: Edge[]): number {
+function calculateRecoveryCostPure(
+	nodes: Node<TableData>[],
+	edges: Edge[]
+): number {
 	const totalAttributes = getTotalAttributes(nodes);
 	const totalNestedTables = getTotalNestedTables(nodes);
 	const accessPattern = getAccessPattern(nodes, edges || []);
 
-	const recoveryCost = (totalAttributes * 0.51) + (totalNestedTables * 0.49) + accessPattern;
+	const recoveryCost =
+		totalAttributes * 0.51 + totalNestedTables * 0.49 + accessPattern;
 
-	return Math.round(recoveryCost * 100) / 100;
+	const roundedRecoveryCost = Math.round(recoveryCost * 100) / 100;
+	return parseFloat(roundedRecoveryCost.toFixed(2));
 }
 
 /**
@@ -137,6 +146,9 @@ function withCacheValidation(
 /**
  * Main export function that combines cache validation with calculation
  */
-export function getRecoveryCost(nodes: Node<TableData>[], edges: Edge[]): number {
+export function getRecoveryCost(
+	nodes: Node<TableData>[],
+	edges: Edge[]
+): number {
 	return withCacheValidation(nodes, edges, calculateRecoveryCostPure);
 }

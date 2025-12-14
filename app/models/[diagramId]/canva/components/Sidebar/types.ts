@@ -5,6 +5,18 @@ export type NavItem = {
 	icon: ReactElement;
 	isActive?: boolean;
 	content?: ReactElement;
+	aditionalToTitle?: aditionalToTitleButton | aditionalToTitleExpand;
+};
+
+export type aditionalToTitleButton = {
+	type: "button";
+	onClick: () => void;
+	titleButton: string;
+};
+
+export type aditionalToTitleExpand = {
+	type: "expand";
+	onClick: () => void;
 };
 
 export type User = {
@@ -14,6 +26,6 @@ export type User = {
 };
 
 export type Data = {
-  navMain: NavItem[];
+	navMain: NavItem[];
 	user: User;
-}
+};

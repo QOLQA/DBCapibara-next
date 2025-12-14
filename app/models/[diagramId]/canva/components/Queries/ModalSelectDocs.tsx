@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
@@ -85,6 +85,7 @@ export const ModalSelectDocs = ({
 			setOpen={setOpen}
 			onSubmit={handleSubmitQuery}
 			type={mode === "edit" ? "update" : "create"}
+			onReturnPreviewsStep={handleReturnModal}
 		>
 			<>
 				<div className="my-13 gap-5 w-160 flex justify-between items-start flex-col relative">
@@ -121,14 +122,6 @@ export const ModalSelectDocs = ({
 							You must select at least one table and write a query.
 						</p>
 					)}
-
-					<Button
-						onClick={handleReturnModal}
-						className="cursor-pointer absolute top-[-97px] left-0 group transition-all duration-600"
-						aria-label="Volver"
-					>
-						<ArrowLeft className="text-secondary-white group-hover:text-white !w-auto !h-[26px]" />
-					</Button>
 				</div>
 			</>
 		</Modal>

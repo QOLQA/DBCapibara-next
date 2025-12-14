@@ -3,17 +3,18 @@ import DiagramClient from "./diagram-client";
 import { getAuthenticatedSolution } from "@/lib/apiServer";
 import { redirect } from "next/navigation";
 
-async function getDiagram(diagramId: string) {
+async function getDiagram(solutionId: string) {
 	try {
-		const data = await getAuthenticatedSolution(diagramId);
+		const data = await getAuthenticatedSolution(solutionId);
+		console.log("data", data);
 		return transformSolutionModel(data);
 	} catch (error) {
 		if (error instanceof Error) {
-			if (error.message === 'UNAUTHORIZED') {
-				redirect('/login');
+			if (error.message === "UNAUTHORIZED") {
+				redirect("/login");
 			}
-			if (error.message === 'FORBIDDEN') {
-				redirect('/models');
+			if (error.message === "FORBIDDEN") {
+				redirect("/models");
 			}
 		}
 		throw error;
@@ -21,9 +22,9 @@ async function getDiagram(diagramId: string) {
 }
 
 export default async function DiagramPage({
-	params
+	params,
 }: {
-	params: Promise<{ diagramId: string }>
+	params: Promise<{ diagramId: string }>;
 }) {
 	const { diagramId } = await params;
 	const loaderData = await getDiagram(diagramId);

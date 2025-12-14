@@ -1,9 +1,10 @@
-'use client'
+"use client";
 
 import type { ReactElement } from "react";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "./button";
+import { ArrowLeft, X } from "lucide-react";
 
 interface ModalProps {
 	title: string;
@@ -13,6 +14,7 @@ interface ModalProps {
 	setOpen: (open: boolean) => void;
 	type?: "create" | "update" | "next" | "save";
 	showCloseButton?: boolean;
+	onReturnPreviewsStep?: () => void;
 }
 
 export const Modal = ({
@@ -23,6 +25,7 @@ export const Modal = ({
 	setOpen,
 	type = "create",
 	showCloseButton = true,
+	onReturnPreviewsStep,
 }: ModalProps) => {
 	const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -43,12 +46,11 @@ export const Modal = ({
 
 	const handleBackdropClick = (e: React.MouseEvent<HTMLDialogElement>) => {
 		const rect = e.currentTarget.getBoundingClientRect();
-		const isInDialog = (
+		const isInDialog =
 			e.clientX >= rect.left &&
 			e.clientX <= rect.right &&
 			e.clientY >= rect.top &&
-			e.clientY <= rect.bottom
-		);
+			e.clientY <= rect.bottom;
 		if (!isInDialog) {
 			handleClose();
 		}
@@ -67,24 +69,33 @@ export const Modal = ({
 		>
 			<div
 				onClick={(e) => e.stopPropagation()}
-				className="w-[730px] bg-[#2A2A2A] border-2 border-[#404040] rounded-lg p-6 relative"
+				className="w-[730px] bg-secondary-gray border-2 border-gray rounded-lg p-6 relative"
 			>
 				{/* Header */}
-				<div className=" mb-8 mt-4 relative flex items-center justify-between">
+				<div className=" my-4 relative flex items-center justify-center ">
+					{onReturnPreviewsStep && (
+						<button
+							type="button"
+							onClick={onReturnPreviewsStep}
+							className="absolute left-0 top-0 cursor-pointer "
+						>
+							<ArrowLeft className="text-secondary-white hover:text-white !w-auto !h-[26px]" />
+						</button>
+					)}
 					<h2 className="text-white text-h3 font-semibold">{title}</h2>
 					{showCloseButton && (
 						<button
 							onClick={handleClose}
-							className="text-white hover:text-gray-300 text-2xl leading-none p-1 absolute right-2 top-0 cursor-pointer"
+							className="text-white hover:text-gray-300 absolute right-0 top-0 cursor-pointer"
 							aria-label="Close modal"
 						>
-							X
+							<X className="text-secondary-white hover:text-white !w-auto !h-[26px]" />
 						</button>
 					)}
 				</div>
 
 				{/* Separator */}
-				<div className="w-full h-[2px] bg-[#404040] mb-4" />
+				<div className="w-full h-[2px] bg-gray mb-4" />
 
 				{/* Content */}
 				<div className="my-4">{children}</div>
@@ -109,14 +120,14 @@ export const Modal = ({
 						{type === "create"
 							? "Crear"
 							: type === "update"
-								? "Actualizar"
-								: type === "next"
-									? "Siguiente"
-									: "Guardar"}
+							? "Actualizar"
+							: type === "next"
+							? "Siguiente"
+							: "Guardar"}
 					</Button>
 				</div>
 			</div>
 		</dialog>,
-		document.body,
+		document.body
 	);
 };

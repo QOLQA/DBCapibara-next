@@ -1,4 +1,4 @@
-import type { Query, VersionBackend, VersionFrontend } from "@/app/models/[diagramId]/canva/types";
+import type { Query, VersionBackend } from "@/app/models/[diagramId]/canva/types";
 import type { Edge, Node } from "@xyflow/react";
 import type { TableData } from "@/app/models/[diagramId]/canva/types";
 import { loadCanva } from "./loadCanva";
@@ -127,7 +127,17 @@ export const saveCanvas = async (
 	}
 };
 
-export const saveSolution = async (diagramId: string, queries: Query[], src_img: string) => {
+export const saveSolution = async (
+	diagramId: string,
+	queries: Query[],
+	src_img: string
+) => {
+	// Solo guardar si src_img no está vacío
+	if (!src_img) {
+		console.warn("src_img is empty, skipping solution image update");
+		return;
+	}
+
 	try {
 		await api.patch(`/solutions/${diagramId}`, { queries, src_img });
 	} catch (error) {
