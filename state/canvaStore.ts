@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -23,7 +23,7 @@ export type CanvasState = {
 	nodes: Node<TableData>[];
 	edges: Edge[];
 	queries: Query[];
-	id: string;
+	id: string; // solutionId
 	setId: (id: string) => void;
 	setQueries: (queries: Query[]) => void;
 	setNodes: (nodes: Node<TableData>[]) => void;
@@ -114,7 +114,7 @@ export const useCanvasStore = create<CanvasState>()(
 			editQuery: (queryId, newQuery) => {
 				set((state) => {
 					const index = state.queries.findIndex(
-						(query) => query.id === queryId,
+						(query) => query.id === queryId
 					);
 					if (index !== -1) {
 						state.queries[index] = newQuery;
@@ -162,8 +162,8 @@ export const useCanvasStore = create<CanvasState>()(
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);
 			},
-		},
-	),
+		}
+	)
 );
 
 export const canvaSelector = (state: CanvasState) => ({

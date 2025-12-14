@@ -1,10 +1,6 @@
-'use client'
+"use client";
 
-import {
-	ArrowLeft,
-	ArrowRight,
-	Chevron,
-} from "@/components/icons/HeaderIcons";
+import { ArrowLeft, ArrowRight, Chevron } from "@/components/icons/HeaderIcons";
 
 import { LogoWithSelect } from "./LogoWithSelect";
 import { ButtonSave } from "./ButtonSave";

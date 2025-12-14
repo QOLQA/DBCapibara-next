@@ -10,24 +10,28 @@ let lastEdgeHash: string | null = null;
  * Generates a hash for nodes excluding x,y positions to avoid recalculation on movement
  */
 function generateNodeHashWithoutPosition(nodes: Node<TableData>[]): string {
-	return JSON.stringify(nodes.map(node => ({
-		id: node.id,
-		data: node.data,
-		type: node.type
-		// Intentionally exclude position to avoid recalculations on movement
-	})));
+	return JSON.stringify(
+		nodes.map((node) => ({
+			id: node.id,
+			data: node.data,
+			type: node.type,
+			// Intentionally exclude position to avoid recalculations on movement
+		}))
+	);
 }
 
 /**
  * Generates a simple hash for edges
  */
 function generateEdgeHash(edges: Edge[]): string {
-	return JSON.stringify(edges.map(edge => ({
-		id: edge.id,
-		source: edge.source,
-		target: edge.target,
-		type: edge.type
-	})));
+	return JSON.stringify(
+		edges.map((edge) => ({
+			id: edge.id,
+			source: edge.source,
+			target: edge.target,
+			type: edge.type,
+		}))
+	);
 }
 
 function getMaxDepth(nodes: Node<TableData>[]): number {
@@ -39,7 +43,7 @@ function getMaxDepth(nodes: Node<TableData>[]): number {
 			return 1;
 		}
 
-		const nestedDepths = tableData.nestedTables.map(nested =>
+		const nestedDepths = tableData.nestedTables.map((nested) =>
 			calculateNestedDepth(nested)
 		);
 
@@ -47,7 +51,7 @@ function getMaxDepth(nodes: Node<TableData>[]): number {
 	}
 
 	// Calculate maximum depth among all nodes
-	const depths = nodes.map(node => calculateNestedDepth(node.data));
+	const depths = nodes.map((node) => calculateNestedDepth(node.data));
 
 	return Math.max(...depths);
 }
@@ -58,7 +62,7 @@ function getMaxRelations(edges: Edge[]): number {
 	// Count relations per node (both as source and target)
 	const relationCounts = new Map<string, number>();
 
-	edges.forEach(edge => {
+	edges.forEach((edge) => {
 		const sourceId = edge.source;
 		const targetId = edge.target;
 
@@ -76,13 +80,16 @@ function getMaxRelations(edges: Edge[]): number {
 /**
  * Pure function to calculate access pattern without caching
  */
-function calculateAccessPatternPure(nodes: Node<TableData>[], edges: Edge[]): number {
+function calculateAccessPatternPure(
+	nodes: Node<TableData>[],
+	edges: Edge[]
+): number {
 	const maxDepth = getMaxDepth(nodes) - 1;
 	const maxRelations = getMaxRelations(edges);
-	const accessPattern = (maxDepth * 0.4) + (maxRelations * 0.6);
+	const accessPattern = maxDepth * 0.4 + maxRelations * 0.6;
 
-
-	return Math.round(accessPattern * 100) / 100
+	const roundedAccessPattern = Math.round(accessPattern * 100) / 100;
+	return parseFloat(roundedAccessPattern.toFixed(2));
 }
 
 /**

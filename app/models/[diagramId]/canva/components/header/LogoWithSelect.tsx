@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Logo } from "@/components/icons/HeaderIcons";
 import {
@@ -9,10 +9,12 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { canvaSelector, useCanvasStore } from "@/state/canvaStore";
+import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 
 // components/header/LogoWithSelect.tsx
 export const LogoWithSelect = () => {
+	const router = useRouter();
 	const {
 		versions,
 		selectedVersionId,
@@ -20,12 +22,12 @@ export const LogoWithSelect = () => {
 		setNodes,
 		setEdges,
 	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
-		useShallow(canvaSelector),
+		useShallow(canvaSelector)
 	);
 
 	const onVersionChange = (newVersionId: string) => {
 		const versionIndex = versions.findIndex(
-			(version) => version._id === newVersionId,
+			(version) => version._id === newVersionId
 		);
 		setNodes(versions[versionIndex].nodes);
 		setEdges(versions[versionIndex].edges);
@@ -34,7 +36,9 @@ export const LogoWithSelect = () => {
 
 	return (
 		<div className="flex items-center gap-8">
-			<Logo className="text-blue" />
+			<div onClick={() => router.push("/models")} className="cursor-pointer">
+				<Logo className="text-blue" />
+			</div>
 			<Select value={selectedVersionId} onValueChange={onVersionChange}>
 				<SelectTrigger className="border-gray rounded-full !text-white text-h6 w-[153px] py-[7px] px-[20px]">
 					<SelectValue />

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useCanvasStore } from "@/state/canvaStore";
 import { DataBaseDiagram } from "./components/Diagram";
@@ -30,7 +30,7 @@ export default function DiagramClient({ loaderData }: DiagramClientProps) {
 	} = useCanvasStore();
 
 	const versionId = loaderData.versions.findIndex(
-		(version: VersionFrontend) => loaderData.last_version_saved === version._id,
+		(version: VersionFrontend) => loaderData.last_version_saved === version._id
 	);
 
 	useEffect(() => {
@@ -46,18 +46,7 @@ export default function DiagramClient({ loaderData }: DiagramClientProps) {
 			setVersions(loaderData.versions);
 			setSelectedVersionId(loaderData.versions[versionId]._id);
 		}
-	}, [
-		isHydrated,
-		loaderData,
-		versionId,
-		setEdges,
-		setId,
-		setNodes,
-		setQueries,
-		setVersions,
-		setSelectedVersionId,
-		id,
-	]);
+	}, [isHydrated, loaderData, versionId, id]);
 
 	return (
 		<LayoutDiagram title={loaderData.name}>
