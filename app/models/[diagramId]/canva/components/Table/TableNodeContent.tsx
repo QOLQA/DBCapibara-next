@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState, useCallback, useMemo } from "react";
 import { type Node, useReactFlow } from "@xyflow/react";
@@ -38,7 +38,7 @@ const AttributeNode = React.memo(
 			useShallow((state) => ({
 				nodes: state.nodes,
 				editNode: state.editNode,
-			})),
+			}))
 		);
 
 		const handleDeleteAttribute = useCallback(
@@ -48,7 +48,7 @@ const AttributeNode = React.memo(
 				// Get the root node (top-level) from the global nodes state
 				const rootId = getKeySegment(columnId, 1);
 				const originalNode = nodes.find(
-					(node) => node.id === rootId,
+					(node) => node.id === rootId
 				) as Node<TableData>;
 				if (!originalNode) return;
 
@@ -64,7 +64,7 @@ const AttributeNode = React.memo(
 				// If the table is at the first nested level, delete the column directly
 				if (numLayers === 2) {
 					editableNode.data.columns = editableNode.data.columns.filter(
-						(col: Column) => col.id !== column.id,
+						(col: Column) => col.id !== column.id
 					);
 					editNode(editableNode.id, editableNode);
 					return;
@@ -73,7 +73,7 @@ const AttributeNode = React.memo(
 				// Recursive function to navigate and delete the column from deeper nested tables
 				const recursiveDeleteColumn = (
 					nestedTables: TableData,
-					layer: number,
+					layer: number
 				): TableData => {
 					if (layer > 100) {
 						return nestedTables;
@@ -81,7 +81,7 @@ const AttributeNode = React.memo(
 
 					if (layer === numLayers - 1) {
 						nestedTables.columns = nestedTables.columns.filter(
-							(col: Column) => col.id !== column.id,
+							(col: Column) => col.id !== column.id
 						);
 						return nestedTables;
 					}
@@ -92,7 +92,7 @@ const AttributeNode = React.memo(
 						(nestedTable: TableData) =>
 							nestedTable.id === nestedTableResultId
 								? recursiveDeleteColumn(nestedTable, layer + 1)
-								: nestedTable,
+								: nestedTable
 					) as TableData[];
 
 					return {
@@ -104,7 +104,7 @@ const AttributeNode = React.memo(
 				editableNode.data = recursiveDeleteColumn(editableNode.data, 1);
 				editNode(rootId as string, editableNode);
 			},
-			[nodes, editNode, columnId],
+			[nodes, editNode, columnId]
 		);
 
 		const handleEditClick = useCallback(() => {
@@ -113,19 +113,20 @@ const AttributeNode = React.memo(
 
 		const handleDeleteClick = useCallback(() => {
 			handleDeleteAttribute(column);
-		}, [handleDeleteAttribute, column]); const handleMoreClick = useCallback((e: React.MouseEvent) => {
+		}, [handleDeleteAttribute, column]);
+		const handleMoreClick = useCallback((e: React.MouseEvent) => {
 			e.stopPropagation();
 		}, []);
 
 		return (
-			<div className="table-attribute">
+			<div className="relative flex items-center table-attribute">
 				<span className="text-white">{column.name}</span>
 				<div>
-					<span className="text-lighter-gray">{column.type}</span>
-					<div className="table-attribute__options">
+					<span className="text-lighter-gray pr-8">{column.type}</span>
+					<div className=" absolute h-full right-0 top-0 table-attribute__options">
 						<ManagedDropdownMenu>
 							{column.type !== "PRIMARY_KEY" &&
-								column.type !== "FOREIGN_KEY" ? (
+							column.type !== "FOREIGN_KEY" ? (
 								<DropdownMenuTrigger asChild>
 									<MoreButton
 										className="text-lighter-gray "
@@ -171,7 +172,7 @@ const AttributeNode = React.memo(
 				</div>
 			</div>
 		);
-	},
+	}
 );
 
 /**
@@ -203,7 +204,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 		"create" | "update"
 	>("create");
 	const [atributesToUpdate, setAtributesToUpdate] = useState<TableAttribute[]>(
-		[],
+		[]
 	);
 
 	const { nodes, editNode, removeNode } = useCanvasStore(
@@ -211,7 +212,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 			nodes: state.nodes,
 			editNode: state.editNode,
 			removeNode: state.removeNode,
-		})),
+		}))
 	);
 
 	const generateRandomId = useCallback(() => {
@@ -219,7 +220,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 		let result = "";
 		for (let i = 0; i < 8; i++) {
 			result += characters.charAt(
-				Math.floor(Math.random() * characters.length),
+				Math.floor(Math.random() * characters.length)
 			);
 		}
 		return result;
@@ -247,7 +248,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 
 						// Recursive function to add attribute in nested tables
 						const addAttributeToNested = (
-							nestedTables: TableData[],
+							nestedTables: TableData[]
 						): TableData[] => {
 							return nestedTables?.map((table: TableData) => {
 								if (table.id === idNestedTableSelected) {
@@ -300,7 +301,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 				});
 			});
 		},
-		[id, idNestedTableSelected, setNodes, generateRandomId],
+		[id, idNestedTableSelected, setNodes, generateRandomId]
 	);
 
 	const handleAddNestedTable = useCallback(
@@ -326,7 +327,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 
 						// Recursive function to add nested table to nested tables
 						const addNestedTableToNested = (
-							nestedTables: TableData[],
+							nestedTables: TableData[]
 						): TableData[] => {
 							return nestedTables?.map((table: TableData) => {
 								if (table.id === idNestedTableSelected) {
@@ -381,7 +382,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 				});
 			});
 		},
-		[id, idNestedTableSelected, setNodes, generateRandomId],
+		[id, idNestedTableSelected, setNodes, generateRandomId]
 	);
 
 	const handleDeleteTable = useCallback(
@@ -391,7 +392,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 			// Get the root node (top-level) from the global nodes state
 			const rootId = getKeySegment(tableId, 1);
 			const originalNode = nodes.find(
-				(node) => node.id === rootId,
+				(node) => node.id === rootId
 			) as Node<TableData>;
 			if (!originalNode) return;
 
@@ -413,11 +414,11 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 			// Recursive function to navigate and delete the nestedTable from deeper nested tables
 			const recursiveDeleteTable = (
 				nestedTables: TableData,
-				layer: number,
+				layer: number
 			): TableData => {
 				if (layer === numLayers - 1) {
 					nestedTables.nestedTables = nestedTables.nestedTables?.filter(
-						(nestedTable: TableData) => nestedTable.id !== tableId,
+						(nestedTable: TableData) => nestedTable.id !== tableId
 					);
 					return nestedTables;
 				}
@@ -427,7 +428,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 					(nestedTable: TableData) =>
 						nestedTable.id === nestedTableResultId
 							? recursiveDeleteTable(nestedTable, layer + 1)
-							: nestedTable,
+							: nestedTable
 				) as TableData[];
 
 				return {
@@ -439,7 +440,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 			editableNode.data = recursiveDeleteTable(editableNode.data, 1);
 			editNode(rootId as string, editableNode);
 		},
-		[nodes, editNode, removeNode],
+		[nodes, editNode, removeNode]
 	);
 
 	const handleFindAtributesToUpdate = useCallback(
@@ -452,7 +453,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 				k = k + 1;
 				const segmentedKey = getKeySegment(tableId, k);
 				table = table?.nestedTables?.find(
-					(table: TableData) => table.id === segmentedKey,
+					(table: TableData) => table.id === segmentedKey
 				);
 			}
 			// add an atribute to each column called "ableToEdit" and set it to true
@@ -466,7 +467,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 
 			setAtributesToUpdate(columns || []);
 		},
-		[nodes, id],
+		[nodes, id]
 	);
 
 	const handleEditAtribute = useCallback(
@@ -479,7 +480,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 				k = k + 1;
 				const segmentedKey = getKeySegment(selectedColumn.id, k);
 				table = table?.nestedTables?.find(
-					(table: TableData) => table.id === segmentedKey,
+					(table: TableData) => table.id === segmentedKey
 				) as TableData;
 			}
 			// add an atribute to each column called "ableToEdit" and set it to true
@@ -492,7 +493,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 			setIsAtributesModalOpen(true);
 			setTypeAtributesModal("update");
 		},
-		[nodes, id],
+		[nodes, id]
 	);
 
 	const handleEditTable = useCallback(() => {
@@ -540,7 +541,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 					)}
 				</React.Fragment>
 			)),
-		[data.columns, handleEditAtribute],
+		[data.columns, handleEditAtribute]
 	);
 
 	const nestedTableNodes = useMemo(
@@ -548,7 +549,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 			data.nestedTables?.map((nestedTable: TableData) => (
 				<TableNodeContent key={nestedTable.id} data={nestedTable} id={id} />
 			)),
-		[data.nestedTables, id],
+		[data.nestedTables, id]
 	);
 
 	const headerColor = useMemo(() => {

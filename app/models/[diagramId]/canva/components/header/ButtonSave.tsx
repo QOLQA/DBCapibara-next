@@ -3,7 +3,7 @@ import { transformVersionToBackend } from "@/lib/canvaConversion";
 import { saveCanvas, saveSolution } from "@/lib/saveCanvas";
 import { useCanvasStore } from "@/state/canvaStore";
 import { getNodesBounds, getViewportForBounds } from "@xyflow/react";
-import { toJpeg } from "html-to-image";
+import { toPng } from "html-to-image";
 import { uploadImage } from "@/lib/imageService";
 
 const imageWidth = 1024;
@@ -58,8 +58,8 @@ export const ButtonSave = () => {
 
 		// Agregar padding alrededor de los nodos para que no choquen con los bordes
 		// El padding es un porcentaje del tamaño de la imagen (15% en cada lado)
-		const paddingX = imageWidth * 0.25; // 15% de padding horizontal
-		const paddingY = imageHeight * 0.25; // 15% de padding vertical
+		const paddingX = imageWidth * 0.15; // 15% de padding horizontal
+		const paddingY = imageHeight * 0.15; // 15% de padding vertical
 
 		// Expandir los bounds con el padding
 		const paddedBounds = {
@@ -73,17 +73,18 @@ export const ButtonSave = () => {
 			paddedBounds,
 			imageWidth,
 			imageHeight,
-			0.5,
-			2,
-			0
+			0.8,
+			1.2,
+			200
 		);
 
-		const pngString = await toJpeg(
+		const pngString = await toPng(
 			document.querySelector(".react-flow__viewport") as HTMLElement,
 			{
-				backgroundColor: "#171717",
+				// backgroundColor: "#171717",
 				width: imageWidth,
 				height: imageHeight,
+				pixelRatio: 3,
 				style: {
 					width: `${imageWidth}px`,
 					height: `${imageHeight}px`,
