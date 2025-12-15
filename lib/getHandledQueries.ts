@@ -61,6 +61,16 @@ function getAllTableNames(nodes: Node<TableData>[]): Map<string, Set<string>> {
 }
 
 /**
+ * Gets all unique table names as an array (for UI purposes)
+ * @param nodes - Array of nodes
+ * @returns Array of unique table names
+ */
+export function getUniqueTableNames(nodes: Node<TableData>[]): string[] {
+	const tableNamesMap = getAllTableNames(nodes);
+	return Array.from(tableNamesMap.keys());
+}
+
+/**
  * Adds bidirectional nested relationships to the graph using table IDs
  */
 function addNestedRelationships(
