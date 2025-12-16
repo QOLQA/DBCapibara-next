@@ -21,7 +21,7 @@ export const QueryItem = ({ query }: { query: Query }) => {
 				})}
 			</div>
 			<span className="text-p text-secondary-white">
-				Colecciones involucradas
+				Involved Collections
 			</span>
 			<div className="flex flex-wrap gap-2.5 w-full pr-3">
 				{query.collections.map((collection) => (

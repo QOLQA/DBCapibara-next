@@ -23,9 +23,9 @@ export const AppStatistics = () => {
 	);
 
 	const data: StastType[] = [
-		{ name: "Patron de acceso", value: accessPatternValue, color: "#0052CC" },
-		{ name: "Costo de Recuperacion", value: recoveryCostValue, color: "#00875A" },
-		{ name: "Redundancia", value: redundancyValue, color: "#5243AA" },
+		{ name: "Access Pattern", value: accessPatternValue, color: "#0052CC" },
+		{ name: "Recovery Cost", value: recoveryCostValue, color: "#00875A" },
+		{ name: "Redundancy", value: redundancyValue, color: "#5243AA" },
 	]
 	return (
 		<div className="flex flex-col h-full w-full items-center justify-between gap-10">

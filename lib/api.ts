@@ -3,7 +3,8 @@
  * Maneja tokens, headers y errores de autenticación
  */
 
-const API_URL = "http://localhost:8000";
+// Client-side: usa la URL pública accesible desde el navegador
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
 export const getAuthToken = (): string | null => {
 	if (typeof window === "undefined") return null;

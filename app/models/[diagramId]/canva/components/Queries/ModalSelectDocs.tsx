@@ -80,7 +80,7 @@ export const ModalSelectDocs = ({
 
 	return (
 		<Modal
-			title="Nueva Consulta"
+			title="New Query"
 			open={open}
 			setOpen={setOpen}
 			onSubmit={handleSubmitQuery}
@@ -90,7 +90,7 @@ export const ModalSelectDocs = ({
 			<>
 				<div className="my-13 gap-5 w-160 flex justify-between items-start flex-col relative">
 					<p className="text-h3 text-secondary-white mb-2">
-						Escoge tus colecciones
+						Choose your collections
 					</p>
 
 					<WordToggleButtons

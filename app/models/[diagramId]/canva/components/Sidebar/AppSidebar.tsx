@@ -9,6 +9,7 @@ import { AppQueries } from "../Queries/AppQueries";
 import type { Data, NavItem } from "./types";
 import { AppStatistics } from "../Statistics/AppStatistics";
 import { useParams, useRouter } from "next/navigation";
+import { useAuthContext } from "@/contexts/auth-context";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { setOpen } = useSidebar();
@@ -16,11 +17,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { diagramId } = useParams<{ diagramId: string }>() as {
 		diagramId: string;
 	};
+	const { user: authUser } = useAuthContext();
 
 	const data: Data = {
 		user: {
-			name: "shadcn",
-			email: "m@example.com",
+			id: authUser?.id || "",
+			username: authUser?.full_name || authUser?.username || "User",
+			email: authUser?.email || "",
+			is_active: authUser?.is_active || false,
+			created_at: authUser?.created_at || "",
 			avatar: "/user.png",
 		},
 		navMain: [
@@ -30,12 +35,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				isActive: true,
 			},
 			{
-				title: "Consultas",
+				title: "Queries",
 				icon: <Calendar />,
 				content: <AppQueries />,
 			},
 			{
-				title: "Estadísticas",
+				title: "Statistics",
 				icon: <DataPie />,
 				content: <AppStatistics />,
 				aditionalToTitle: {

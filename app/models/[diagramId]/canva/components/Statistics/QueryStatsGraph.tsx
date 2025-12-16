@@ -5,23 +5,23 @@
 import { useCanvasStore } from "@/state/canvaStore"
 import { calculateHandledQueriesPercentage } from "@/lib/getHandledQueries"
 import {
-  Label,
-  PolarGrid,
-  PolarRadiusAxis,
-  RadialBar,
-  RadialBarChart,
+	Label,
+	PolarGrid,
+	PolarRadiusAxis,
+	RadialBar,
+	RadialBarChart,
 	ResponsiveContainer,
 } from "recharts"
 
 
 export const QueryStatsGraph = () => {
 
-	const handledPercentage = useCanvasStore((state) => 
+	const handledPercentage = useCanvasStore((state) =>
 		calculateHandledQueriesPercentage(state.queries, state.nodes, state.edges),
 	);
 
 	const porcentageAngle = (handledPercentage * 360) / 100
-	
+
 	const chartData = [
 		{
 			porcentage: handledPercentage,
@@ -43,10 +43,10 @@ export const QueryStatsGraph = () => {
 			>
 				<defs>
 					<filter id="glow">
-						<feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-						<feMerge> 
-							<feMergeNode in="coloredBlur"/>
-							<feMergeNode in="SourceGraphic"/>
+						<feGaussianBlur stdDeviation="4" result="coloredBlur" />
+						<feMerge>
+							<feMergeNode in="coloredBlur" />
+							<feMergeNode in="SourceGraphic" />
 						</feMerge>
 					</filter>
 				</defs>
@@ -58,9 +58,9 @@ export const QueryStatsGraph = () => {
 					style={{ filter: 'url(#glow)' }}
 					polarRadius={[80, 73]}
 				/>
-				<RadialBar 
-					dataKey="porcentage" 
-					className="fill-cuartenary-gray" 
+				<RadialBar
+					dataKey="porcentage"
+					className="fill-cuartenary-gray"
 					cornerRadius={10}
 					style={{ filter: 'url(#glow)' }}
 				/>
@@ -87,14 +87,14 @@ export const QueryStatsGraph = () => {
 											y={(viewBox.cy || 0) + 18}
 											className="fill-white text-p"
 										>
-											Consultas
+											Queries
 										</tspan>
 										<tspan
 											x={viewBox.cx}
 											y={(viewBox.cy || 0) + 33}
 											className="fill-white text-p"
 										>
-											abordadas
+											Handled
 										</tspan>
 									</text>
 								)

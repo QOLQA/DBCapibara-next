@@ -127,7 +127,7 @@ const DatabaseDiagram = () => {
 	);
 
 	return (
-		<div className="w-full h-full relative pb-[16px] pl-[5px] pr-[16px] pt-[2px]">
+		<div className="w-full h-full relative pb-[16px] pl-[5px] pr-[16px] pt-[2px] bg-secondary-gray">
 			{/* Loader mientras cambia de versión */}
 			{isChangingVersion && (
 				<div className="absolute inset-0 bg-terciary-gray/80 backdrop-blur-sm z-9999 flex items-center justify-center rounded-xl">
