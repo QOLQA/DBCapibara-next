@@ -42,14 +42,8 @@ export const ButtonSave = () => {
 				saveCanvas(Id, versionId, diagram),
 			]);
 
-			alert("Saved successfully");
 		} catch (error) {
 			console.error("Error saving:", error);
-			alert(
-				`Error to save: ${
-					error instanceof Error ? error.message : "Unknown error"
-				}`
-			);
 		}
 	};
 
