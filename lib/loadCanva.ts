@@ -1,12 +1,12 @@
 import { useCanvasStore } from "@/state/canvaStore";
 import { transformSolutionModel } from "./solutionConversion";
-import type { VersionFrontend } from "@/app/models/[diagramId]/canva/types";
+import type { VersionFrontend, SolutionModel } from "@/app/models/[diagramId]/canva/types";
 import { api } from "./api";
 
 export async function loadCanva(diagramId: string, versionId: string) {
 	try {
 		const data = await api.get(`/solutions/${diagramId}`);
-		const transformed = transformSolutionModel(data);
+		const transformed = transformSolutionModel(data as SolutionModel);
 
 		const { setNodes, setEdges, setQueries, setVersions } =
 			useCanvasStore.getState();
