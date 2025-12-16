@@ -23,7 +23,8 @@ export interface RegisterData {
 	full_name?: string;
 }
 
-const API_URL = 'http://localhost:8000';
+// Client-side: usa la URL pública accesible desde el navegador
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
 
 export const useAuth = () => {
 	const [user, setUser] = useState<User | null>(null);
