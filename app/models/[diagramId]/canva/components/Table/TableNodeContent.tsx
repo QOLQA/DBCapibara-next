@@ -142,7 +142,7 @@ const AttributeNode = React.memo(
 							>
 								<DropdownMenuItem type="normal" onClick={handleEditClick}>
 									<Edit className="text-white" />
-									Editar
+								Edit
 								</DropdownMenuItem>
 								<DropdownMenuSeparator className="bg-gray" />
 								<DropdownMenuItem
@@ -163,7 +163,7 @@ const AttributeNode = React.memo(
 											fill="#E93544"
 										/>
 									</svg>
-									Eliminar
+								  Delete	
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</ManagedDropdownMenu>
@@ -576,18 +576,18 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 						>
 							<DropdownMenuItem type="normal" onClick={handleEditTable}>
 								<Edit className="text-white" />
-								Editar
+								Edit
 							</DropdownMenuItem>
 
 							<DropdownMenuSeparator className="bg-gray" />
 							<DropdownMenuItem type="normal" onClick={handleAddAttributes}>
 								<Plus className="text-white" />
-								Agregar atributos
+								Add attributes
 							</DropdownMenuItem>
 							<DropdownMenuSeparator className="bg-gray" />
 							<DropdownMenuItem type="normal" onClick={handleAddDocuments}>
 								<AddDocument className="text-white" />
-								Agregar documentos
+								Add documents
 							</DropdownMenuItem>
 
 							<DropdownMenuSeparator className="bg-gray" />
@@ -597,7 +597,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 								onClick={handleDeleteTableClick}
 							>
 								<Delete className="text-red" />
-								Eliminar
+								Delete table	
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</ManagedDropdownMenu>

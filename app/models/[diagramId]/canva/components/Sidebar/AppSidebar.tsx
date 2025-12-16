@@ -22,7 +22,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const data: Data = {
 		user: {
 			id: authUser?.id || "",
-			username: authUser?.full_name || authUser?.username || "Usuario",
+			username: authUser?.full_name || authUser?.username || "User",
 			email: authUser?.email || "",
 			is_active: authUser?.is_active || false,
 			created_at: authUser?.created_at || "",
@@ -35,12 +35,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				isActive: true,
 			},
 			{
-				title: "Consultas",
+				title: "Queries",
 				icon: <Calendar />,
 				content: <AppQueries />,
 			},
 			{
-				title: "Estadísticas",
+				title: "Statistics",
 				icon: <DataPie />,
 				content: <AppStatistics />,
 				aditionalToTitle: {

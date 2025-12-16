@@ -15,7 +15,7 @@ export const BtnNewQuery = () => {
 				className="w-full h-auto py-4 flex justify-center rounded-xl items-center border-2 border-dashed border-semilighter-gray bg-transparent text-lighter-gray"
 			>
 				<div className="py-1.5 px-5 border border-semilighter-gray bg-transparent rounded-lg text-h5 hover:bg-lighter-gray hover:text-gray cursor-pointer transition-all duration-500">
-					Agregar Consulta
+					Add Query
 				</div>
 			</button>
 

@@ -43,7 +43,7 @@ export const ModalNewQuery = ({
 	return (
 		<>
 			<Modal
-				title="Nueva Consulta"
+				title="New Query"
 				open={open}
 				setOpen={setOpen}
 				onSubmit={handleSubmit}
