@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 async function getDiagram(solutionId: string) {
 	try {
 		const data = await getAuthenticatedSolution(solutionId);
-		console.log("data", data);
 		return transformSolutionModel(data);
 	} catch (error) {
 		if (error instanceof Error) {

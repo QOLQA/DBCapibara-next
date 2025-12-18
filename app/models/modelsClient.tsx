@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut } from "lucide-react";
+import { Plus, LogOut, Trash } from "lucide-react";
 import Link from "next/link";
 import { useState, useOptimistic, useTransition } from "react";
 import AddSolutionModal from "./components/AddSolutionModal";
@@ -19,6 +19,7 @@ interface ModelProps {
 	queries: unknown;
 	_id: string;
 	src_img: string;
+	onDelete: (id: string) => void;
 }
 
 // Componente de imagen con mejor manejo de errores
@@ -72,10 +73,29 @@ const ModelImage = ({
 	);
 };
 
-const Model = ({ _id, name, src_img }: ModelProps) => {
+const Model = ({ _id, name, src_img, onDelete }: ModelProps) => {
+	const router = useRouter();
+	const handleDeleteSolution = async (
+		event: React.MouseEvent<HTMLButtonElement>,
+		id: string
+	) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		onDelete(id);
+
+		console.log("solución eliminada: ", id);
+	};
+
 	return (
 		<li className="model">
-			<Link href={`/models/${_id}/canva`} className="focus:rounded-2xl">
+			<article
+				onClick={() => {
+					console.log("clicked cuando no deberia ", _id);
+					router.push(`/models/${_id}/canva`);
+				}}
+				className="focus:rounded-2xl"
+			>
 				<div className="model__thumbnail">
 					<ModelImage
 						src={src_img}
@@ -84,29 +104,36 @@ const Model = ({ _id, name, src_img }: ModelProps) => {
 					/>
 				</div>
 				<div className="model__info">
-					<p className="text-white text-h3">{name}</p>
+					<div className="flex items-center justify-between">
+						<p className="text-white text-h3">{name}</p>
+						<button
+							className="text-white cursor-pointer hover:text-red-500"
+							onClick={(event) => handleDeleteSolution(event, _id)}
+						>
+							<Trash />
+						</button>
+					</div>
 					<p className="text-lighter-gray text-p">Editado el 24 / 10 / 24</p>
 				</div>
-			</Link>
+			</article>
 		</li>
 	);
 };
 
+type OptimisticAction =
+	| { type: "add"; solution: any }
+	| { type: "delete"; id: string };
+
 export default function ModelsClient({
-	initialModels,
+	initialSolutions,
 }: {
-	initialModels: any[];
+	initialSolutions: any[];
 }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const router = useRouter();
 	const { user, logout } = useAuth();
 	const [isPending, startTransition] = useTransition();
-
-	// Optimistic updates for models
-	const [optimisticModels, addOptimisticModel] = useOptimistic<any[], any>(
-		initialModels,
-		(state, newModel) => [...state, newModel]
-	);
+	const [solutions, setSolutions] = useState(initialSolutions);
 
 	const handleAddSolution = async (name: string) => {
 		setIsModalOpen(false);
@@ -116,13 +143,30 @@ export default function ModelsClient({
 				name: name,
 			});
 
-			console.log("Modelo creado:", data);
-
+			console.log("nueva solución creada: ", data);
 			// Navigate to the new model's canvas
 			router.push(`/models/${data._id}/canva`);
 		} catch (error) {
 			console.error("Error creating solution:", error);
 			// No rethrow - el manejo de auth está en fetchWithAuth
+		}
+	};
+
+	const handleDeleteSolution = async (id: string) => {
+		setSolutions(solutions.filter((solution) => solution._id !== id));
+
+		try {
+			await api.delete(`/solutions/${id}`);
+		} catch (error: any) {
+			if (
+				error?.message?.includes("does not exists") ||
+				error?.message?.includes("404")
+			) {
+				return;
+			}
+
+			console.error("Error deleting solution:", error);
+			router.refresh();
 		}
 	};
 
@@ -168,7 +212,7 @@ export default function ModelsClient({
 			</header>
 			<main className="bg-secondary-gray pb-36 min-h-[90vh]">
 				<div className="max-w-[1330px] mx-auto">
-					<h1 className="text-center text-white text-h2">Tus modelos</h1>
+					<h1 className="text-center text-white text-h2">Your Solutions</h1>
 					<hr className="mt-[33px] mb-20 border-gray" />
 
 					{isPending && (
@@ -178,8 +222,12 @@ export default function ModelsClient({
 					)}
 
 					<ul className="models grid grid-cols-3 gap-10">
-						{optimisticModels.map((model) => (
-							<Model {...model} key={model._id} />
+						{solutions.map((solution) => (
+							<Model
+								{...solution}
+								key={solution._id}
+								onDelete={handleDeleteSolution}
+							/>
 						))}
 					</ul>
 				</div>
