@@ -53,7 +53,7 @@ function getMaxDepth(nodes: Node<TableData>[]): number {
 	// Calculate maximum depth among all nodes
 	const depths = nodes.map((node) => calculateNestedDepth(node.data));
 
-	return Math.max(...depths);
+	return depths.reduce((sum, d) => (d > 0 ? sum + d - 1 : sum), 0);
 }
 
 function getMaxRelations(edges: Edge[]): number {
@@ -84,7 +84,7 @@ function calculateAccessPatternPure(
 	nodes: Node<TableData>[],
 	edges: Edge[]
 ): number {
-	const maxDepth = getMaxDepth(nodes) - 1;
+	const maxDepth = getMaxDepth(nodes);
 	const maxRelations = getMaxRelations(edges);
 	const accessPattern = maxDepth * 0.4 + maxRelations * 0.6;
 

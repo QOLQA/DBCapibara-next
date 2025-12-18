@@ -11,25 +11,32 @@ let lastEdgeHash: string | null = null;
  * Generates a simple hash to detect changes in data structure
  */
 function generateHash<T>(data: T[]): string {
-	return JSON.stringify(data.map(item =>
-		typeof item === 'object' && item !== null ?
-			Object.keys(item).sort().reduce((acc, key) => {
-				acc[key] = (item as any)[key];
-				return acc;
-			}, {} as any) : item
-	));
+	return JSON.stringify(
+		data.map((item) =>
+			typeof item === "object" && item !== null
+				? Object.keys(item)
+						.sort()
+						.reduce((acc, key) => {
+							acc[key] = (item as any)[key];
+							return acc;
+						}, {} as any)
+				: item
+		)
+	);
 }
 
 /**
  * Generates a specific hash for nodes excluding x,y positions
  */
 function generateNodeHashWithoutPosition(nodes: Node<TableData>[]): string {
-	return JSON.stringify(nodes.map(node => ({
-		id: node.id,
-		data: node.data,
-		type: node.type
-		// Intentionally exclude position to avoid recalculations on movement
-	})));
+	return JSON.stringify(
+		nodes.map((node) => ({
+			id: node.id,
+			data: node.data,
+			type: node.type,
+			// Intentionally exclude position to avoid recalculations on movement
+		}))
+	);
 }
 
 /**
@@ -47,13 +54,13 @@ function getAllTableNames(nodes: Node<TableData>[]): Map<string, Set<string>> {
 
 		// Process nested tables if they exist
 		if (table.nestedTables && table.nestedTables.length > 0) {
-			table.nestedTables.forEach(nestedTable => {
+			table.nestedTables.forEach((nestedTable) => {
 				extractNamesRecursively(nestedTable);
 			});
 		}
 	};
 
-	nodes.forEach(node => {
+	nodes.forEach((node) => {
 		extractNamesRecursively(node.data);
 	});
 
@@ -98,7 +105,7 @@ function addNestedRelationships(
 
 	// Process nested tables recursively
 	if (table.nestedTables && table.nestedTables.length > 0) {
-		table.nestedTables.forEach(nestedTable => {
+		table.nestedTables.forEach((nestedTable) => {
 			addNestedRelationships(graph, nestedTable, currentTableId);
 		});
 	}
@@ -107,18 +114,21 @@ function addNestedRelationships(
 /**
  * Builds a connection graph between nodes using table IDs
  */
-function buildConnectionGraph(nodes: Node<TableData>[], edges: Edge[]): Map<string, Set<string>> {
+function buildConnectionGraph(
+	nodes: Node<TableData>[],
+	edges: Edge[]
+): Map<string, Set<string>> {
 	const graph = new Map<string, Set<string>>();
 
 	// Initialize all parent nodes in the graph and add nested relationships
-	nodes.forEach(node => {
+	nodes.forEach((node) => {
 		addNestedRelationships(graph, node.data);
 	});
 
 	// Add BIDIRECTIONAL connections based on edges (edges represent relationships that can be traversed both ways)
-	edges.forEach(edge => {
-		const sourceNode = nodes.find(n => n.id === edge.source);
-		const targetNode = nodes.find(n => n.id === edge.target);
+	edges.forEach((edge) => {
+		const sourceNode = nodes.find((n) => n.id === edge.source);
+		const targetNode = nodes.find((n) => n.id === edge.target);
 
 		if (sourceNode && targetNode) {
 			const sourceId = sourceNode.data.id;
@@ -156,14 +166,14 @@ function hasPathBetweenAllTables(
 	}
 
 	// Get all possible table IDs for each collection name
-	const collectionIdSets = uniqueCollections.map(name => {
+	const collectionIdSets = uniqueCollections.map((name) => {
 		const ids = tableNamesMap.get(name);
 		if (!ids || ids.size === 0) return null;
 		return Array.from(ids);
 	});
 
 	// If any collection doesn't exist, query cannot be handled
-	if (collectionIdSets.some(ids => ids === null)) {
+	if (collectionIdSets.some((ids) => ids === null)) {
 		return false;
 	}
 
@@ -207,7 +217,11 @@ function hasPathBetweenAllTables(
 /**
  * BFS to find path between two nodes
  */
-function hasPathBFS(start: string, end: string, graph: Map<string, Set<string>>): boolean {
+function hasPathBFS(
+	start: string,
+	end: string,
+	graph: Map<string, Set<string>>
+): boolean {
 	if (start === end) return true;
 
 	const visited = new Set<string>();
@@ -242,7 +256,9 @@ function isQueryFullyHandled(
 	graph: Map<string, Set<string>>
 ): boolean {
 	// 1. Verify that all tables exist (including nested ones)
-	const allTablesExist = collections.every(collection => tableNamesMap.has(collection));
+	const allTablesExist = collections.every((collection) =>
+		tableNamesMap.has(collection)
+	);
 	if (!allTablesExist) return false;
 
 	// 2. Verify that there is a path between all tables
@@ -257,9 +273,11 @@ function getHandledQueriesCount(
 	tableNamesMap: Map<string, Set<string>>,
 	graph: Map<string, Set<string>>
 ): number {
-	return queries.filter(query =>
+	const handledQueries = queries.filter((query) =>
 		isQueryFullyHandled(query.collections, tableNamesMap, graph)
-	).length;
+	);
+	console.log("handledQueries", handledQueries);
+	return handledQueries.length;
 }
 
 /**
@@ -295,6 +313,7 @@ export function calculateHandledQueriesPercentage(
 	const graph = buildConnectionGraph(nodes, edges);
 	const totalQueries = queries.length;
 	const handledQueries = getHandledQueriesCount(queries, tableNamesMap, graph);
+	console.log("totalQueries", totalQueries, "handledQueries", handledQueries);
 
 	if (totalQueries === 0) {
 		cachedResult = 0;
