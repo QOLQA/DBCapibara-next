@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +26,7 @@ interface TableAttribute {
 interface ModalAtributesProps {
 	onSubmit: (
 		newAtributes: TableAttribute[],
-		typeModal: "create" | "update",
+		typeModal: "create" | "update"
 	) => void;
 	open: boolean;
 	setOpen: (open: boolean) => void;
@@ -35,11 +35,12 @@ interface ModalAtributesProps {
 }
 
 const types = [
-	{ value: "VARCHAR(255)", label: "VARCHAR(255)" },
-	{ value: "INT", label: "INT" },
-	{ value: "BOOLEAN", label: "BOOLEAN" },
-	{ value: "DATE", label: "DATE" },
-	{ value: "ARRAY", label: "ARRAY" },
+	{ value: "string", label: "string" },
+	{ value: "integer", label: "integer" },
+	{ value: "double", label: "double" },
+	{ value: "boolean", label: "boolean" },
+	{ value: "date", label: "date" },
+	{ value: "array", label: "array[]" },
 ];
 
 const ModalAtributes: React.FC<ModalAtributesProps> = React.memo(
@@ -69,7 +70,7 @@ const ModalAtributes: React.FC<ModalAtributesProps> = React.memo(
 				onSubmit(data.attributes, type);
 				setOpen(false);
 			},
-			[onSubmit, type, setOpen],
+			[onSubmit, type, setOpen]
 		);
 
 		const handleAppend = useCallback(() => {
@@ -85,19 +86,19 @@ const ModalAtributes: React.FC<ModalAtributesProps> = React.memo(
 			(index: number) => {
 				remove(index);
 			},
-			[remove],
+			[remove]
 		);
 
 		const handleTypeChange = useCallback(
 			(value: string, index: number) => {
 				setValue(`attributes.${index}.type`, value);
 			},
-			[setValue],
+			[setValue]
 		);
 
 		const modalTitle = useMemo(
 			() => (type === "create" ? "Agregar Atributos" : "Editar Atributos"),
-			[type],
+			[type]
 		);
 
 		useEffect(() => {
@@ -175,7 +176,7 @@ const ModalAtributes: React.FC<ModalAtributesProps> = React.memo(
 				</div>
 			</Modal>
 		);
-	},
+	}
 );
 
 export default ModalAtributes;

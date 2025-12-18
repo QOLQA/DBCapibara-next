@@ -74,8 +74,8 @@ export const uploadImage = async (
 			blob = await response.blob();
 		}
 
-		const file = new File([blob], `${solutionId}.jpg`, {
-			type: "image/jpeg",
+		const file = new File([blob], `${solutionId}.png`, {
+			type: "image/png",
 		});
 
 		const timestamp = Math.floor(Date.now() / 1000).toString();

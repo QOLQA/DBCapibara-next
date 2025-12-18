@@ -7,10 +7,10 @@ export const StatsLineTotal = ({ data }: { data: StastType[] }) => {
 	const totalValue = data.reduce((sum, stat) => sum + stat.value, 0);
 
 	return (
-		<div className="flex items-center justify-between w-full h-full">
+		<div className="flex items-center justify-between w-full h-full pr-5">
 			<LineStats data={data} />
 
-			<div className="flex flex-col items-center justify-center ">
+			<div className="flex flex-col items-center justify-center">
 				<span className="text-h2 font-bold">
 					{parseFloat(totalValue.toFixed(2))}
 				</span>

@@ -133,7 +133,9 @@ const DatabaseDiagram = () => {
 				<div className="absolute inset-0 bg-terciary-gray/80 backdrop-blur-sm z-9999 flex items-center justify-center rounded-xl">
 					<div className="flex flex-col items-center gap-4">
 						<div className="w-12 h-12 border-4 border-blue border-t-transparent rounded-full animate-spin" />
-						<p className="text-white text-lg font-medium">Cambiando versión...</p>
+						<p className="text-white text-lg font-medium">
+							Cambiando versión...
+						</p>
 					</div>
 				</div>
 			)}

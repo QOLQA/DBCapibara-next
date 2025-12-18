@@ -26,7 +26,9 @@ export const LogoWithSelect = () => {
 		useShallow(canvaSelector)
 	);
 	const Id = useCanvasStore((state) => state.id);
-	const setIsChangingVersion = useCanvasStore((state) => state.setIsChangingVersion);
+	const setIsChangingVersion = useCanvasStore(
+		(state) => state.setIsChangingVersion
+	);
 
 	const onVersionChange = async (newVersionId: string) => {
 		// Mostrar loader
@@ -43,7 +45,7 @@ export const LogoWithSelect = () => {
 		// DESPUÉS de guardar, cambiar a la nueva versión
 		const updatedVersions = useCanvasStore.getState().versions;
 		const versionIndex = updatedVersions.findIndex(
-			(version) => version._id === newVersionId,
+			(version) => version._id === newVersionId
 		);
 
 		// Cambiar UI

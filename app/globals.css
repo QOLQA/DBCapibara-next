@@ -287,6 +287,13 @@
 	border-radius: 0.75rem 0.75rem 0 0;
 }
 
+.table-header span {
+	white-space: nowrap;
+	flex-shrink: 0;
+	min-width: 0;
+	overflow: visible;
+}
+
 .table-content {
 	background-color: var(--color-secondary-gray);
 	border-radius: 0 0 0.75rem 0.75rem;
@@ -299,10 +306,17 @@
 	align-items: center;
 }
 
+.table-attribute span {
+	white-space: nowrap;
+	flex-shrink: 0;
+	min-width: 0;
+	overflow: visible;
+}
+
 .table-attributes div {
 	color: var(--color-lighter-gray);
 	display: flex;
-	gap: 0.625rem;
+	gap: 2rem;
 	align-items: center;
 }
 

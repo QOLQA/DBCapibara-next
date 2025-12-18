@@ -48,12 +48,15 @@ export function ChartBarStacked() {
 	}));
 
 	useEffect(() => {
-		const metricsData = versionData.map((version) => ({
-			schema: version.schema_name,
-			redundancy: getRedundancyMetrics(version.nodes),
-			recovery_cost: getRecoveryCost(version.nodes, version.edges),
-			access_pattern: getAccessPattern(version.nodes, version.edges),
-		}));
+		const metricsData = versionData.map((version) => {
+			console.log("version", version.schema_name);
+			return {
+				schema: version.schema_name,
+				redundancy: getRedundancyMetrics(version.nodes),
+				recovery_cost: getRecoveryCost(version.nodes, version.edges),
+				access_pattern: getAccessPattern(version.nodes, version.edges),
+			};
+		});
 		setMetricsChartData(metricsData);
 
 		const completudeData = versionData.map((version) => ({
