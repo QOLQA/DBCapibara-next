@@ -5,7 +5,10 @@
 
 import { cookies } from 'next/headers';
 
-const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
+// En producción (plataformas separadas): usa la URL pública del backend
+// En desarrollo con Docker: usa BACKEND_URL (nombre del contenedor)
+// En desarrollo sin Docker: usa localhost
+const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
 
 /**
  * Obtiene el token de autenticación de las cookies

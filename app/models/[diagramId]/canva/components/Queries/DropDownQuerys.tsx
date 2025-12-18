@@ -62,7 +62,7 @@ export const DropDownQuerys = ({ editQuery }: { editQuery: Query }) => {
 								fill="#DFDFDF"
 							/>
 						</svg>
-						Editar
+						Edit
 					</DropdownMenuItem>
 					<DropdownMenuSeparator className="bg-secondary-white" />
 					<DropdownMenuItem
@@ -83,7 +83,7 @@ export const DropDownQuerys = ({ editQuery }: { editQuery: Query }) => {
 								fill="#E93544"
 							/>
 						</svg>
-						Eliminar
+						Delete
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</ManagedDropdownMenu>

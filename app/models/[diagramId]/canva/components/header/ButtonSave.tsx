@@ -31,9 +31,6 @@ export const ButtonSave = () => {
 				console.error("Error generating image:", imageError);
 				// Si falla la subida de imagen, usar una URL placeholder o la existente
 				secureUrl = ""; // O podrías usar la URL existente del modelo
-				alert(
-					"Error to update the image. The diagram will be saved without updating the image."
-				);
 			}
 
 			// Guardar solución y canvas en paralelo
@@ -42,14 +39,8 @@ export const ButtonSave = () => {
 				saveCanvas(Id, versionId, diagram),
 			]);
 
-			alert("Saved successfully");
 		} catch (error) {
 			console.error("Error saving:", error);
-			alert(
-				`Error to save: ${
-					error instanceof Error ? error.message : "Unknown error"
-				}`
-			);
 		}
 	};
 

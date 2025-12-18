@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import type { User } from "@/hooks/use-auth";
 
 export type NavItem = {
 	title: string;
@@ -19,11 +20,6 @@ export type aditionalToTitleExpand = {
 	onClick: () => void;
 };
 
-export type User = {
-	name: string;
-	email: string;
-	avatar: string;
-};
 
 export type Data = {
 	navMain: NavItem[];
