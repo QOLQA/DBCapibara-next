@@ -1,11 +1,27 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useState, useCallback, useMemo } from "react";
+import { type Node, useReactFlow } from "@xyflow/react";
+import { useShallow } from "zustand/react/shallow";
+import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
 import type {
+	AttributeNodeProps,
 	TableData,
 	TableNodeProps,
+	Column,
 } from "../../types";
+import {
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MoreButton } from "../Diagram/MoreButton";
+// import AtributesModal from "./AtributesModal"
 import ModalDocument from "../Modals/ModalDocument";
+
+import { useCanvasStore } from "@/state/canvaStore";
+import getKeySegment from "@/lib/getKeySegment";
 import ModalAtributes from "../Modals/ModalAtributes";
 import { getSubmodelColor } from "@/lib/submodelColors";
 
@@ -165,7 +181,17 @@ const AttributeNode = React.memo(
  *
  * Props:
  * - All properties from TableNodeProps (data: TableData, id: string)
+ * - handleDeleteTable: function to handle table deletion
+ * - handleAddAtribute: function to handle attribute addition
+ * - handleAddNestedTable: function to handle nested table addition
  */
+
+interface TableAttribute {
+	id: string;
+	name: string;
+	type: string;
+	ableToEdit: boolean;
+}
 
 export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 	const { setNodes } = useReactFlow();
@@ -526,23 +552,63 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 		[data.nestedTables, id]
 	);
 
+	const headerColor = useMemo(() => {
+		const submodelIndex = data.submodelIndex ?? 0;
+		return getSubmodelColor(submodelIndex);
+	}, [data.submodelIndex]);
+
 	return (
 		<>
 			<div className="table">
-				<TableHeader
-					label={data.label}
-					submodelIndex={data.submodelIndex}
-					onEdit={handleEditTable}
-					onAddAttributes={handleAddAttributes}
-					onAddDocuments={handleAddDocuments}
-					onDelete={handleDeleteTableClick}
-				/>
+				<div
+					className="table-header text-white"
+					style={{ backgroundColor: headerColor }}
+				>
+					<span>{data.label}</span>
+
+					<ManagedDropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<MoreButton className="hover:text-lighter-gray" />
+						</DropdownMenuTrigger>
+						<DropdownMenuContent
+							className="z-50 "
+							side="right"
+							variant="menu-1"
+						>
+							<DropdownMenuItem type="normal" onClick={handleEditTable}>
+								<Edit className="text-white" />
+								Editar
+							</DropdownMenuItem>
+
+							<DropdownMenuSeparator className="bg-gray" />
+							<DropdownMenuItem type="normal" onClick={handleAddAttributes}>
+								<Plus className="text-white" />
+								Agregar atributos
+							</DropdownMenuItem>
+							<DropdownMenuSeparator className="bg-gray" />
+							<DropdownMenuItem type="normal" onClick={handleAddDocuments}>
+								<AddDocument className="text-white" />
+								Agregar documentos
+							</DropdownMenuItem>
+
+							<DropdownMenuSeparator className="bg-gray" />
+							<DropdownMenuItem
+								type="delete"
+								className="text-red"
+								onClick={handleDeleteTableClick}
+							>
+								<Delete className="text-red" />
+								Eliminar
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</ManagedDropdownMenu>
+				</div>
+				{/* table content */}
 				<div className="table-content">
-					<TableAttributes
-						columns={data.columns}
-						onEditAttribute={handleEditAtribute}
-					/>
+					{/* table attributes */}
+					<div className="table-attributes">{attributeNodes}</div>
 					{data.nestedTables && data.nestedTables.length > 0 && (
+						// table nested
 						<div className="table-nesteds">{nestedTableNodes}</div>
 					)}
 				</div>

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Modal } from "@/components/ui/modal";
 import { useState, useTransition } from "react";
@@ -35,14 +35,14 @@ const AddSolutionModal: React.FC<AddSolutionalModalProps> = ({
 			type="create"
 		>
 			<>
-				<div className="my-13 flex justify-between items-center">
-					<label htmlFor="docName" className="text-secondary-white pr-12">
-						Name
+				<div className="my-13 flex justify-between items-center gap-4">
+					<label htmlFor="docName" className="text-secondary-white shrink-0">
+						Solution Name:
 					</label>
 					<input
 						type="text"
 						id="docName"
-						className="w-120 py-3 px-5 border border-gray rounded-md bg-terciary-gray focus:ring-2 focus:outline-none"
+						className="w-full py-2 px-5 border border-gray rounded-md bg-terciary-gray focus:ring-2 focus:outline-none text-white disabled:opacity-50 disabled:cursor-not-allowed"
 						value={docName}
 						onChange={(e) => setDocName(e.target.value)}
 						disabled={isPending}
