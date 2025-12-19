@@ -12,7 +12,7 @@ interface ModalProps {
 	onSubmit?: () => void;
 	open: boolean;
 	setOpen: (open: boolean) => void;
-	type?: "create" | "update" | "next" | "save";
+	type?: "create" | "update" | "next" | "save" | "delete";
 	showCloseButton?: boolean;
 	onReturnPreviewsStep?: () => void;
 }
@@ -106,7 +106,7 @@ export const Modal = ({
 						variant={"outline"}
 						type="button"
 						onClick={handleClose}
-						className="w-[6rem] cursor-pointer text-h3 text-white bg-red border-none hover:bg-red-dark hover:text-white"
+						className="w-[6rem] cursor-pointer text-h3 text-white !bg-red border-none hover:!bg-red-dark !hover:text-white"
 					>
 						Cancelar
 					</Button>
@@ -115,7 +115,7 @@ export const Modal = ({
 						variant={"outline"}
 						type="button"
 						onClick={handleSubmit}
-						className="w-[6rem] cursor-pointer text-h3 text-white bg-green border-none hover:bg-green-dark hover:text-white"
+						className="w-[6rem] cursor-pointer text-h3 text-white !bg-green border-none hover:!bg-green-dark hover:!text-white"
 					>
 						{type === "create"
 							? "Crear"
@@ -123,6 +123,8 @@ export const Modal = ({
 							? "Actualizar"
 							: type === "next"
 							? "Siguiente"
+							: type === "delete"
+							? "Eliminar"
 							: "Guardar"}
 					</Button>
 				</div>

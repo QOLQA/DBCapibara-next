@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut, Trash } from "lucide-react";
+import { Plus, LogOut, Trash, Delete, Edit } from "lucide-react";
 import Link from "next/link";
 import { useState, useOptimistic, useTransition } from "react";
 import AddSolutionModal from "./components/AddSolutionModal";
@@ -12,6 +12,17 @@ import { api } from "@/lib/api";
 import { useAuth } from "@/hooks/use-auth";
 import { Logo } from "@/components/icons/HeaderIcons";
 import { cn } from "@/lib/utils";
+import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
+import {
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MoreButton } from "./[diagramId]/canva/components/Diagram/MoreButton";
+import DeleteSolutionModal from "./components/DeleteSolutionModal";
+import EditSolutionModal from "./components/EditSolutionModal";
+import { useModelsStore } from "@/state/modelsStore";
 
 interface ModelProps {
 	name: string;
@@ -19,7 +30,8 @@ interface ModelProps {
 	queries: unknown;
 	_id: string;
 	src_img: string;
-	onDelete: (id: string) => void;
+	requestDelete: () => void;
+	requestEdit: () => void;
 }
 
 // Componente de imagen con mejor manejo de errores
@@ -73,18 +85,35 @@ const ModelImage = ({
 	);
 };
 
-const Model = ({ _id, name, src_img, onDelete }: ModelProps) => {
+const Model = ({
+	_id,
+	name,
+	src_img,
+	requestDelete,
+	requestEdit,
+}: ModelProps) => {
 	const router = useRouter();
-	const handleDeleteSolution = async (
-		event: React.MouseEvent<HTMLButtonElement>,
+	const { setSolutionId } = useModelsStore.getState();
+	const handleRequestDeleteSolution = async (
+		event: React.MouseEvent<HTMLDivElement>,
 		id: string
 	) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		onDelete(id);
+		setSolutionId(_id);
+		requestDelete();
+	};
 
-		console.log("solución eliminada: ", id);
+	const handleRequestEditSolution = async (
+		event: React.MouseEvent<HTMLDivElement>,
+		id: string
+	) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		setSolutionId(_id);
+		requestEdit();
 	};
 
 	return (
@@ -106,12 +135,35 @@ const Model = ({ _id, name, src_img, onDelete }: ModelProps) => {
 				<div className="model__info">
 					<div className="flex items-center justify-between">
 						<p className="text-white text-h3">{name}</p>
-						<button
-							className="text-white cursor-pointer hover:text-red-500"
-							onClick={(event) => handleDeleteSolution(event, _id)}
-						>
-							<Trash />
-						</button>
+						<ManagedDropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<MoreButton className="hover:text-lighter-gray text-white" />
+							</DropdownMenuTrigger>
+							<DropdownMenuContent
+								className="z-50 "
+								side="right"
+								variant="menu-1"
+							>
+								<DropdownMenuItem
+									type="normal"
+									onClick={(event) => handleRequestEditSolution(event, _id)}
+								>
+									<Edit className="text-white" />
+									Editar
+								</DropdownMenuItem>
+
+								<DropdownMenuSeparator className="bg-gray" />
+
+								<DropdownMenuItem
+									type="delete"
+									className="text-red"
+									onClick={(event) => handleRequestDeleteSolution(event, _id)}
+								>
+									<Trash className="text-red" />
+									Eliminar
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</ManagedDropdownMenu>
 					</div>
 					<p className="text-lighter-gray text-p">Editado el 24 / 10 / 24</p>
 				</div>
@@ -129,14 +181,21 @@ export default function ModelsClient({
 }: {
 	initialSolutions: any[];
 }) {
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isAddSolutionModalOpen, setIsAddSolutionModalOpen] = useState(false);
+	const [isEditSolutionModalOpen, setIsEditSolutionModalOpen] = useState(false);
+	const [isDeleteSolutionModalOpen, setIsDeleteSolutionModalOpen] =
+		useState(false);
+
 	const router = useRouter();
 	const { user, logout } = useAuth();
+
 	const [isPending, startTransition] = useTransition();
 	const [solutions, setSolutions] = useState(initialSolutions);
 
+	const { solutionId } = useModelsStore.getState();
+
 	const handleAddSolution = async (name: string) => {
-		setIsModalOpen(false);
+		setIsAddSolutionModalOpen(false);
 
 		try {
 			const data = await api.post<SolutionModel>("/solutions", {
@@ -152,11 +211,22 @@ export default function ModelsClient({
 		}
 	};
 
-	const handleDeleteSolution = async (id: string) => {
-		setSolutions(solutions.filter((solution) => solution._id !== id));
+	const handleRequestDeleteSolution = () => {
+		setIsDeleteSolutionModalOpen(true);
+	};
+
+	const handleRequestEditSolution = () => {
+		setIsEditSolutionModalOpen(true);
+	};
+
+	const handleConfirmDeleteSolution = async () => {
+		if (!solutionId) return;
+
+		const id = solutionId;
 
 		try {
 			await api.delete(`/solutions/${id}`);
+			setSolutions(solutions.filter((solution) => solution._id !== id));
 		} catch (error: any) {
 			if (
 				error?.message?.includes("does not exists") ||
@@ -166,6 +236,27 @@ export default function ModelsClient({
 			}
 
 			console.error("Error deleting solution:", error);
+			router.refresh();
+		}
+	};
+
+	const handleEditSolution = async () => {
+		const { solutionId, solutionDataToEdit } = await useModelsStore.getState();
+		if (!solutionId) return;
+
+		try {
+			await api.patch(`/solutions/${solutionId}`, {
+				name: solutionDataToEdit?.name,
+			});
+			setSolutions(
+				solutions.map((solution) =>
+					solution._id === solutionId
+						? { ...solution, name: solutionDataToEdit?.name }
+						: solution
+				)
+			);
+		} catch (error: any) {
+			console.error("Error editing solution:", error);
 			router.refresh();
 		}
 	};
@@ -188,9 +279,9 @@ export default function ModelsClient({
 						<Button
 							type="button"
 							onClick={() => {
-								setIsModalOpen(true);
+								setIsAddSolutionModalOpen(true);
 							}}
-							className="text-white font-weight-900 cursor-pointer bg-black"
+							className="text-white font-weight-900 cursor-pointer bg-black hover:bg-primary-gray"
 						>
 							<Plus /> Nuevo Modelo
 						</Button>
@@ -226,18 +317,37 @@ export default function ModelsClient({
 							<Model
 								{...solution}
 								key={solution._id}
-								onDelete={handleDeleteSolution}
+								requestDelete={handleRequestDeleteSolution}
+								requestEdit={handleRequestEditSolution}
 							/>
 						))}
 					</ul>
 				</div>
 			</main>
 
-			{isModalOpen && (
+			{isAddSolutionModalOpen && (
 				<AddSolutionModal
-					open={isModalOpen}
-					setOpen={setIsModalOpen}
+					open={isAddSolutionModalOpen}
+					setOpen={setIsAddSolutionModalOpen}
 					onSubmit={handleAddSolution}
+				/>
+			)}
+
+			{isDeleteSolutionModalOpen && (
+				<DeleteSolutionModal
+					open={isDeleteSolutionModalOpen}
+					setOpen={setIsDeleteSolutionModalOpen}
+					onConfirm={handleConfirmDeleteSolution}
+					solutionName={solutions.find((s) => s._id === solutionId)?.name}
+				/>
+			)}
+
+			{isEditSolutionModalOpen && (
+				<EditSolutionModal
+					open={isEditSolutionModalOpen}
+					setOpen={setIsEditSolutionModalOpen}
+					onSubmit={handleEditSolution}
+					solutionNameToEdit={solutions.find((s) => s._id === solutionId)?.name}
 				/>
 			)}
 		</>
