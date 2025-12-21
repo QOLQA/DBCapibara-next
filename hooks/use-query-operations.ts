@@ -5,17 +5,6 @@ import { useCanvasStore } from "@/state/canvaStore";
 import { api } from "@/lib/api";
 import type { Query } from "@/app/models/[diagramId]/canva/types";
 
-interface QueryCreateData {
-	full_query: string;
-	collections: string[];
-	solution_id: string;
-}
-
-interface QueryUpdateData {
-	full_query?: string;
-	collections?: string[];
-}
-
 /**
  * Hook para manejar operaciones CRUD de queries con optimistic updates
  * Actualiza primero el estado local (para UI fluida) y luego sincroniza con el backend
@@ -36,19 +25,18 @@ export const useQueryOperations = () => {
 	 * 4. Revierte si falla
 	 */
 	const createQuery = useCallback(
-		async (queryData: Omit<Query, "id">, tempId: string) => {
+		async (queryData: Omit<Query, "_id">, tempId: string) => {
 			// Optimistic update - agregar inmediatamente al store
 			const optimisticQuery: Query = {
-				id: tempId,
+				_id: tempId,
 				...queryData,
 			};
 			addQueryToStore(optimisticQuery);
 
 			try {
 				// Sincronizar con backend
-				const createData: QueryCreateData = {
-					full_query: queryData.full_query,
-					collections: queryData.collections,
+				const createData: Omit<Query, "_id"> & { solution_id: string } = {
+					...queryData,
 					solution_id: solutionId,
 				};
 
@@ -77,10 +65,10 @@ export const useQueryOperations = () => {
 	 * 4. Revierte si falla
 	 */
 	const updateQuery = useCallback(
-		async (queryId: string, updates: QueryUpdateData) => {
+		async (queryId: string, updates: Partial<Omit<Query, "_id">>) => {
 			// Obtener query actual para rollback si falla
 			const { queries } = useCanvasStore.getState();
-			const originalQuery = queries.find((q) => q.id === queryId);
+			const originalQuery = queries.find((q) => q._id === queryId);
 
 			if (!originalQuery) {
 				console.error("❌ Query not found");
@@ -127,7 +115,7 @@ export const useQueryOperations = () => {
 		async (queryId: string) => {
 			// Obtener query para rollback si falla
 			const { queries } = useCanvasStore.getState();
-			const queryToDelete = queries.find((q) => q.id === queryId);
+			const queryToDelete = queries.find((q) => q._id === queryId);
 
 			if (!queryToDelete) {
 				console.error("❌ Query not found");

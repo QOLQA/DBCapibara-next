@@ -42,6 +42,7 @@ export const ModalSelectDocs = ({
 	// Use custom hook for table selection logic
 	const {
 		selectedTables,
+		highlightedWords,
 		error,
 		words,
 		addTable,
@@ -76,13 +77,15 @@ export const ModalSelectDocs = ({
 					{
 						full_query: queryText,
 						collections: selectedTables,
+						highlighted_words: highlightedWords,
 					},
 					tempId
 				);
 			} else if (queryEdit) {
-				await updateQuery(queryEdit.id, {
+				await updateQuery(queryEdit._id, {
 					full_query: queryText,
 					collections: selectedTables,
+					highlighted_words: highlightedWords,
 				});
 			}
 

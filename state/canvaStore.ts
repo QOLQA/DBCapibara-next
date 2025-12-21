@@ -122,7 +122,7 @@ export const useCanvasStore = create<CanvasState>()(
 			editQuery: (queryId, newQuery) => {
 				set((state) => {
 					const index = state.queries.findIndex(
-						(query) => query.id === queryId
+						(query) => query._id === queryId
 					);
 					if (index !== -1) {
 						state.queries[index] = newQuery;
@@ -141,7 +141,7 @@ export const useCanvasStore = create<CanvasState>()(
 			},
 			removeQuery: (queryId) => {
 				set((state) => {
-					state.queries = state.queries.filter((q) => q.id !== queryId);
+					state.queries = state.queries.filter((q) => q._id !== queryId);
 				});
 			},
 			onNodesChange: (changes: NodeChange<Node<TableData>>[]) => {

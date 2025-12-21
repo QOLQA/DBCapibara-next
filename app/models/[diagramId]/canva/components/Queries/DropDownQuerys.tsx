@@ -20,7 +20,7 @@ export const DropDownQuerys = ({ editQuery }: { editQuery: Query }) => {
 
 	const handleDelete = async () => {
 		try {
-			await deleteQuery(editQuery.id);
+			await deleteQuery(editQuery._id);
 		} catch (error) {
 			console.error("Error deleting query:", error);
 		}
