@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut, Trash, Delete, Edit } from "lucide-react";
+import { Plus, LogOut, Trash, Edit } from "lucide-react";
 import Link from "next/link";
-import { useState, useOptimistic, useTransition } from "react";
+import { useState, useTransition } from "react";
 import AddSolutionModal from "./components/AddSolutionModal";
 import type { SolutionModel } from "./[diagramId]/canva/types";
 import { useRouter } from "next/navigation";
