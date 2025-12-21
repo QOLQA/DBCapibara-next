@@ -24,8 +24,15 @@ export const ModalNewQuery = ({
 }: ModalProps) => {
 	const [showSelectDocs, setShowSelectDocs] = useState(false);
 	const [isPending, startTransition] = useTransition();
+	const [error, setError] = useState(false);
 
 	const handleSubmit = () => {
+		if (!queryText.trim()) {
+			setError(true);
+			return;
+		}
+
+		setError(false);
 		startTransition(() => {
 			setOpen(false);
 			setShowSelectDocs(true);
@@ -38,6 +45,7 @@ export const ModalNewQuery = ({
 		} else {
 			setQueryText("");
 		}
+		setError(false);
 	}, [queryEdit, mode, setQueryText]);
 
 	return (
@@ -61,11 +69,19 @@ export const ModalNewQuery = ({
 							placeholder="Escribe tu consulta"
 							id="docName"
 							value={queryText}
-							onChange={(e) => setQueryText(e.target.value)}
+							onChange={(e) => {
+								setQueryText(e.target.value);
+								if (error) setError(false);
+							}}
 							disabled={isPending}
 							className="text-h4 w-full h-36 py-3 px-5 border border-gray rounded-md bg-terciary-gray focus:outline-none text-white placeholder:text-lighter-gray disabled:opacity-50 disabled:cursor-not-allowed"
 						/>
 					</div>
+					{error && (
+						<p className="text-red-500 mt-2 text-sm">
+							Debes escribir una consulta antes de continuar.
+						</p>
+					)}
 					{isPending && (
 						<div className="text-center text-sm text-gray-400">
 							Procesando...
