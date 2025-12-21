@@ -1,16 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
-import { ArrowLeft } from "lucide-react";
 import { useCanvasStore } from "@/state/canvaStore";
 import { useUniqueId } from "@/hooks/use-unique-id";
 import { getUniqueTableNames } from "@/lib/getHandledQueries";
 import { useTableSelection } from "@/hooks/use-table-selection";
+import { useQueryOperations } from "@/hooks/use-query-operations";
 import { WordToggleButtons } from "./WordToggleButtons";
 import { SelectedTablesList } from "./SelectedTablesList";
 import { AddDocumentSection } from "./AddDocumentSection";
 import type { Query } from "../../types";
+import { useState } from "react";
 
 type ModalProps = {
 	open: boolean;
@@ -31,8 +31,10 @@ export const ModalSelectDocs = ({
 	setQueryText,
 	onReturn,
 }: ModalProps) => {
-	const { addQuery, editQuery, nodes } = useCanvasStore();
+	const { nodes } = useCanvasStore();
 	const generateId = useUniqueId();
+	const { createQuery, updateQuery } = useQueryOperations();
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	// Get all available table names from nodes
 	const availableTableNames = getUniqueTableNames(nodes);
@@ -60,22 +62,36 @@ export const ModalSelectDocs = ({
 		onReturn();
 	};
 
-	const handleSubmitQuery = () => {
-		if (!queryText.trim() || !validateSelection()) {
+	const handleSubmitQuery = async () => {
+		if (!queryText.trim() || !validateSelection() || isSubmitting) {
 			return;
 		}
 
-		const queryData = {
-			id: mode === "create" ? generateId() : queryEdit?.id || "",
-			full_query: queryText,
-			collections: selectedTables,
-		};
+		setIsSubmitting(true);
 
-		mode === "create"
-			? addQuery(queryData)
-			: editQuery(queryData.id, queryData);
+		try {
+			if (mode === "create") {
+				const tempId = generateId();
+				await createQuery(
+					{
+						full_query: queryText,
+						collections: selectedTables,
+					},
+					tempId
+				);
+			} else if (queryEdit) {
+				await updateQuery(queryEdit.id, {
+					full_query: queryText,
+					collections: selectedTables,
+				});
+			}
 
-		handleClose();
+			handleClose();
+		} catch (error) {
+			console.error("Error submitting query:", error);
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
@@ -120,6 +136,12 @@ export const ModalSelectDocs = ({
 					{error && (
 						<p className="text-red-500 mt-4 text-sm">
 							You must select at least one table and write a query.
+						</p>
+					)}
+
+					{isSubmitting && (
+						<p className="text-blue-500 mt-4 text-sm">
+							Saving query...
 						</p>
 					)}
 				</div>
