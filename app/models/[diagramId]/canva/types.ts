@@ -27,9 +27,10 @@ export interface TableNodeProps {
 }
 
 export interface Query {
-	id: string;
+	_id: string;
 	full_query: string;
 	collections: string[];
+	highlighted_words: string[];
 }
 
 export interface NodeBackend {
@@ -74,7 +75,6 @@ export interface SolutionModel {
 	name: string;
 	versions: VersionBackend[];
 	last_version_saved: string;
-	queries: Query[]
 	src_img: string;
 }
 
