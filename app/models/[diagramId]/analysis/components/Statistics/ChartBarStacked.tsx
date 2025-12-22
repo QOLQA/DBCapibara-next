@@ -39,7 +39,6 @@ export function ChartBarStacked() {
 	const [completudeChartData, setCompletudeChartData] = useState<any[]>([]);
 	const [selectedSchemas, setSelectedSchemas] = useState<string[]>([]);
 
-	console.log("versions", versions);
 
 	const versionData = versions.map((version) => ({
 		schema_name: version.description,
@@ -49,7 +48,6 @@ export function ChartBarStacked() {
 
 	useEffect(() => {
 		const metricsData = versionData.map((version) => {
-			console.log("version", version.schema_name);
 			return {
 				schema: version.schema_name,
 				redundancy: getRedundancyMetrics(version.nodes),

@@ -45,7 +45,6 @@ export const useQueryOperations = () => {
 				// Actualizar con el ID real del backend
 				editQueryInStore(tempId, createdQuery);
 
-				console.log("✅ Query created successfully");
 				return createdQuery;
 			} catch (error) {
 				// Revertir el optimistic update si falla
@@ -92,7 +91,6 @@ export const useQueryOperations = () => {
 				// Actualizar con datos del backend por si hay diferencias
 				editQueryInStore(queryId, backendQuery);
 
-				console.log("✅ Query updated successfully");
 				return backendQuery;
 			} catch (error) {
 				// Revertir al estado original si falla
@@ -129,7 +127,6 @@ export const useQueryOperations = () => {
 				// Sincronizar con backend
 				await api.delete(`/queries/${queryId}`);
 
-				console.log("✅ Query deleted successfully");
 			} catch (error) {
 				// Revertir - restaurar la query si falla
 				addQueryToStore(queryToDelete);

@@ -122,7 +122,6 @@ const Model = ({
 		<li className="model">
 			<article
 				onClick={() => {
-					console.log("clicked cuando no deberia ", _id);
 					router.push(`/models/${_id}/canva`);
 				}}
 				className="focus:rounded-2xl"
@@ -203,7 +202,6 @@ export default function ModelsClient({
 				name: name,
 			});
 
-			console.log("nueva solución creada: ", data);
 			// Navigate to the new model's canvas
 			router.push(`/models/${data._id}/canva`);
 		} catch (error) {
