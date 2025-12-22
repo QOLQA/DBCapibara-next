@@ -1,15 +1,17 @@
 'use client';
 
-import { useState, useEffect, useActionState, useOptimistic, Suspense } from 'react';
+import { useState, useEffect, useOptimistic, Suspense } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createLoginAction, createRegisterAction } from './lib/actions';
 import { StatusMessages } from './components/StatusMessages';
 import { AuthToggle } from './components/AuthToggle';
 import { LoginForm } from './components/LoginForm';
+import type { LoginFormData, RegisterFormData } from './lib/validation';
 
 function LoginContent() {
 	const [isSignUp, setIsSignUp] = useState(false);
+	const [serverError, setServerError] = useState<string | null>(null);
 	const { login, register, isAuthenticated } = useAuth();
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -30,12 +32,18 @@ function LoginContent() {
 	const loginAction = createLoginAction(login, setOptimisticState, handleSuccess);
 	const registerAction = createRegisterAction(register, setOptimisticState, handleSuccess);
 
-	const [loginErrors, loginFormAction] = useActionState(loginAction, null);
-	const [registerErrors, registerFormAction] = useActionState(registerAction, null);
+	// Handler para el submit del formulario
+	const handleFormSubmit = async (data: LoginFormData | RegisterFormData) => {
+		setServerError(null);
 
-	// Estado actual dependiendo del modo
-	const currentErrors = isSignUp ? registerErrors : loginErrors;
-	const currentAction = isSignUp ? registerFormAction : loginFormAction;
+		const error = isSignUp
+			? await registerAction(data as RegisterFormData)
+			: await loginAction(data as LoginFormData);
+
+		if (error) {
+			setServerError(error);
+		}
+	};
 
 	// Redirigir si ya está autenticado
 	useEffect(() => {
@@ -44,6 +52,14 @@ function LoginContent() {
 			router.push(redirect);
 		}
 	}, [isAuthenticated, router, searchParams]);
+
+	// Limpiar error del servidor cuando cambia el modo
+	useEffect(() => {
+		setServerError(null);
+	}, [isSignUp]);
+
+	// Convertir error del servidor a formato de array para StatusMessages
+	const currentErrors = serverError ? [serverError] : null;
 
 	return (
 		<div className="min-h-screen bg-primary-gray flex items-center justify-center p-4 transition-colors duration-300">
@@ -65,7 +81,11 @@ function LoginContent() {
 					</div>
 
 					<StatusMessages errors={currentErrors} optimisticState={optimisticState} />
-					<LoginForm isSignUp={isSignUp} action={currentAction} />
+					<LoginForm
+						isSignUp={isSignUp}
+						onSubmit={handleFormSubmit}
+						isSubmitting={optimisticState.status === 'submitting'}
+					/>
 
 					{/* Footer */}
 					<div className="mt-6 text-center transition-all duration-300">
