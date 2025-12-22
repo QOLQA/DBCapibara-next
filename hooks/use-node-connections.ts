@@ -298,7 +298,7 @@ export const useTableConnections = ({
 					);
 				});
 
-				let submodelIndex = getNextAvailableSubmodelIndex(updatedNodes);
+				let submodelIndex = getNextAvailableSubmodelIndex(updatedNodes) - 1;
 				for (const node of nodesToUpdate) {
 					await updateSubmodelIndexInNodes(
 						updatedNodes,

@@ -31,6 +31,7 @@ import {
 	Edit,
 	Plus,
 } from "@/components/icons/TableOptionsIcons";
+import { useTableConnections } from "@/hooks/use-node-connections";
 
 const AttributeNode = React.memo(
 	({ column, columnId, handleEdit }: AttributeNodeProps) => {
@@ -40,7 +41,6 @@ const AttributeNode = React.memo(
 				editNode: state.editNode,
 			}))
 		);
-
 		const handleDeleteAttribute = useCallback(
 			(column: Column) => {
 				const numLayers = columnId.split("-").length;
@@ -114,6 +114,7 @@ const AttributeNode = React.memo(
 		const handleDeleteClick = useCallback(() => {
 			handleDeleteAttribute(column);
 		}, [handleDeleteAttribute, column]);
+
 		const handleMoreClick = useCallback((e: React.MouseEvent) => {
 			e.stopPropagation();
 		}, []);
@@ -207,13 +208,24 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 		[]
 	);
 
-	const { nodes, editNode, removeNode } = useCanvasStore(
+	const { nodes, editNode, edges, setEdges, removeNode } = useCanvasStore(
 		useShallow((state) => ({
 			nodes: state.nodes,
 			editNode: state.editNode,
+			edges: state.edges,
+			setEdges: state.setEdges,
 			removeNode: state.removeNode,
 		}))
 	);
+
+	// Hook to handle the connection deletion
+	const { handleNodeRemove } = useTableConnections({
+		nodes,
+		edges,
+		editNode,
+		addEdge: () => {}, // No se usa aquí
+		setEdges,
+	});
 
 	const generateRandomId = useCallback(() => {
 		const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -517,6 +529,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 
 	const handleDeleteTableClick = useCallback(() => {
 		handleDeleteTable(data.id as string);
+		handleNodeRemove(data.id as string, nodes);
 	}, [handleDeleteTable, data.id]);
 
 	const handleCloseDocumentModal = useCallback(() => {
