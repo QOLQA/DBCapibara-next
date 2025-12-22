@@ -276,7 +276,6 @@ function getHandledQueriesCount(
 	const handledQueries = queries.filter((query) =>
 		isQueryFullyHandled(query.collections, tableNamesMap, graph)
 	);
-	console.log("handledQueries", handledQueries);
 	return handledQueries.length;
 }
 
@@ -313,7 +312,6 @@ export function calculateHandledQueriesPercentage(
 	const graph = buildConnectionGraph(nodes, edges);
 	const totalQueries = queries.length;
 	const handledQueries = getHandledQueriesCount(queries, tableNamesMap, graph);
-	console.log("totalQueries", totalQueries, "handledQueries", handledQueries);
 
 	if (totalQueries === 0) {
 		cachedResult = 0;

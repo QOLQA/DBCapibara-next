@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut, Trash, Delete, Edit } from "lucide-react";
+import { Plus, LogOut, Trash, Edit } from "lucide-react";
 import Link from "next/link";
-import { useState, useOptimistic, useTransition } from "react";
+import { useState, useTransition } from "react";
 import AddSolutionModal from "./components/AddSolutionModal";
 import type { SolutionModel } from "./[diagramId]/canva/types";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,7 @@ interface ModelProps {
 	queries: unknown;
 	_id: string;
 	src_img: string;
+	last_updated_at?: string;
 	requestDelete: () => void;
 	requestEdit: () => void;
 }
@@ -89,6 +90,7 @@ const Model = ({
 	_id,
 	name,
 	src_img,
+	last_updated_at,
 	requestDelete,
 	requestEdit,
 }: ModelProps) => {
@@ -120,7 +122,6 @@ const Model = ({
 		<li className="model">
 			<article
 				onClick={() => {
-					console.log("clicked cuando no deberia ", _id);
 					router.push(`/models/${_id}/canva`);
 				}}
 				className="focus:rounded-2xl"
@@ -165,16 +166,15 @@ const Model = ({
 							</DropdownMenuContent>
 						</ManagedDropdownMenu>
 					</div>
-					<p className="text-lighter-gray text-p">Editado el 24 / 10 / 24</p>
+					<p className="text-lighter-gray text-p">
+						Last edited {new Date(last_updated_at || new Date()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+					</p>
 				</div>
 			</article>
 		</li>
 	);
 };
 
-type OptimisticAction =
-	| { type: "add"; solution: any }
-	| { type: "delete"; id: string };
 
 export default function ModelsClient({
 	initialSolutions,
@@ -202,7 +202,6 @@ export default function ModelsClient({
 				name: name,
 			});
 
-			console.log("nueva solución creada: ", data);
 			// Navigate to the new model's canvas
 			router.push(`/models/${data._id}/canva`);
 		} catch (error) {
