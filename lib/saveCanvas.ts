@@ -75,7 +75,6 @@ export const saveCanvas = async (
 
 			// Verificar si ya se guardó esta versión exacta
 			if (lastSavedHash.get(versionKey) === currentHash) {
-				console.log("No hay cambios para guardar, omitiendo guardado");
 				return; // No hay cambios, omitir guardado
 			}
 

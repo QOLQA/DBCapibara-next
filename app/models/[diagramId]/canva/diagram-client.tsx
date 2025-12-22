@@ -12,7 +12,6 @@ interface DiagramClientProps {
 		versions: VersionFrontend[];
 		solutionId: string;
 		last_version_saved: string;
-		queries: any[];
 	};
 }
 
@@ -23,7 +22,6 @@ export default function DiagramClient({ loaderData }: DiagramClientProps) {
 		id,
 		setNodes,
 		setEdges,
-		setQueries,
 		setId,
 		setVersions,
 		setSelectedVersionId,
@@ -42,7 +40,6 @@ export default function DiagramClient({ loaderData }: DiagramClientProps) {
 			setId(loaderData.solutionId);
 			setNodes(loaderData.versions[versionId].nodes);
 			setEdges(loaderData.versions[versionId].edges);
-			setQueries(loaderData.queries);
 			setVersions(loaderData.versions);
 			setSelectedVersionId(loaderData.versions[versionId]._id);
 		}

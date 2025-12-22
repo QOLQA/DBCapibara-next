@@ -11,16 +11,19 @@ import { MoreButton } from "../Diagram/MoreButton";
 import { useState } from "react";
 import { ModalNewQuery } from "./ModalNewQuery";
 import type { Query } from "../../types";
-import { useCanvasStore } from "@/state/canvaStore";
+import { useQueryOperations } from "@/hooks/use-query-operations";
 
 export const DropDownQuerys = ({ editQuery }: { editQuery: Query }) => {
 	const [open, setOpen] = useState(false);
 	const [queryText, setQueryText] = useState("");
+	const { deleteQuery } = useQueryOperations();
 
-	const deleteQuery = useCanvasStore((state) => state.removeQuery);
-
-	const handleDelete = () => {
-		deleteQuery(editQuery.id);
+	const handleDelete = async () => {
+		try {
+			await deleteQuery(editQuery._id);
+		} catch (error) {
+			console.error("Error deleting query:", error);
+		}
 	};
 
 	const handleEdit = () => {

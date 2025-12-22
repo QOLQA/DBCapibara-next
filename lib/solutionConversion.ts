@@ -21,7 +21,6 @@ export function transformSolutionModel(solution: SolutionModel): {
 	versions: VersionFrontend[];
 	solutionId: string;
 	last_version_saved: string;
-	queries: Query[];
 } {
 	/**
 	 * Maps a NodeBackend or NestedNode to a Node<TableData> object.
@@ -85,6 +84,5 @@ export function transformSolutionModel(solution: SolutionModel): {
 		versions: versions,
 		solutionId: solution._id,
 		last_version_saved: solution.last_version_saved,
-		queries: solution.queries,
 	};
 }
