@@ -3,6 +3,7 @@ import "./globals.css";
 import { DropdownProvider } from "@/contexts/dropdown-context";
 import { AuthProvider } from "@/contexts/auth-context";
 import { AuthTokenSync } from "@/components/authTokenSync";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
 	title: "DBCapibara - Database Modeling Tool",
@@ -21,6 +22,7 @@ export default function RootLayout({
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			</head>
 			<body className="font-OpenSans">
+				<Toaster position="top-center" />
 				<AuthProvider>
 					<AuthTokenSync />
 					<DropdownProvider>{children}</DropdownProvider>

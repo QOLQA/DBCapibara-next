@@ -93,7 +93,7 @@ export const useCanvasStore = create<CanvasState>()(
 				});
 			},
 			getQueryById: (queryId) => {
-				const query = get().queries.find((q) => q.id === queryId);
+				const query = get().queries.find((q) => q._id === queryId);
 				return query;
 			},
 			addNode: (node) => {

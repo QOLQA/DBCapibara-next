@@ -387,6 +387,59 @@ div.customHandle {
 	opacity: 0;
 }
 
+/* Estilos mejorados para los handles de conexión */
+.react-flow__handle {
+	cursor: crosshair;
+	z-index: 10;
+	transition: all 0.2s ease;
+}
+
+.custom-handle {
+	transition: all 0.2s ease;
+}
+
+.custom-handle:hover {
+	background: #0052cc !important;
+	border-color: #0052cc !important;
+	transform: scale(1.2);
+	box-shadow: 0 0 0 4px rgba(0, 82, 204, 0.2);
+}
+
+/* Handle target invisible pero funcional - distribuidos a lo largo de toda la altura */
+/* .custom-handle-target {
+	opacity: 0 !important;
+	pointer-events: all !important;
+	width: 30px !important;
+	height: 30px !important;
+} */
+
+/* .custom-handle-target:hover {
+	opacity: 0 !important;
+} */
+
+/* .react-flow__handle.connecting {
+	background: #0052cc !important;
+	border-color: #0052cc !important;
+	box-shadow: 0 0 0 4px rgba(0, 82, 204, 0.3);
+	transform: scale(1.2);
+} */
+
+/* Estilos para las edges punteadas */
+.react-flow__edge-path {
+	stroke-dasharray: 8, 4;
+	stroke-width: 2;
+	transition: stroke 0.2s ease;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+	stroke: #0052cc;
+	stroke-width: 2.5;
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+	stroke: #0052cc;
+}
+
 .controls-with-buttons button {
 	background-color: var(--color-primary-gray);
 	border: none;
