@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useOptimistic, Suspense } from 'react';
+import { useState, useEffect, useOptimistic, Suspense, startTransition } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createLoginAction, createRegisterAction } from './lib/actions';
@@ -36,13 +36,15 @@ function LoginContent() {
 	const handleFormSubmit = async (data: LoginFormData | RegisterFormData) => {
 		setServerError(null);
 
-		const error = isSignUp
-			? await registerAction(data as RegisterFormData)
-			: await loginAction(data as LoginFormData);
+		startTransition(async () => {
+			const error = isSignUp
+				? await registerAction(data as RegisterFormData)
+				: await loginAction(data as LoginFormData);
 
-		if (error) {
-			setServerError(error);
-		}
+			if (error) {
+				setServerError(error);
+			}
+		});
 	};
 
 	// Redirigir si ya está autenticado
