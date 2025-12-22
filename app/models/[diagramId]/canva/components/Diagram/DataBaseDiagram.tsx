@@ -8,7 +8,7 @@ import {
 	MiniMap,
 	MarkerType,
 } from "@xyflow/react";
-import type { Node, EdgeChange } from "@xyflow/react";
+import type { Node, EdgeChange, NodeChange } from "@xyflow/react";
 import type { TableData } from "../../types";
 
 import { nodeTypes } from "../Table/TableNode";
@@ -48,9 +48,6 @@ const DatabaseDiagram = () => {
 		useShallow(canvaSelector)
 	);
 
-	console.log("nodes: ", nodes);
-	console.log("edges: ", edges);
-
 	const isChangingVersion = useCanvasStore((state) => state.isChangingVersion);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,7 +66,7 @@ const DatabaseDiagram = () => {
 		[nodes, edges, editNode, addEdge, setEdges]
 	);
 
-	const { handleConnect, handleDisconnect } =
+	const { handleConnect, handleDisconnect, handleNodeRemove } =
 		useTableConnections(connectionConfig);
 
 	const handleAddDocument = useCallback(
@@ -126,12 +123,24 @@ const DatabaseDiagram = () => {
 		[onEdgesChange, handleDisconnect]
 	);
 
+	const handleNodesChange = useCallback(
+		(changes: NodeChange<Node<TableData>>[]) => {
+			changes.forEach((change) => {
+				if (change.type === "remove") {
+					handleNodeRemove(change.id, nodes);
+				}
+			});
+			onNodesChange(changes);
+		},
+		[onNodesChange, handleNodeRemove, nodes]
+	);
+
 	const reactFlowProps = useMemo(
 		() => ({
 			nodes,
 			edges,
-			onNodesChange,
 			onEdgesChange: handleEdgesChange,
+			onNodesChange: handleNodesChange,
 			nodeTypes,
 			edgeTypes,
 			onConnect: handleConnect,

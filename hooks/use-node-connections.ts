@@ -221,8 +221,6 @@ export const useTableConnections = ({
 			updatedTargetNode.data.columns = updatedTargetNode.data.columns.filter(
 				(col) => col.id !== `e-${targetNode.id}-${sourceNode.id}`
 			);
-			console.log("targetNode antes de editar: ", targetNode);
-			console.log("updatedTargetNode despues de editar: ", updatedTargetNode);
 
 			editNode(targetNode.id, updatedTargetNode);
 
@@ -231,9 +229,7 @@ export const useTableConnections = ({
 			);
 
 			const submodelIndex = getNextAvailableSubmodelIndex(updatedNodes);
-			console.log("submodelIndex: ", submodelIndex);
 			const graph = buildGraph(filteredEdges);
-			console.log("graph: ", graph);
 			updateSubmodelIndexInNodes(
 				updatedNodes,
 				submodelIndex,
@@ -241,11 +237,82 @@ export const useTableConnections = ({
 				targetNode.id,
 				editNode
 			);
-
-			console.log("nodes en useTableConnections: ", nodes);
 		},
 		[edges, nodes, editNode]
 	);
 
-	return { handleConnect, handleDisconnect };
+	// Handle node deletion
+	const handleNodeRemove = useCallback(
+		async (nodeId: string, nodes: Node<TableData>[]) => {
+			const nodeToRemove = nodes.find((node) => node.id === nodeId);
+			if (!nodeToRemove) return;
+
+			// Encontrar todos los edges conectados al nodo que se va a eliminar
+			const connectedEdges = edges.filter(
+				(edge) => edge.source === nodeId || edge.target === nodeId
+			);
+
+			// Eliminar todos los edges conectados
+			const filteredEdges = edges.filter(
+				(edge) => edge.source !== nodeId && edge.target !== nodeId
+			);
+			setEdges(filteredEdges);
+
+			// Para cada edge conectado, eliminar las foreign keys de los nodos afectados
+			for (const edge of connectedEdges) {
+				const otherNodeId = edge.source === nodeId ? edge.target : edge.source;
+				const otherNode = nodes.find((node) => node.id === otherNodeId);
+
+				if (otherNode) {
+					// Eliminar la foreign key que referencia al nodo eliminado
+					const updatedNode = structuredClone(otherNode);
+					updatedNode.data.columns = updatedNode.data.columns.filter(
+						(col) => col.id !== `e-${otherNode.id}-${nodeId}`
+					);
+
+					editNode(otherNode.id, updatedNode);
+				}
+			}
+
+			// Actualizar submodelIndex de los nodos restantes
+			const remainingNodes = nodes.filter((node) => node.id !== nodeId);
+			const updatedNodes = remainingNodes.map((node) => {
+				// Actualizar las columnas que puedan tener referencias al nodo eliminado
+				const updatedNode = structuredClone(node);
+				updatedNode.data.columns = updatedNode.data.columns.filter(
+					(col) => !col.id.includes(`-${nodeId}`)
+				);
+				return updatedNode;
+			});
+
+			// Recalcular submodelIndex usando el grafo actualizado
+			const graph = buildGraph(filteredEdges);
+
+			// Si hay nodos restantes, actualizar sus submodelIndex
+			if (updatedNodes.length > 0) {
+				// Encontrar nodos que necesitan actualización de submodelIndex
+				const nodesToUpdate = updatedNodes.filter((node) => {
+					// Si el nodo tenía conexiones con el nodo eliminado, necesita recalcular
+					return connectedEdges.some(
+						(edge) => edge.source === node.id || edge.target === node.id
+					);
+				});
+
+				let submodelIndex = getNextAvailableSubmodelIndex(updatedNodes);
+				for (const node of nodesToUpdate) {
+					await updateSubmodelIndexInNodes(
+						updatedNodes,
+						submodelIndex,
+						graph,
+						node.id,
+						editNode
+					);
+					submodelIndex = submodelIndex + 1;
+				}
+			}
+		},
+		[edges, nodes, editNode, setEdges]
+	);
+
+	return { handleConnect, handleDisconnect, handleNodeRemove };
 };
