@@ -172,9 +172,6 @@ const Model = ({
 	);
 };
 
-type OptimisticAction =
-	| { type: "add"; solution: any }
-	| { type: "delete"; id: string };
 
 export default function ModelsClient({
 	initialSolutions,
