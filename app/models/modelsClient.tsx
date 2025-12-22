@@ -30,6 +30,7 @@ interface ModelProps {
 	queries: unknown;
 	_id: string;
 	src_img: string;
+	last_updated_at?: string;
 	requestDelete: () => void;
 	requestEdit: () => void;
 }
@@ -89,6 +90,7 @@ const Model = ({
 	_id,
 	name,
 	src_img,
+	last_updated_at,
 	requestDelete,
 	requestEdit,
 }: ModelProps) => {
@@ -165,7 +167,9 @@ const Model = ({
 							</DropdownMenuContent>
 						</ManagedDropdownMenu>
 					</div>
-					<p className="text-lighter-gray text-p">Editado el 24 / 10 / 24</p>
+					<p className="text-lighter-gray text-p">
+						Last edited {new Date(last_updated_at || new Date()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+					</p>
 				</div>
 			</article>
 		</li>

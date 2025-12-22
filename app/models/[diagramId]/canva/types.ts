@@ -76,6 +76,7 @@ export interface SolutionModel {
 	versions: VersionBackend[];
 	last_version_saved: string;
 	src_img: string;
+	last_updated_at?: string;
 }
 
 export interface VersionFrontend {
