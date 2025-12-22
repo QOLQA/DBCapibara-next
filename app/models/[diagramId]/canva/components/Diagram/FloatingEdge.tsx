@@ -1,11 +1,11 @@
 'use client'
 
-import { BaseEdge, getStraightPath, useInternalNode } from "@xyflow/react";
+import { BaseEdge, getSmoothStepPath, useInternalNode } from "@xyflow/react";
 import type { EdgeProps } from "@xyflow/react";
 import { getEdgeParams } from "@/lib/edges";
 
 /**
- * FloatingEdge is a custom edge component for React Flow that renders a straight edge between two nodes.
+ * FloatingEdge is a custom edge component for React Flow that renders a step edge with 90-degree angles between two nodes.
  * @param id - The unique edge id
  * @param source - The id of the source node
  * @param target - The id of the target node
@@ -28,11 +28,14 @@ export function FloatingEdge({
 
 	const { sx, sy, tx, ty } = getEdgeParams(sourceNode, targetNode);
 
-	const [path] = getStraightPath({
+	// Usar getSmoothStepPath para crear una ruta con ángulos de 90 grados
+	// borderRadius: 0 para esquinas completamente rectas
+	const [path] = getSmoothStepPath({
 		sourceX: sx,
 		sourceY: sy,
 		targetX: tx,
 		targetY: ty,
+		borderRadius: 0, // Esquinas completamente rectas (90 grados)
 	});
 
 	return (
@@ -41,7 +44,12 @@ export function FloatingEdge({
 			className="react-flow__edge-path"
 			path={path}
 			markerEnd={markerEnd}
-			style={style}
+			style={{
+				...style,
+				strokeDasharray: "8, 4",
+				strokeWidth: 2,
+				stroke: "#4e4e4e",
+			}}
 		/>
 	);
 }

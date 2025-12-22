@@ -25,13 +25,19 @@ import { getNextAvailableSubmodelIndex } from "@/hooks/use-node-connections";
 
 const connectionLineStyle = {
 	stroke: "#4E4E4E",
-	strokeWidth: 3,
+	strokeWidth: 2,
+	strokeDasharray: "8, 4",
 };
 
 const defaultEdgeOptions = {
 	type: "floating",
 	style: connectionLineStyle,
-	markerEnd: { type: MarkerType.ArrowClosed },
+	markerEnd: {
+		type: MarkerType.ArrowClosed,
+		width: 20,
+		height: 20,
+		color: "#4e4e4e",
+	},
 };
 
 const DatabaseDiagram = () => {
