@@ -21,6 +21,14 @@ const ModalAddCollection: React.FC<ModalAddCollectionProps> = React.memo(
 			});
 		};
 
+		const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+			if (e.key === "Enter" && !isPending) {
+				e.preventDefault();
+				handleSubmit();
+				setOpen(false);
+			}
+		};
+
 		return (
 			<Modal
 				title="Create collection"
@@ -38,6 +46,7 @@ const ModalAddCollection: React.FC<ModalAddCollectionProps> = React.memo(
 							id="name"
 							value={docName}
 							onChange={(e) => setDocName(e.target.value)}
+							onKeyDown={handleKeyDown}
 							disabled={isPending}
 							className="w-full py-2 px-5 border border-gray rounded-md bg-terciary-gray focus:ring-2 focus:outline-none text-white disabled:opacity-50 disabled:cursor-not-allowed"
 						/>

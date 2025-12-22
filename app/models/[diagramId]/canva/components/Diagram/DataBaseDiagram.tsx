@@ -8,7 +8,7 @@ import {
 	MiniMap,
 	MarkerType,
 } from "@xyflow/react";
-import type { Node } from "@xyflow/react";
+import type { Node, EdgeChange } from "@xyflow/react";
 import type { TableData } from "../../types";
 
 import { nodeTypes } from "../Table/TableNode";
@@ -21,6 +21,7 @@ import ModalAddCollection from "../Modals/ModalAddCollection";
 import { canvaSelector, useCanvasStore } from "@/state/canvaStore";
 import { useShallow } from "zustand/shallow";
 import { useUniqueId } from "@/hooks/use-unique-id";
+import { getNextAvailableSubmodelIndex } from "@/hooks/use-node-connections";
 
 const connectionLineStyle = {
 	stroke: "#4E4E4E",
@@ -40,11 +41,16 @@ const DatabaseDiagram = () => {
 		addNode,
 		editNode,
 		addEdge,
+		setEdges,
 		onNodesChange,
 		onEdgesChange,
 	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
 		useShallow(canvaSelector)
 	);
+
+	console.log("nodes: ", nodes);
+	console.log("edges: ", edges);
+
 	const isChangingVersion = useCanvasStore((state) => state.isChangingVersion);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,26 +60,23 @@ const DatabaseDiagram = () => {
 	const connectionConfig = useMemo(
 		() => ({
 			nodes,
+			edges,
 			editNode,
 			addEdge,
+			setEdges,
 			onError: () => setShowError(true),
 		}),
-		[nodes, editNode, addEdge]
+		[nodes, edges, editNode, addEdge, setEdges]
 	);
 
-	const { handleConnect } = useTableConnections(connectionConfig);
+	const { handleConnect, handleDisconnect } =
+		useTableConnections(connectionConfig);
 
 	const handleAddDocument = useCallback(
 		(name: string) => {
 			const newIdNode = generateId();
 
-			// Calculate the next available submodelIndex
-			const existingIndices = nodes
-				.map((node) => node.data.submodelIndex ?? 0)
-				.filter((index) => index !== undefined);
-			const maxIndex =
-				existingIndices.length > 0 ? Math.max(...existingIndices) : -1;
-			const newSubmodelIndex = maxIndex + 1;
+			const newSubmodelIndex = getNextAvailableSubmodelIndex(nodes);
 
 			const newNode: Node<TableData> = {
 				id: newIdNode,
@@ -110,12 +113,25 @@ const DatabaseDiagram = () => {
 		setShowError(false);
 	}, []);
 
+	const handleEdgesChange = useCallback(
+		(changes: EdgeChange[]) => {
+			changes.forEach((change) => {
+				if (change.type === "remove") {
+					handleDisconnect(change.id, nodes);
+				}
+			});
+
+			onEdgesChange(changes);
+		},
+		[onEdgesChange, handleDisconnect]
+	);
+
 	const reactFlowProps = useMemo(
 		() => ({
 			nodes,
 			edges,
 			onNodesChange,
-			onEdgesChange,
+			onEdgesChange: handleEdgesChange,
 			nodeTypes,
 			edgeTypes,
 			onConnect: handleConnect,
@@ -123,7 +139,7 @@ const DatabaseDiagram = () => {
 			defaultEdgeOptions,
 			fitView: true,
 		}),
-		[nodes, edges, onNodesChange, onEdgesChange, handleConnect]
+		[nodes, edges, onNodesChange, handleEdgesChange, handleConnect]
 	);
 
 	return (
