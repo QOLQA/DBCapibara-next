@@ -42,7 +42,7 @@ export const AppQueries = () => {
 		<div className="flex flex-col gap-5 h-full w-full items-center">
 			<BtnNewQuery />
 			<div className="flex flex-col gap-5 w-full max-h-full overflow-y-auto items-center custom-scrollbar">
-				{queries.map((query, index) => (
+				{queries?.map((query, index) => (
 					<QueryItem
 						key={`${query.collections[0]}-${index}-queries`}
 						query={query}
