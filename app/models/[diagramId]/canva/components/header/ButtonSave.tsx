@@ -5,6 +5,7 @@ import { useCanvasStore } from "@/state/canvaStore";
 import { getNodesBounds, getViewportForBounds } from "@xyflow/react";
 import { toPng } from "html-to-image";
 import { uploadImage } from "@/lib/imageService";
+import { toast } from "sonner";
 
 const imageWidth = 1024;
 const imageHeight = 768;
@@ -39,8 +40,10 @@ export const ButtonSave = () => {
 				saveCanvas(Id, versionId, diagram),
 			]);
 
+			toast.success("Canvas saved successfully");
 		} catch (error) {
 			console.error("Error saving:", error);
+			toast.error("Error saving canvas");
 		}
 	};
 
