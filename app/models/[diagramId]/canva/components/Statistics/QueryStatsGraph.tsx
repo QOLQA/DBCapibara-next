@@ -77,24 +77,17 @@ export const QueryStatsGraph = () => {
 									>
 										<tspan
 											x={viewBox.cx}
-											y={(viewBox.cy || 0) - 14}
+											y={(viewBox.cy || 0) - 2}
 											className="fill-white text-4xl font-bold"
 										>
 											{handledPercentage}%
 										</tspan>
 										<tspan
 											x={viewBox.cx}
-											y={(viewBox.cy || 0) + 18}
+											y={(viewBox.cy || 0) + 32}
 											className="fill-white text-p"
 										>
-											Queries
-										</tspan>
-										<tspan
-											x={viewBox.cx}
-											y={(viewBox.cy || 0) + 33}
-											className="fill-white text-p"
-										>
-											Handled
+											Completude
 										</tspan>
 									</text>
 								)
