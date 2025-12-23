@@ -172,28 +172,62 @@ export const validateEmail = (email: string) => {
 
 /**
  * Manejo centralizado de errores de API
+ * @param error - The error object
+ * @param response - The response object (optional)
+ * @param t - Translation function (optional, defaults to English)
  */
-export const handleApiError = (error: any, response?: Response): string => {
+export const handleApiError = (
+	error: any,
+	response?: Response,
+	t?: (path: string) => string
+): string => {
+	// Helper to get translation with fallback to English
+	const getTranslation = (path: string): string => {
+		if (t) return t(path);
+		// Default to English if no translation function provided
+		// Import statically to avoid dynamic require issues
+		try {
+			const { useTranslation } = require("@/i18n");
+			const { t: defaultT } = useTranslation("en");
+			return defaultT(path);
+		} catch {
+			// Fallback to English hardcoded strings if import fails
+			const englishErrors: Record<string, string> = {
+				"apiErrors.sessionExpired": "Session expired or invalid credentials",
+				"apiErrors.noPermission":
+					"You don't have permission to perform this action",
+				"apiErrors.notFound": "Resource not found",
+				"apiErrors.alreadyExists": "Resource already exists",
+				"apiErrors.invalidData": "Invalid input data",
+				"apiErrors.tooManyRequests":
+					"Too many requests. Please try again later",
+				"apiErrors.serverError": "Internal server error",
+				"apiErrors.unknownError": "An unknown error occurred",
+			};
+			return englishErrors[path] || path;
+		}
+	};
+
 	if (response) {
 		switch (response.status) {
 			case 401:
-				return "Sesión expirada o credenciales inválidas";
+				return getTranslation("apiErrors.sessionExpired");
 			case 403:
-				return "No tienes permisos para realizar esta acción";
+				return getTranslation("apiErrors.noPermission");
 			case 404:
-				return "Recurso no encontrado";
+				return getTranslation("apiErrors.notFound");
 			case 409:
-				return "El recurso ya existe";
+				return getTranslation("apiErrors.alreadyExists");
 			case 422:
-				return "Datos de entrada inválidos";
+				return getTranslation("apiErrors.invalidData");
 			case 429:
-				return "Demasiadas solicitudes. Intenta de nuevo más tarde";
+				return getTranslation("apiErrors.tooManyRequests");
 			case 500:
 			case 502:
 			case 503:
-				return "Error del servidor. Intenta de nuevo más tarde";
+				return getTranslation("apiErrors.serverError");
 			default:
-				return error?.message || "Error desconocido";
+				return error?.message || getTranslation("apiErrors.unknownError");
 		}
 	}
 

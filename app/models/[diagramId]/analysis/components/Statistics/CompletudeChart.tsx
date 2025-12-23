@@ -25,7 +25,7 @@ const CompletudeChart = ({
 			<div className="flex gap-2 flex-row justify-center">
 				<div className=" text-[#E93544] flex items-center gap-2">
 					<div className="size-4 bg-[#E93544] rounded-sm"></div>
-					<p>Completude</p>
+					<p>Completude (Queries Handled)</p>
 				</div>
 			</div>
 			<ChartContainer config={chartConfig} className="w-full h-full">

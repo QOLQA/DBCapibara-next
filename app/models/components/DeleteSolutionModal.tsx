@@ -3,6 +3,7 @@
 import { Modal } from "@/components/ui/modal";
 import { AlertTriangle } from "lucide-react";
 import { useTransition } from "react";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface DeleteSolutionModalProps {
 	open: boolean;
@@ -15,9 +16,12 @@ const DeleteSolutionModal: React.FC<DeleteSolutionModalProps> = ({
 	open,
 	setOpen,
 	onConfirm,
-	solutionName = "esta solución",
+	solutionName,
 }) => {
+	const { t } = useTranslation();
 	const [isPending, startTransition] = useTransition();
+	const defaultSolutionName =
+		solutionName || t("modals.deleteProject.defaultProjectName");
 
 	const handleConfirm = () => {
 		startTransition(async () => {
@@ -28,7 +32,7 @@ const DeleteSolutionModal: React.FC<DeleteSolutionModalProps> = ({
 
 	return (
 		<Modal
-			title="Confirm delete solution"
+			title={t("modals.deleteProject.title")}
 			open={open}
 			setOpen={setOpen}
 			onSubmit={handleConfirm}
@@ -39,17 +43,17 @@ const DeleteSolutionModal: React.FC<DeleteSolutionModalProps> = ({
 					<AlertTriangle className="text-red shrink-0 size-10 mt-0.5 mr-2" />
 					<div className="flex-1">
 						<p className="text-white text-h5">
-							¿Estás seguro de que deseas eliminar{" "}
-							<strong>{solutionName}</strong>?
+							{t("modals.deleteProject.confirmMessage")}{" "}
+							<strong>{defaultSolutionName}</strong>?
 						</p>
 						<p className="text-red text-p mt-2">
-							Esta acción no se puede deshacer.
+							{t("modals.deleteProject.irreversibleAction")}
 						</p>
 					</div>
 				</div>
 				{isPending && (
 					<div className="mt-4 text-center text-sm text-gray-400">
-						Eliminando solución...
+						{t("modals.deleteProject.deleting")}
 					</div>
 				)}
 			</>

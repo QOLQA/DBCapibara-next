@@ -2,6 +2,7 @@
 
 import { Modal } from "@/components/ui/modal";
 import { useState, useTransition } from "react";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface AddSolutionalModalProps {
 	open: boolean;
@@ -14,6 +15,7 @@ const AddSolutionModal: React.FC<AddSolutionalModalProps> = ({
 	setOpen,
 	onSubmit,
 }) => {
+	const { t } = useTranslation();
 	const [docName, setDocName] = useState("");
 	const [isPending, startTransition] = useTransition();
 
@@ -28,7 +30,7 @@ const AddSolutionModal: React.FC<AddSolutionalModalProps> = ({
 
 	return (
 		<Modal
-			title="Nueva solución"
+			title={t("modals.addProject.title")}
 			open={open}
 			setOpen={setOpen}
 			onSubmit={handleSubmit}
@@ -37,7 +39,7 @@ const AddSolutionModal: React.FC<AddSolutionalModalProps> = ({
 			<>
 				<div className="my-13 flex justify-between items-center gap-4">
 					<label htmlFor="docName" className="text-secondary-white shrink-0">
-						Solution Name:
+						{t("modals.addProject.nameLabel")}
 					</label>
 					<input
 						type="text"
@@ -50,7 +52,7 @@ const AddSolutionModal: React.FC<AddSolutionalModalProps> = ({
 				</div>
 				{isPending && (
 					<div className="mt-4 text-center text-sm text-gray-400">
-						Creando solución...
+						{t("modals.addProject.creating")}
 					</div>
 				)}
 			</>

@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-'use client'
+"use client";
 
-import { useCanvasStore } from "@/state/canvaStore"
-import { calculateHandledQueriesPercentage } from "@/lib/getHandledQueries"
+import { useCanvasStore } from "@/state/canvaStore";
+import { calculateHandledQueriesPercentage } from "@/lib/getHandledQueries";
 import {
 	Label,
 	PolarGrid,
@@ -11,23 +11,21 @@ import {
 	RadialBar,
 	RadialBarChart,
 	ResponsiveContainer,
-} from "recharts"
-
+} from "recharts";
 
 export const QueryStatsGraph = () => {
-
 	const handledPercentage = useCanvasStore((state) =>
-		calculateHandledQueriesPercentage(state.queries, state.nodes, state.edges),
+		calculateHandledQueriesPercentage(state.queries, state.nodes, state.edges)
 	);
 
-	const porcentageAngle = (handledPercentage * 360) / 100
+	const porcentageAngle = (handledPercentage * 360) / 100;
 
 	const chartData = [
 		{
 			porcentage: handledPercentage,
 			fill: "var(--color-red)",
-		}
-	]
+		},
+	];
 	return (
 		<ResponsiveContainer
 			width="100%"
@@ -55,14 +53,14 @@ export const QueryStatsGraph = () => {
 					radialLines={false}
 					stroke="none"
 					className="first:fill-[#3C4254] last:fill-cuartenary-gray"
-					style={{ filter: 'url(#glow)' }}
+					style={{ filter: "url(#glow)" }}
 					polarRadius={[80, 73]}
 				/>
 				<RadialBar
 					dataKey="porcentage"
 					className="fill-cuartenary-gray"
 					cornerRadius={10}
-					style={{ filter: 'url(#glow)' }}
+					style={{ filter: "url(#glow)" }}
 				/>
 				<PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
 					<Label
@@ -97,12 +95,12 @@ export const QueryStatsGraph = () => {
 											Handled
 										</tspan>
 									</text>
-								)
+								);
 							}
 						}}
 					/>
 				</PolarRadiusAxis>
 			</RadialBarChart>
 		</ResponsiveContainer>
-	)
-}
+	);
+};

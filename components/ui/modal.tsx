@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "./button";
 import { ArrowLeft, X } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface ModalProps {
 	title: string;
@@ -27,6 +28,7 @@ export const Modal = ({
 	showCloseButton = true,
 	onReturnPreviewsStep,
 }: ModalProps) => {
+	const { t } = useTranslation();
 	const dialogRef = useRef<HTMLDialogElement>(null);
 
 	useEffect(() => {
@@ -108,7 +110,7 @@ export const Modal = ({
 						onClick={handleClose}
 						className="w-[6rem] cursor-pointer text-h3 text-white !bg-red border-none hover:!bg-red-dark !hover:text-white"
 					>
-						Cancelar
+						{t("common.cancel")}
 					</Button>
 
 					<Button
@@ -118,14 +120,14 @@ export const Modal = ({
 						className="w-[6rem] cursor-pointer text-h3 text-white !bg-green border-none hover:!bg-green-dark hover:!text-white"
 					>
 						{type === "create"
-							? "Crear"
+							? t("common.create")
 							: type === "update"
-							? "Actualizar"
+							? t("common.update")
 							: type === "next"
-							? "Siguiente"
+							? t("common.next")
 							: type === "delete"
-							? "Eliminar"
-							: "Guardar"}
+							? t("common.delete")
+							: t("common.save")}
 					</Button>
 				</div>
 			</div>

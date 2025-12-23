@@ -2,6 +2,7 @@
 
 import { Modal } from "@/components/ui/modal";
 import React, { useState, useTransition } from "react";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface ModalAddCollectionProps {
 	onSubmit: (name: string) => void;
@@ -11,6 +12,7 @@ interface ModalAddCollectionProps {
 
 const ModalAddCollection: React.FC<ModalAddCollectionProps> = React.memo(
 	({ onSubmit, open, setOpen }) => {
+		const { t } = useTranslation();
 		const [docName, setDocName] = useState("");
 		const [isPending, startTransition] = useTransition();
 
@@ -31,7 +33,7 @@ const ModalAddCollection: React.FC<ModalAddCollectionProps> = React.memo(
 
 		return (
 			<Modal
-				title="Create collection"
+				title={t("modals.createCollection.title")}
 				onSubmit={handleSubmit}
 				open={open}
 				setOpen={setOpen}
@@ -39,7 +41,7 @@ const ModalAddCollection: React.FC<ModalAddCollectionProps> = React.memo(
 				<>
 					<div className="flex justify-between items-center gap-4">
 						<label htmlFor="name" className="text-secondary-white">
-							Nombre
+							{t("modals.createCollection.nameLabel")}
 						</label>
 						<input
 							type="text"
@@ -53,7 +55,7 @@ const ModalAddCollection: React.FC<ModalAddCollectionProps> = React.memo(
 					</div>
 					{isPending && (
 						<div className="mt-4 text-center text-sm text-gray-400">
-							Creando colección...
+							{t("modals.createCollection.creating")}
 						</div>
 					)}
 				</>

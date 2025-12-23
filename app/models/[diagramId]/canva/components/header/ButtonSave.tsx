@@ -6,11 +6,13 @@ import { getNodesBounds, getViewportForBounds } from "@xyflow/react";
 import { toPng } from "html-to-image";
 import { uploadImage } from "@/lib/imageService";
 import { toast } from "sonner";
+import { useTranslation } from "@/hooks/use-translation";
 
 const imageWidth = 1024;
 const imageHeight = 768;
 
 export const ButtonSave = () => {
+	const { t } = useTranslation();
 	const Id = useCanvasStore((state) => state.id);
 	const versionId = useCanvasStore((state) => state.selectedVersionId);
 	const versions = useCanvasStore((state) => state.versions);
@@ -40,10 +42,10 @@ export const ButtonSave = () => {
 				saveCanvas(Id, versionId, diagram),
 			]);
 
-			toast.success("Canvas saved successfully");
+			toast.success(t("toasts.canvasSaved"));
 		} catch (error) {
 			console.error("Error saving:", error);
-			toast.error("Error saving canvas");
+			toast.error(t("toasts.errorSavingCanvas"));
 		}
 	};
 

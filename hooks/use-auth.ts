@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { handleApiError } from '@/lib/api';
+import { useState, useEffect, useCallback } from "react";
+import { handleApiError } from "@/lib/api";
+import { useTranslation } from "./use-translation";
 
 export interface User {
 	id: string;
@@ -24,16 +25,17 @@ export interface RegisterData {
 }
 
 // Client-side: usa la URL pública accesible desde el navegador
-const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
 export const useAuth = () => {
+	const { t } = useTranslation();
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
 	// Verificar autenticación al montar
 	const checkAuth = useCallback(async () => {
-		const token = localStorage.getItem('access_token');
+		const token = localStorage.getItem("access_token");
 
 		if (!token) {
 			setLoading(false);
@@ -43,8 +45,8 @@ export const useAuth = () => {
 		try {
 			const response = await fetch(`${API_URL}/auth/me`, {
 				headers: {
-					'Authorization': `Bearer ${token}`
-				}
+					Authorization: `Bearer ${token}`,
+				},
 			});
 
 			if (response.ok) {
@@ -52,12 +54,12 @@ export const useAuth = () => {
 				setUser(userData);
 			} else {
 				// Token inválido o expirado
-				localStorage.removeItem('access_token');
+				localStorage.removeItem("access_token");
 				setUser(null);
 			}
 		} catch (err) {
-			console.error('Error verificando autenticación:', err);
-			localStorage.removeItem('access_token');
+			console.error("Error verificando autenticación:", err);
+			localStorage.removeItem("access_token");
 			setUser(null);
 		} finally {
 			setLoading(false);
@@ -68,110 +70,123 @@ export const useAuth = () => {
 		checkAuth();
 	}, [checkAuth]);
 
-	const login = useCallback(async (credentials: LoginCredentials) => {
-		setError(null);
-		setLoading(true);
+	const login = useCallback(
+		async (credentials: LoginCredentials) => {
+			setError(null);
+			setLoading(true);
 
-		try {
-			// OAuth2 requiere FormData con username y password
-			const formData = new URLSearchParams();
-			formData.append('username', credentials.username);
-			formData.append('password', credentials.password);
+			try {
+				// OAuth2 requiere FormData con username y password
+				const formData = new URLSearchParams();
+				formData.append("username", credentials.username);
+				formData.append("password", credentials.password);
 
-			const response = await fetch(`${API_URL}/auth/login`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				body: formData
-			});
+				const response = await fetch(`${API_URL}/auth/login`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded",
+					},
+					body: formData,
+				});
 
-			if (!response.ok) {
-				const errorData = await response.json().catch(() => ({}));
-				const errorMessage = handleApiError(errorData, response);
-				throw new Error(errorMessage);
-			}
-
-			const data = await response.json();
-			localStorage.setItem('access_token', data.access_token);
-
-			// Sincronizar con cookies para server components
-			if (typeof document !== 'undefined') {
-				const isProduction = process.env.NODE_ENV === 'production';
-				const cookieOptions = [
-					`access_token=${data.access_token}`,
-					'path=/',
-					'max-age=1800', // 30 minutos
-					'SameSite=Lax', // Protección CSRF
-					isProduction ? 'Secure' : '' // Solo HTTPS en producción
-				].filter(Boolean).join('; ');
-
-				document.cookie = cookieOptions;
-			}
-
-			// Obtener información del usuario
-			await checkAuth();
-
-			return data;
-		} catch (err) {
-			const errorMessage = err instanceof Error ? err.message : 'Error al iniciar sesión';
-			setError(errorMessage);
-			throw err;
-		} finally {
-			setLoading(false);
-		}
-	}, [checkAuth]);
-
-	const register = useCallback(async (data: RegisterData) => {
-		setError(null);
-		setLoading(true);
-
-		try {
-			const response = await fetch(`${API_URL}/auth/register`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data)
-			});
-
-			if (!response.ok) {
-				const errorData = await response.json().catch(() => ({}));
-
-				// Manejar errores de validación
-				if (Array.isArray(errorData.detail)) {
-					const messages = errorData.detail.map((err: any) => err.msg).join(', ');
-					throw new Error(messages);
+				if (!response.ok) {
+					const errorData = await response.json().catch(() => ({}));
+					const errorMessage = handleApiError(errorData, response, t);
+					throw new Error(errorMessage);
 				}
 
-				const errorMessage = handleApiError(errorData, response);
-				throw new Error(errorMessage);
+				const data = await response.json();
+				localStorage.setItem("access_token", data.access_token);
+
+				// Sincronizar con cookies para server components
+				if (typeof document !== "undefined") {
+					const isProduction = process.env.NODE_ENV === "production";
+					const cookieOptions = [
+						`access_token=${data.access_token}`,
+						"path=/",
+						"max-age=1800", // 30 minutos
+						"SameSite=Lax", // Protección CSRF
+						isProduction ? "Secure" : "", // Solo HTTPS en producción
+					]
+						.filter(Boolean)
+						.join("; ");
+
+					document.cookie = cookieOptions;
+				}
+
+				// Obtener información del usuario
+				await checkAuth();
+
+				return data;
+			} catch (err) {
+				const errorMessage =
+					err instanceof Error ? err.message : "Error al iniciar sesión";
+				setError(errorMessage);
+				throw err;
+			} finally {
+				setLoading(false);
 			}
+		},
+		[checkAuth]
+	);
 
-			const userData = await response.json();
+	const register = useCallback(
+		async (data: RegisterData) => {
+			setError(null);
+			setLoading(true);
 
-			// Después de registrar, hacer login automáticamente
-			await login({
-				username: data.username,
-				password: data.password
-			});
+			try {
+				const response = await fetch(`${API_URL}/auth/register`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(data),
+				});
 
-			return userData;
-		} catch (err) {
-			const errorMessage = err instanceof Error ? err.message : 'Error al registrar';
-			setError(errorMessage);
-			throw err;
-		} finally {
-			setLoading(false);
-		}
-	}, [login]);
+				if (!response.ok) {
+					const errorData = await response.json().catch(() => ({}));
+
+					// Manejar errores de validación
+					if (Array.isArray(errorData.detail)) {
+						const messages = errorData.detail
+							.map((err: any) => err.msg)
+							.join(", ");
+						throw new Error(messages);
+					}
+
+					const errorMessage = handleApiError(errorData, response, t);
+					throw new Error(errorMessage);
+				}
+
+				const userData = await response.json();
+
+				// Después de registrar, hacer login automáticamente
+				await login({
+					username: data.username,
+					password: data.password,
+				});
+
+				return userData;
+			} catch (err) {
+				const errorMessage =
+					err instanceof Error ? err.message : "Error al registrar";
+				setError(errorMessage);
+				throw err;
+			} finally {
+				setLoading(false);
+			}
+		},
+		[login]
+	);
 
 	const logout = useCallback(() => {
-		localStorage.removeItem('access_token');
+		localStorage.removeItem("access_token");
 
 		// Limpiar cookie también
-		if (typeof document !== 'undefined') {
-			document.cookie = 'access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+		if (typeof document !== "undefined") {
+			document.cookie =
+				"access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 		}
 
 		setUser(null);
@@ -186,6 +201,6 @@ export const useAuth = () => {
 		register,
 		logout,
 		isAuthenticated: !!user,
-		checkAuth
+		checkAuth,
 	};
 };

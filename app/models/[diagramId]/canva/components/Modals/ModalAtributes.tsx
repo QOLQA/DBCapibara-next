@@ -15,6 +15,7 @@ import {
 import { Trash } from "lucide-react";
 import React, { useEffect, useCallback, useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface TableAttribute {
 	id: string;
@@ -45,6 +46,7 @@ const types = [
 
 const ModalAtributes: React.FC<ModalAtributesProps> = React.memo(
 	({ onSubmit, open, setOpen, type = "create", atributesToUpdate }) => {
+		const { t } = useTranslation();
 		const { register, control, handleSubmit, reset, watch, setValue } =
 			useForm<{
 				attributes: TableAttribute[];
@@ -97,8 +99,11 @@ const ModalAtributes: React.FC<ModalAtributesProps> = React.memo(
 		);
 
 		const modalTitle = useMemo(
-			() => (type === "create" ? "Agregar Atributos" : "Editar Atributos"),
-			[type]
+			() =>
+				type === "create"
+					? t("modals.attributes.addTitle")
+					: t("modals.attributes.editTitle"),
+			[type, t]
 		);
 
 		useEffect(() => {
@@ -127,7 +132,7 @@ const ModalAtributes: React.FC<ModalAtributesProps> = React.memo(
 							return (
 								<div key={field.id} className="flex items-center gap-6 mb-2">
 									<Input
-										placeholder="Nombre"
+										placeholder={t("modals.attributes.namePlaceholder")}
 										{...register(`attributes.${index}.name`)}
 										className="w-1/2"
 									/>
@@ -169,7 +174,7 @@ const ModalAtributes: React.FC<ModalAtributesProps> = React.memo(
 								className="cursor-pointer py-[2px] hover:bg-gray bg-transparent rounded-lg text-secondary-white border border-gray"
 								onClick={handleAppend}
 							>
-								nuevo atributo
+								{t("other.newAttribute")}
 							</Button>
 						</div>
 					)}
