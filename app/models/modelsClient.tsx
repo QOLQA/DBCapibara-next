@@ -23,6 +23,7 @@ import { MoreButton } from "./[diagramId]/canva/components/Diagram/MoreButton";
 import DeleteSolutionModal from "./components/DeleteSolutionModal";
 import EditSolutionModal from "./components/EditSolutionModal";
 import { useModelsStore } from "@/state/modelsStore";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface ModelProps {
 	name: string;
@@ -45,6 +46,7 @@ const ModelImage = ({
 	alt: string;
 	className: string;
 }) => {
+	const { t } = useTranslation();
 	const [imageError, setImageError] = useState(false);
 	const [imageLoading, setImageLoading] = useState(true);
 
@@ -53,7 +55,7 @@ const ModelImage = ({
 			<div
 				className={`${className} bg-primary-gray flex items-center justify-center text-gray-400`}
 			>
-				Sin imagen
+				{t("other.noImage")}
 			</div>
 		);
 	}
@@ -79,7 +81,7 @@ const ModelImage = ({
 			/>
 			{imageLoading && (
 				<div className="absolute inset-0 bg-primary-gray flex items-center justify-center">
-					<div className="text-gray-400 text-sm">Cargando...</div>
+					<div className="text-gray-400 text-sm">{t("common.loading")}</div>
 				</div>
 			)}
 		</div>
@@ -94,6 +96,7 @@ const Model = ({
 	requestDelete,
 	requestEdit,
 }: ModelProps) => {
+	const { t } = useTranslation();
 	const router = useRouter();
 	const { setSolutionId } = useModelsStore.getState();
 	const handleRequestDeleteSolution = async (
@@ -150,7 +153,7 @@ const Model = ({
 									onClick={(event) => handleRequestEditSolution(event, _id)}
 								>
 									<Edit className="text-white" />
-									Editar
+									{t("common.edit")}
 								</DropdownMenuItem>
 
 								<DropdownMenuSeparator className="bg-gray" />
@@ -161,13 +164,17 @@ const Model = ({
 									onClick={(event) => handleRequestDeleteSolution(event, _id)}
 								>
 									<Trash className="text-red" />
-									Eliminar
+									{t("common.delete")}
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</ManagedDropdownMenu>
 					</div>
 					<p className="text-lighter-gray text-p">
-						Last edited {new Date(last_updated_at || new Date()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+						{t("other.lastEdited")}{" "}
+						{new Date(last_updated_at || new Date()).toLocaleDateString(
+							"en-US",
+							{ month: "short", day: "numeric", year: "numeric" }
+						)}
 					</p>
 				</div>
 			</article>
@@ -175,12 +182,12 @@ const Model = ({
 	);
 };
 
-
 export default function ModelsClient({
 	initialSolutions,
 }: {
 	initialSolutions: any[];
 }) {
+	const { t } = useTranslation();
 	const [isAddSolutionModalOpen, setIsAddSolutionModalOpen] = useState(false);
 	const [isEditSolutionModalOpen, setIsEditSolutionModalOpen] = useState(false);
 	const [isDeleteSolutionModalOpen, setIsDeleteSolutionModalOpen] =
@@ -282,7 +289,7 @@ export default function ModelsClient({
 							}}
 							className="text-white font-weight-900 cursor-pointer bg-black hover:bg-primary-gray"
 						>
-							<Plus /> Nuevo Modelo
+							<Plus /> {t("other.newModel")}
 						</Button>
 						<div className="flex items-center gap-3">
 							{user && (
@@ -292,7 +299,7 @@ export default function ModelsClient({
 								className="rounded-full"
 								size="icon"
 								onClick={handleLogout}
-								title="Cerrar sesión"
+								title={t("common.logOut")}
 							>
 								<LogOut className="h-4 w-4" />
 							</Button>
@@ -302,12 +309,14 @@ export default function ModelsClient({
 			</header>
 			<main className="bg-secondary-gray pb-36 min-h-[90vh]">
 				<div className="max-w-[1330px] mx-auto">
-					<h1 className="text-center text-white text-h2">Your Solutions</h1>
+					<h1 className="text-center text-white text-h2">
+						{t("other.yourProjects")}
+					</h1>
 					<hr className="mt-[33px] mb-20 border-gray" />
 
 					{isPending && (
 						<div className="text-center text-white mb-4">
-							<p className="text-sm">Cargando...</p>
+							<p className="text-sm">{t("common.loading")}</p>
 						</div>
 					)}
 

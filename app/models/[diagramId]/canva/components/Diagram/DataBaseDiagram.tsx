@@ -14,7 +14,6 @@ import type { TableData } from "../../types";
 import { nodeTypes } from "../Table/TableNode";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
-import ShowErrorModal from "../Modals/ShowErrorModal";
 import { edgeTypes } from "./FloatingEdge";
 import { useTableConnections } from "@/hooks/use-node-connections";
 import ModalAddCollection from "../Modals/ModalAddCollection";
@@ -22,6 +21,8 @@ import { canvaSelector, useCanvasStore } from "@/state/canvaStore";
 import { useShallow } from "zustand/shallow";
 import { useUniqueId } from "@/hooks/use-unique-id";
 import { getNextAvailableSubmodelIndex } from "@/hooks/use-node-connections";
+import { useTranslation } from "@/hooks/use-translation";
+import { toast } from "sonner";
 
 const connectionLineStyle = {
 	stroke: "#4E4E4E",
@@ -41,6 +42,7 @@ const defaultEdgeOptions = {
 };
 
 const DatabaseDiagram = () => {
+	const { t } = useTranslation();
 	const {
 		nodes,
 		edges,
@@ -57,7 +59,6 @@ const DatabaseDiagram = () => {
 	const isChangingVersion = useCanvasStore((state) => state.isChangingVersion);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [showError, setShowError] = useState(false);
 	const generateId = useUniqueId();
 
 	const connectionConfig = useMemo(
@@ -67,9 +68,9 @@ const DatabaseDiagram = () => {
 			editNode,
 			addEdge,
 			setEdges,
-			onError: () => setShowError(true),
+			onError: () => toast.error(t("databaseDiagram.relationshipExists")),
 		}),
-		[nodes, edges, editNode, addEdge, setEdges]
+		[nodes, edges, editNode, addEdge, setEdges, t]
 	);
 
 	const { handleConnect, handleDisconnect, handleNodeRemove } =
@@ -110,10 +111,6 @@ const DatabaseDiagram = () => {
 
 	const handleCloseModal = useCallback(() => {
 		setIsModalOpen(false);
-	}, []);
-
-	const handleCloseError = useCallback(() => {
-		setShowError(false);
 	}, []);
 
 	const handleEdgesChange = useCallback(
@@ -165,7 +162,7 @@ const DatabaseDiagram = () => {
 					<div className="flex flex-col items-center gap-4">
 						<div className="w-12 h-12 border-4 border-blue border-t-transparent rounded-full animate-spin" />
 						<p className="text-white text-lg font-medium">
-							Cambiando versión...
+							{t("databaseDiagram.changingVersion")}
 						</p>
 					</div>
 				</div>
@@ -176,7 +173,7 @@ const DatabaseDiagram = () => {
 				onClick={handleOpenModal}
 				className="absolute top-5 right-10 bg-green text-white hover:bg-green-dark z-10 cursor-pointer"
 			>
-				<span className="text-xl">+</span> Nueva Colección
+				<span className="text-xl">+</span> {t("databaseDiagram.newCollection")}
 			</Button>
 
 			<ModalAddCollection
@@ -190,13 +187,6 @@ const DatabaseDiagram = () => {
 				<Controls className="text-white controls-with-buttons " />
 				<MiniMap nodeClassName="!fill-gray" className="!bg-secondary-gray" />
 			</ReactFlow>
-
-			{showError && (
-				<ShowErrorModal
-					onClose={handleCloseError}
-					errorMessage="Ya existe una relación entre estas tablas"
-				/>
-			)}
 		</div>
 	);
 };

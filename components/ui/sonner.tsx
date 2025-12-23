@@ -4,9 +4,9 @@ import {
 	CircleCheckIcon,
 	InfoIcon,
 	Loader2Icon,
-	OctagonXIcon,
 	TriangleAlertIcon,
 	CheckIcon,
+	X,
 } from "lucide-react";
 // import { useTheme } from "next-themes";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
@@ -54,10 +54,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
 				),
 				error: (
 					<div className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-red)]">
-						<OctagonXIcon
-							className="h-4 w-4 text-secondary-gray"
-							strokeWidth={3}
-						/>
+						<X className="h-4 w-4 text-secondary-gray" strokeWidth={3} />
 					</div>
 				),
 				loading: (

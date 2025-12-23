@@ -1,8 +1,9 @@
-'use client'
+"use client";
 
 import { Modal } from "@/components/ui/modal";
 import React, { useCallback, useState } from "react";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface ModalDocumentProps {
 	onSubmit: (name: string) => void;
@@ -23,12 +24,13 @@ const ModalDocument: React.FC<ModalDocumentProps> = React.memo(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
 				setDocName(e.target.value);
 			},
-			[],
+			[]
 		);
 
+		const { t } = useTranslation();
 		return (
 			<Modal
-				title="Crear Documento"
+				title={t("modals.document.createTitle")}
 				onSubmit={handleSubmit}
 				open={open}
 				setOpen={setOpen}
@@ -36,7 +38,7 @@ const ModalDocument: React.FC<ModalDocumentProps> = React.memo(
 				<div className="my-4">
 					<div className="flex justify-between items-center gap-4">
 						<label htmlFor="name" className="text-secondary-white">
-							Nombre
+							{t("modals.document.nameLabel")}
 						</label>
 						<Input
 							type="text"
@@ -49,7 +51,7 @@ const ModalDocument: React.FC<ModalDocumentProps> = React.memo(
 				</div>
 			</Modal>
 		);
-	},
+	}
 );
 
 export default ModalDocument;

@@ -1,9 +1,10 @@
-'use client'
+"use client";
 
 import { Modal } from "@/components/ui/modal";
 import { useEffect, useState, useTransition } from "react";
 import { ModalSelectDocs } from "./ModalSelectDocs";
 import type { Query } from "../../types";
+import { useTranslation } from "@/hooks/use-translation";
 
 type ModalProps = {
 	open: boolean;
@@ -22,6 +23,7 @@ export const ModalNewQuery = ({
 	queryText,
 	setQueryText,
 }: ModalProps) => {
+	const { t } = useTranslation();
 	const [showSelectDocs, setShowSelectDocs] = useState(false);
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState(false);
@@ -51,7 +53,7 @@ export const ModalNewQuery = ({
 	return (
 		<>
 			<Modal
-				title="New Query"
+				title={t("modals.newQuery.title")}
 				open={open}
 				setOpen={setOpen}
 				onSubmit={handleSubmit}
@@ -63,10 +65,10 @@ export const ModalNewQuery = ({
 							htmlFor="docName"
 							className="text-h3 text-secondary-white pr-12"
 						>
-							Consulta
+							{t("modals.newQuery.queryLabel")}
 						</label>
 						<textarea
-							placeholder="Escribe tu consulta"
+							placeholder={t("modals.newQuery.queryPlaceholder")}
 							id="docName"
 							value={queryText}
 							onChange={(e) => {
@@ -79,12 +81,12 @@ export const ModalNewQuery = ({
 					</div>
 					{error && (
 						<p className="text-red-500 mt-2 text-sm">
-							Debes escribir una consulta antes de continuar.
+							{t("modals.newQuery.error")}
 						</p>
 					)}
 					{isPending && (
 						<div className="text-center text-sm text-gray-400">
-							Procesando...
+							{t("common.loading")}
 						</div>
 					)}
 				</>

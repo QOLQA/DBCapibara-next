@@ -32,9 +32,11 @@ import {
 	Plus,
 } from "@/components/icons/TableOptionsIcons";
 import { useTableConnections } from "@/hooks/use-node-connections";
+import { useTranslation } from "@/hooks/use-translation";
 
 const AttributeNode = React.memo(
 	({ column, columnId, handleEdit }: AttributeNodeProps) => {
+		const { t } = useTranslation();
 		const { nodes, editNode } = useCanvasStore(
 			useShallow((state) => ({
 				nodes: state.nodes,
@@ -144,7 +146,7 @@ const AttributeNode = React.memo(
 							>
 								<DropdownMenuItem type="normal" onClick={handleEditClick}>
 									<Edit className="text-white" />
-									Editar
+									{t("common.edit")}
 								</DropdownMenuItem>
 								<DropdownMenuSeparator className="bg-gray" />
 								<DropdownMenuItem
@@ -165,7 +167,7 @@ const AttributeNode = React.memo(
 											fill="#E93544"
 										/>
 									</svg>
-									Eliminar
+									{t("common.delete")}
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</ManagedDropdownMenu>
@@ -195,6 +197,7 @@ interface TableAttribute {
 }
 
 export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
+	const { t } = useTranslation();
 	const { setNodes } = useReactFlow();
 	const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
 	const [isAtributesModalOpen, setIsAtributesModalOpen] = useState(false);
@@ -590,18 +593,18 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 						>
 							<DropdownMenuItem type="normal" onClick={handleEditTable}>
 								<Edit className="text-white" />
-								Editar
+								{t("common.edit")}
 							</DropdownMenuItem>
 
 							<DropdownMenuSeparator className="bg-gray" />
 							<DropdownMenuItem type="normal" onClick={handleAddAttributes}>
 								<Plus className="text-white" />
-								Agregar atributos
+								{t("other.addAttributes")}
 							</DropdownMenuItem>
 							<DropdownMenuSeparator className="bg-gray" />
 							<DropdownMenuItem type="normal" onClick={handleAddDocuments}>
 								<AddDocument className="text-white" />
-								Agregar documentos
+								{t("other.addDocuments")}
 							</DropdownMenuItem>
 
 							<DropdownMenuSeparator className="bg-gray" />
@@ -611,7 +614,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 								onClick={handleDeleteTableClick}
 							>
 								<Delete className="text-red" />
-								Eliminar
+								{t("common.delete")}
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</ManagedDropdownMenu>

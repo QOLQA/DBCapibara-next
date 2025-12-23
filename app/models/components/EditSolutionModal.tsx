@@ -3,6 +3,7 @@
 import { Modal } from "@/components/ui/modal";
 import { useModelsStore } from "@/state/modelsStore";
 import React, { useState, useTransition } from "react";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface EditSolutionModalProps {
 	onSubmit: () => void;
@@ -13,6 +14,7 @@ interface EditSolutionModalProps {
 
 const EditSolutionModal: React.FC<EditSolutionModalProps> = React.memo(
 	({ onSubmit, solutionNameToEdit = "", open, setOpen }) => {
+		const { t } = useTranslation();
 		const [solutionName, setSolutionName] = useState(solutionNameToEdit);
 		const [isPending, startTransition] = useTransition();
 		const { setSolutionDataToEdit, solutionId } = useModelsStore.getState();
@@ -29,7 +31,7 @@ const EditSolutionModal: React.FC<EditSolutionModalProps> = React.memo(
 
 		return (
 			<Modal
-				title="Edit solution"
+				title={t("modals.editProject.title")}
 				onSubmit={handleSubmit}
 				open={open}
 				setOpen={setOpen}
@@ -37,7 +39,7 @@ const EditSolutionModal: React.FC<EditSolutionModalProps> = React.memo(
 				<>
 					<div className="flex justify-between items-center gap-4">
 						<label htmlFor="name" className="text-secondary-white shrink-0">
-							Solution Name:
+							{t("modals.editProject.nameLabel")}
 						</label>
 						<input
 							type="text"
@@ -50,7 +52,7 @@ const EditSolutionModal: React.FC<EditSolutionModalProps> = React.memo(
 					</div>
 					{isPending && (
 						<div className="mt-4 text-center text-sm text-gray-400">
-							Creando colección...
+							{t("modals.editProject.creating")}
 						</div>
 					)}
 				</>

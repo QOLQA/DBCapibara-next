@@ -1,8 +1,9 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface ShowErrorModalProps {
 	onClose: () => void;
@@ -13,6 +14,7 @@ const ShowErrorModal: React.FC<ShowErrorModalProps> = ({
 	onClose,
 	errorMessage,
 }) => {
+	const { t } = useTranslation();
 	const modalRef = useRef<HTMLDialogElement>(null);
 
 	useEffect(() => {
@@ -23,7 +25,7 @@ const ShowErrorModal: React.FC<ShowErrorModalProps> = ({
 		<dialog
 			ref={modalRef}
 			onClose={onClose}
-			className="bg-red-50 p-6 m-auto rounded-xl shadow-lg w-96 border border-red-400 backdrop:bg-black/50 backdrop:backdrop-blur-sm open:animate-fade-in"
+			className="bg-primary-gray p-6 m-auto rounded-xl shadow-lg w-96 border border-red-600 backdrop:bg-black/50 backdrop:backdrop-blur-sm open:animate-fade-in"
 		>
 			<p className="text-red-700 font-semibold mb-4 flex items-center gap-2">
 				{/* Error icon for visual feedback */}
@@ -62,11 +64,11 @@ const ShowErrorModal: React.FC<ShowErrorModalProps> = ({
 						onClose();
 					}}
 				>
-					Aceptar
+					{t("modals.error.accept")}
 				</Button>
 			</div>
 		</dialog>,
-		document.body,
+		document.body
 	);
 };
 
