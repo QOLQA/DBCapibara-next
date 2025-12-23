@@ -151,36 +151,36 @@ export const useTableConnections = ({
 				const sourceSubmodelIndex = sourceNode.data.submodelIndex;
 				const targetSubmodelIndex = targetNode.data.submodelIndex;
 
-				// Update the source node with foreign key
-				let updatedSourceNode = structuredClone(sourceNode);
-				updatedSourceNode.data.columns.push({
-					id: `e-${updatedSourceNode.id}-${targetNode.id}`,
-					name: `${targetNode.data.label}_id`,
+				// Update the target node with foreign key
+				let updatedTargetNode = structuredClone(targetNode);
+				updatedTargetNode.data.columns.push({
+					id: `e-${updatedTargetNode.id}-${sourceNode.id}`,
+					name: `${sourceNode.data.label}_id`,
 					type: "FOREIGN_KEY",
 				});
 
-				// Update all nodes that share the same submodelIndex as the source
-				// to adopt the target's submodelIndex (merge submodels)
+				// Update all nodes that share the same submodelIndex as the target
+				// to adopt the source's submodelIndex (merge submodels)
 				nodes.forEach((node) => {
 					if (
-						node.id !== sourceNode.id &&
-						node.data.submodelIndex === sourceSubmodelIndex
+						node.id !== targetNode.id &&
+						node.data.submodelIndex === targetSubmodelIndex
 					) {
 						let updatedNode = structuredClone(node);
 
 						updatedNode = updateSubmodelIndexInTable(
-							targetSubmodelIndex ?? 0,
+							sourceSubmodelIndex ?? 0,
 							updatedNode
 						);
 						editNode(node.id, updatedNode);
 					}
 				});
 
-				updatedSourceNode = updateSubmodelIndexInTable(
-					targetSubmodelIndex ?? 0,
-					updatedSourceNode
+				updatedTargetNode = updateSubmodelIndexInTable(
+					sourceSubmodelIndex ?? 0,
+					updatedTargetNode
 				);
-				editNode(sourceNode.id, updatedSourceNode);
+				editNode(targetNode.id, updatedTargetNode);
 
 				// Crear la arista
 				const newEdge: Edge = {
@@ -216,16 +216,16 @@ export const useTableConnections = ({
 
 			if (!sourceNode || !targetNode) return;
 
-			// Eliminar la foreign key del nodo source
-			const updatedSourceNode = structuredClone(sourceNode);
-			updatedSourceNode.data.columns = updatedSourceNode.data.columns.filter(
-				(col) => col.id !== `e-${sourceNode.id}-${targetNode.id}`
+			// Eliminar la foreign key del nodo target
+			const updatedTargetNode = structuredClone(targetNode);
+			updatedTargetNode.data.columns = updatedTargetNode.data.columns.filter(
+				(col) => col.id !== `e-${targetNode.id}-${sourceNode.id}`
 			);
 
-			editNode(sourceNode.id, updatedSourceNode);
+			editNode(targetNode.id, updatedTargetNode);
 
 			const updatedNodes = nodes.map((node) =>
-				node.id === sourceNode.id ? updatedSourceNode : node
+				node.id === targetNode.id ? updatedTargetNode : node
 			);
 
 			const submodelIndex = getNextAvailableSubmodelIndex(updatedNodes);
@@ -234,7 +234,7 @@ export const useTableConnections = ({
 				updatedNodes,
 				submodelIndex,
 				graph,
-				sourceNode.id,
+				targetNode.id,
 				editNode
 			);
 		},
