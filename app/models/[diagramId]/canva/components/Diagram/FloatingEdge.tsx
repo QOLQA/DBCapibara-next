@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { BaseEdge, getSmoothStepPath, useInternalNode } from "@xyflow/react";
 import type { EdgeProps } from "@xyflow/react";
@@ -18,6 +18,7 @@ export function FloatingEdge({
 	target,
 	markerEnd,
 	style,
+	selected,
 }: EdgeProps) {
 	const sourceNode = useInternalNode(source);
 	const targetNode = useInternalNode(target);
@@ -26,29 +27,45 @@ export function FloatingEdge({
 		return null;
 	}
 
-	const { sx, sy, tx, ty } = getEdgeParams(sourceNode, targetNode);
+	const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(
+		sourceNode,
+		targetNode
+	);
 
 	// Usar getSmoothStepPath para crear una ruta con ángulos de 90 grados
 	// borderRadius: 0 para esquinas completamente rectas
 	const [path] = getSmoothStepPath({
 		sourceX: sx,
 		sourceY: sy,
+		sourcePosition: sourcePos,
 		targetX: tx,
 		targetY: ty,
+		targetPosition: targetPos,
 		borderRadius: 0, // Esquinas completamente rectas (90 grados)
 	});
+
+	const strokeColor = selected ? "#747474" : "#4e4e4e";
+	const strokeWidth = selected ? 2.5 : 2;
+
+	const updatedMarkerEnd =
+		selected && markerEnd && typeof markerEnd === "object"
+			? {
+					...(markerEnd as object),
+					color: "#0052cc",
+			  }
+			: markerEnd;
 
 	return (
 		<BaseEdge
 			id={id}
 			className="react-flow__edge-path"
 			path={path}
-			markerEnd={markerEnd}
+			markerEnd={updatedMarkerEnd as string}
 			style={{
 				...style,
 				strokeDasharray: "8, 4",
-				strokeWidth: 2,
-				stroke: "#4e4e4e",
+				strokeWidth: strokeWidth,
+				stroke: strokeColor,
 			}}
 		/>
 	);

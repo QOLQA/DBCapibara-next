@@ -24,37 +24,54 @@ export const TableNode = ({ data, id }: TableNodeProps) => {
 			{/* Target Handle - Centrado en la tabla */}
 			<Handle
 				type="target"
-				position={Position.Left}
+				position={Position.Bottom}
 				id="target-center"
+				// className="!bg-red"
 				style={{
-					width: "80%",
-					height: "50%",
+					width: "65%",
+					height: "calc(100% - 57px)",
 					background: "transparent",
 					border: "none",
 					borderRadius: 0,
-					left: "50%",
-					top: "50%",
-					transform: "translate(-50%, -50%)",
-					opacity: 0,
+					transform: "translate(-77%, 0%)",
 					cursor: "crosshair",
-					position: "absolute",
+					zIndex: 10,
 				}}
 			/>
 
-			{/* Source Handle (Right) - Para crear conexiones */}
+			{/* Source Handle (Right) - Handle como contenedor con div interno visual */}
 			<Handle
 				type="source"
 				position={Position.Right}
-				className="react-flow__handle react-flow__handle-source custom-handle"
+				className="group"
 				style={{
-					width: "12px",
-					height: "12px",
-					borderRadius: "50%",
-					background: "#1e1e1e",
-					border: "2px solid #4e4e4e",
-					right: "-6px",
+					width: "64px",
+					height: "64px",
+					background: "transparent",
+					border: "none",
+					borderRadius: 0,
+					right: "-32px",
+					top: "50%",
+					transform: "translateY(-50%)",
+					cursor: "crosshair",
+					zIndex: 10,
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
 				}}
-			/>
+			>
+				<div
+					className="group-hover:bg-[#0052cc] group-hover:border-[#0052cc] group-hover:scale-125 group-hover:shadow-[0_0_0_4px_rgba(0,82,204,0.2)]"
+					style={{
+						width: "12px",
+						height: "12px",
+						borderRadius: "50%",
+						background: "#1e1e1e",
+						border: "2px solid #4e4e4e",
+						transition: "all 0.2s ease",
+					}}
+				/>
+			</Handle>
 
 			<TableNodeContent data={data} id={id} />
 		</div>
