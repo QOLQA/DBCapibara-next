@@ -8,7 +8,7 @@ export async function loadCanva(diagramId: string, versionId: string) {
 		const data = await api.get(`/solutions/${diagramId}`);
 		const transformed = transformSolutionModel(data as SolutionModel);
 
-		const { setNodes, setEdges, setQueries, setVersions } =
+		const { setNodes, setEdges, setVersions } =
 			useCanvasStore.getState();
 
 		const indexVersion = transformed.versions.findIndex(
@@ -17,7 +17,6 @@ export async function loadCanva(diagramId: string, versionId: string) {
 
 		setNodes(transformed.versions[indexVersion].nodes);
 		setEdges(transformed.versions[indexVersion].edges);
-		setQueries(transformed.queries);
 		setVersions(transformed.versions);
 	} catch (error) {
 		console.error("Error loading canvas:", error);

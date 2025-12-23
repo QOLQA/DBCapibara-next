@@ -1,21 +1,18 @@
 'use client';
 
-import { useFormStatus } from 'react-dom';
-
 interface SubmitButtonProps {
 	isSignUp: boolean;
+	isSubmitting: boolean;
 }
 
-export function SubmitButton({ isSignUp }: SubmitButtonProps) {
-	const { pending } = useFormStatus();
-
+export function SubmitButton({ isSignUp, isSubmitting }: SubmitButtonProps) {
 	return (
 		<button
 			type="submit"
-			disabled={pending}
+			disabled={isSubmitting}
 			className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-4 px-6 rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface disabled:opacity-50 disabled:cursor-not-allowed"
 		>
-			{pending ? (
+			{isSubmitting ? (
 				<span className="flex items-center justify-center gap-2">
 					<svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
 						<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
