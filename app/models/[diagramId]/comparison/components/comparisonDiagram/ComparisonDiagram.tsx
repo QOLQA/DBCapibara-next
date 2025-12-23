@@ -6,10 +6,8 @@ import {
 	MiniMap,
 	ReactFlow,
 	MarkerType,
-	ReactFlowProps,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import type { Node } from "@xyflow/react";
 import { nodeTypes } from "@/app/models/[diagramId]/canva/components/Table/TableNode";
 import { edgeTypes } from "@/app/models/[diagramId]/canva/components/Diagram/FloatingEdge";
 
@@ -18,7 +16,6 @@ import { canvaSelector } from "@/state/canvaStore";
 import { useShallow } from "zustand/shallow";
 import { useState } from "react";
 import { useMemo } from "react";
-import { useUniqueId } from "@/hooks/use-unique-id";
 import { useTableConnections } from "@/hooks/use-node-connections";
 
 const connectionLineStyle = {
@@ -36,7 +33,6 @@ const ComparisonDiagram = () => {
 	const {
 		nodes,
 		edges,
-		addNode,
 		editNode,
 		addEdge,
 		setEdges,
@@ -46,9 +42,7 @@ const ComparisonDiagram = () => {
 		useShallow(canvaSelector)
 	);
 
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [showError, setShowError] = useState(false);
-	const generateId = useUniqueId();
 
 	const connectionConfig = useMemo(
 		() => ({
