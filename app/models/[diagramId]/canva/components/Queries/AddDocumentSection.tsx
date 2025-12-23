@@ -27,6 +27,25 @@ export function AddDocumentSection({
 		setShowSearch(false);
 	};
 
+	const handleAddCustomTable = () => {
+		if (searchTerm.trim() && !selectedTables.includes(searchTerm.trim())) {
+			onAddTable(searchTerm.trim());
+			setSearchTerm("");
+			setShowSearch(false);
+		}
+	};
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter" && searchTerm.trim()) {
+			e.preventDefault();
+			if (filteredTables.length === 1) {
+				handleAddTable(filteredTables[0]);
+			} else {
+				handleAddCustomTable();
+			}
+		}
+	};
+
 	const handleCancel = () => {
 		setShowSearch(false);
 		setSearchTerm("");
@@ -51,27 +70,37 @@ export function AddDocumentSection({
 		<div className="flex flex-col gap-2 px-4 py-3 bg-terciary-gray border border-gray rounded-lg">
 			<input
 				type="text"
-				placeholder="Search for a table..."
+				placeholder="Search or type a table name..."
 				value={searchTerm}
 				onChange={(e) => setSearchTerm(e.target.value)}
+				onKeyDown={handleKeyDown}
 				className="w-full px-3 py-2 bg-primary-black border border-gray rounded-md text-white placeholder:text-lighter-gray focus:outline-none focus:border-secondary-white"
 				autoFocus
 			/>
 			{searchTerm && (
 				<div className="max-h-40 overflow-y-auto flex flex-col gap-1">
 					{filteredTables.length > 0 ? (
-						filteredTables.map((tableName) => (
-							<button
-								key={tableName}
-								type="button"
-								onClick={() => handleAddTable(tableName)}
-								className="px-3 py-2 text-left text-secondary-white hover:bg-gray rounded transition-colors duration-200"
-							>
-								{tableName}
-							</button>
-						))
+						<>
+							{filteredTables.map((tableName) => (
+								<button
+									key={tableName}
+									type="button"
+									onClick={() => handleAddTable(tableName)}
+									className="px-3 py-2 text-left text-secondary-white hover:bg-gray rounded transition-colors duration-200"
+								>
+									{tableName}
+								</button>
+							))}
+						</>
 					) : (
-						<p className="px-3 py-2 text-lighter-gray text-sm">No tables found</p>
+						<button
+							type="button"
+							onClick={handleAddCustomTable}
+							className="px-3 py-2 text-left text-secondary-white hover:bg-gray rounded transition-colors duration-200 flex items-center gap-2"
+						>
+							<Plus className="w-4 h-4" />
+							Add "{searchTerm}"
+						</button>
 					)}
 				</div>
 			)}
