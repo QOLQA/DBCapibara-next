@@ -36,7 +36,7 @@ const defaultEdgeOptions = {
 		type: MarkerType.ArrowClosed,
 		width: 20,
 		height: 20,
-		color: "#4e4e4e",
+		color: "#4e4e42",
 	},
 };
 
