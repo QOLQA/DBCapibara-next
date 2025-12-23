@@ -39,6 +39,7 @@ const ComparisonDiagram = () => {
 		addNode,
 		editNode,
 		addEdge,
+		setEdges,
 		onNodesChange,
 		onEdgesChange,
 	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
@@ -52,11 +53,13 @@ const ComparisonDiagram = () => {
 	const connectionConfig = useMemo(
 		() => ({
 			nodes,
+			edges,
 			editNode,
 			addEdge,
+			setEdges,
 			onError: () => setShowError(true),
 		}),
-		[nodes, editNode, addEdge]
+		[nodes, edges, editNode, addEdge, setEdges]
 	);
 
 	const { handleConnect } = useTableConnections(connectionConfig);
