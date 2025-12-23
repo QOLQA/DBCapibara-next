@@ -25,6 +25,7 @@ export type CanvasState = {
 	queries: Query[];
 	id: string;
 	isChangingVersion: boolean;
+	hasLoadedQueries: boolean;
 	setId: (id: string) => void;
 	setQueries: (queries: Query[]) => void;
 	setNodes: (nodes: Node<TableData>[]) => void;
@@ -32,6 +33,7 @@ export type CanvasState = {
 	setVersions: (versions: VersionFrontend[]) => void;
 	setSelectedVersionId: (id: string) => void;
 	setIsChangingVersion: (isChanging: boolean) => void;
+	setHasLoadedQueries: (hasLoaded: boolean) => void;
 	getQueryById: (queryId: string) => Query | undefined;
 	addNode: (node: Node<TableData>) => void;
 	addEdge: (edge: Edge) => void;
@@ -57,6 +59,7 @@ export const useCanvasStore = create<CanvasState>()(
 			versions: [],
 			selectedVersionId: "",
 			isChangingVersion: false,
+			hasLoadedQueries: false,
 			setSelectedVersionId: (id) => {
 				set((state) => {
 					state.selectedVersionId = id;
@@ -65,6 +68,11 @@ export const useCanvasStore = create<CanvasState>()(
 			setIsChangingVersion: (isChanging) => {
 				set((state) => {
 					state.isChangingVersion = isChanging;
+				});
+			},
+			setHasLoadedQueries: (hasLoaded) => {
+				set((state) => {
+					state.hasLoadedQueries = hasLoaded;
 				});
 			},
 			setId: (id) => {
