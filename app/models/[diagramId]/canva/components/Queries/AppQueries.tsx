@@ -9,17 +9,18 @@ import { QueryItem } from "./QueryItem";
 export const AppQueries = () => {
 	const queries = useCanvasStore((state) => state.queries);
 	const solutionId = useCanvasStore((state) => state.id);
+	const hasLoadedQueries = useCanvasStore((state) => state.hasLoadedQueries);
+	const setHasLoadedQueries = useCanvasStore((state) => state.setHasLoadedQueries);
 	const { syncQueries } = useQueryOperations();
 	const [isLoading, setIsLoading] = useState(false);
-	const [hasLoaded, setHasLoaded] = useState(false);
 
-	// Cargar queries desde el backend cuando el componente se monte
+	// Cargar queries desde el backend solo la primera vez
 	useEffect(() => {
-		if (solutionId && !hasLoaded) {
+		if (solutionId && !hasLoadedQueries) {
 			setIsLoading(true);
 			syncQueries()
 				.then(() => {
-					setHasLoaded(true);
+					setHasLoadedQueries(true);
 				})
 				.catch((error) => {
 					console.error("❌ Failed to load queries:", error);
@@ -28,7 +29,7 @@ export const AppQueries = () => {
 					setIsLoading(false);
 				});
 		}
-	}, [solutionId, hasLoaded, syncQueries]);
+	}, [solutionId, hasLoadedQueries, syncQueries, setHasLoadedQueries]);
 
 	if (isLoading) {
 		return (

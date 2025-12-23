@@ -10,7 +10,7 @@ export function SubmitButton({ isSignUp, isSubmitting }: SubmitButtonProps) {
 		<button
 			type="submit"
 			disabled={isSubmitting}
-			className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-4 px-6 rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface disabled:opacity-50 disabled:cursor-not-allowed"
+			className="w-full bg-primary hover:bg-primary/90 text-terciary-gray font-medium py-4 px-6 rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface disabled:opacity-50 disabled:cursor-not-allowed"
 		>
 			{isSubmitting ? (
 				<span className="flex items-center justify-center gap-2">
