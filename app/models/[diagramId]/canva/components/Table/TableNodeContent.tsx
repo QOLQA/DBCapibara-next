@@ -33,6 +33,8 @@ import {
 } from "@/components/icons/TableOptionsIcons";
 import { useTableConnections } from "@/hooks/use-node-connections";
 import { useTranslation } from "@/hooks/use-translation";
+import { NestedTableCardinality } from "./NestedTableCardinality";
+import type { CardinalityType } from "../../types";
 
 const AttributeNode = React.memo(
 	({ column, columnId, handleEdit }: AttributeNodeProps) => {
@@ -129,7 +131,7 @@ const AttributeNode = React.memo(
 					<div className=" absolute h-full right-0 top-0 table-attribute__options">
 						<ManagedDropdownMenu>
 							{column.type !== "PRIMARY_KEY" &&
-							column.type !== "FOREIGN_KEY" ? (
+								column.type !== "FOREIGN_KEY" ? (
 								<DropdownMenuTrigger asChild>
 									<MoreButton
 										className="text-lighter-gray "
@@ -196,7 +198,11 @@ interface TableAttribute {
 	ableToEdit: boolean;
 }
 
-export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
+interface TableNodeContentProps extends TableNodeProps {
+	isNested?: boolean;
+}
+
+export const TableNodeContent = React.memo(({ data, id, isNested = false }: TableNodeContentProps) => {
 	const { t } = useTranslation();
 	const { setNodes } = useReactFlow();
 	const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
@@ -226,7 +232,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 		nodes,
 		edges,
 		editNode,
-		addEdge: () => {}, // No se usa aquí
+		addEdge: () => { }, // No se usa aquí
 		setEdges,
 	});
 
@@ -563,7 +569,7 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 	const nestedTableNodes = useMemo(
 		() =>
 			data.nestedTables?.map((nestedTable: TableData) => (
-				<TableNodeContent key={nestedTable.id} data={nestedTable} id={id} />
+				<TableNodeContent key={nestedTable.id} data={nestedTable} id={id} isNested />
 			)),
 		[data.nestedTables, id]
 	);
@@ -575,12 +581,20 @@ export const TableNodeContent = React.memo(({ data, id }: TableNodeProps) => {
 
 	return (
 		<>
-			<div className="table">
+			<div className={isNested ? "table nested-table" : "table"}>
 				<div
 					className="table-header text-white"
 					style={{ backgroundColor: headerColor }}
 				>
-					<span>{data.label}</span>
+					<div className="flex items-center">
+						<span>{data.label}</span>
+						{isNested && (
+							<NestedTableCardinality
+								tableId={data.id}
+								cardinality={(data.cardinality as CardinalityType) ?? "1...n"}
+							/>
+						)}
+					</div>
 
 					<ManagedDropdownMenu>
 						<DropdownMenuTrigger asChild>

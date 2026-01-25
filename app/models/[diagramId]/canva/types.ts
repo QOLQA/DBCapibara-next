@@ -22,6 +22,7 @@ export interface TableData {
 	columns: Column[];
 	nestedTables?: TableData[];
 	submodelIndex?: number;
+	cardinality?: CardinalityType;
 }
 
 export interface AttributeNodeProps {
