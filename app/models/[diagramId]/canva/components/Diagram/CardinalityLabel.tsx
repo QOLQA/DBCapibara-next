@@ -60,10 +60,10 @@ export const CardinalityLabel = React.memo(
 
 		return (
 			<foreignObject
-				width={80}
-				height={30}
-				x={labelX - 40}
-				y={labelY - 15}
+				width={130}
+				height={40}
+				x={labelX - 70}
+				y={labelY - 20}
 				className="overflow-visible pointer-events-auto"
 				requiredExtensions="http://www.w3.org/1999/xhtml"
 			>
@@ -75,7 +75,7 @@ export const CardinalityLabel = React.memo(
 						<DropdownMenuTrigger asChild>
 							<button
 								type="button"
-								className="px-2 py-1 text-lighter-gray text-p-sm bg-transparent hover:bg-secondary-gray/80 rounded cursor-pointer transition-colors duration-200 border-none outline-none focus:ring-1 focus:ring-lighter-gray/50"
+								className="px-2 py-1 text-lighter-gray text-p-lg bg-terciary-gray hover:bg-secondary-gray/80 rounded cursor-pointer transition-colors duration-200 border-none outline-none focus:ring-1 focus:ring-lighter-gray/50"
 								onClick={handleClick}
 							>
 								{cardinality}
