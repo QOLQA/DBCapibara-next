@@ -66,6 +66,7 @@ export function transformSolutionModel(solution: SolutionModel): {
 			})),
 			nestedTables: mapNestedNode(nestedNode.nested_nodes || [], submodelIndex),
 			submodelIndex,
+			cardinality: nestedNode.cardinality,
 		}));
 	}
 
