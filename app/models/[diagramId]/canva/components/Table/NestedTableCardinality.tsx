@@ -15,7 +15,7 @@ import {
 	type TableData,
 	CARDINALITY_OPTIONS,
 } from "../../types";
-import getKeySegment from "@/lib/getKeySegment";
+import getKeySegment from "@/lib/utils/keys";
 
 interface NestedTableCardinalityProps {
 	tableId: string;

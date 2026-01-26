@@ -61,7 +61,7 @@ export function FloatingEdge({
 
 	// Default cardinality if not set
 	const edgeData = data as EdgeData | undefined;
-	const cardinality: CardinalityType = edgeData?.cardinality ?? "1...n";
+	const cardinality: CardinalityType = edgeData?.cardinality ?? "1 ... n";
 
 	return (
 		<>
