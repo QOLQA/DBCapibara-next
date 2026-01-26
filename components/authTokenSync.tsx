@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { getAuthToken } from '@/lib/api';
+import { getAuthToken } from '@/lib/api/client';
 
 /**
  * Componente que sincroniza el token JWT entre localStorage y cookies

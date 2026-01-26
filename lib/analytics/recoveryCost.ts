@@ -1,6 +1,6 @@
 import type { Node, Edge } from "@xyflow/react";
 import type { TableData } from "@/app/models/[diagramId]/canva/types";
-import { getAccessPattern } from "./getAccessPattern";
+import { getAccessPattern } from "./accessPattern";
 
 // Cache to avoid unnecessary recalculations
 let cachedRecoveryCost: number | null = null;

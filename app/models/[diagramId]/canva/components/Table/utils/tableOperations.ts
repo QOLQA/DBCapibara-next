@@ -1,5 +1,5 @@
 import type { TableData, Column } from "../../../types";
-import getKeySegment from "@/lib/getKeySegment";
+import getKeySegment from "@/lib/utils/keys";
 
 /**
  * Generates a random 8-character alphanumeric ID

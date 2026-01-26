@@ -5,9 +5,9 @@ import { SquadStats } from "./SquadStats";
 import type { StastType } from "../../types";
 import { StatsLineTotal } from "./StatsLineTotal";
 import { useCanvasStore } from "@/state/canvaStore";
-import { getAccessPattern } from "@/lib/getAccessPattern";
-import { getRecoveryCost } from "@/lib/getRecoveryCost";
-import { getRedundancyMetrics } from "@/lib/getRedundancyMetrics";
+import { getAccessPattern } from "@/lib/analytics/accessPattern";
+import { getRecoveryCost } from "@/lib/analytics/recoveryCost";
+import { getRedundancyMetrics } from "@/lib/analytics/redundancy";
 
 export const AppStatistics = () => {
 	const accessPatternValue = useCanvasStore((state) =>

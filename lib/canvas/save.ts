@@ -1,9 +1,9 @@
 import type { Query, VersionBackend } from "@/app/models/[diagramId]/canva/types";
 import type { Edge, Node } from "@xyflow/react";
 import type { TableData } from "@/app/models/[diagramId]/canva/types";
-import { loadCanva } from "./loadCanva";
-import { api } from "./api";
-import { transformVersionToBackend } from "./canvaConversion";
+import { loadCanva } from "./load";
+import { api } from "../api/client";
+import { transformVersionToBackend } from "../conversions/canvas";
 import { useCanvasStore } from "@/state/canvaStore";
 
 // Cache para evitar guardados innecesarios

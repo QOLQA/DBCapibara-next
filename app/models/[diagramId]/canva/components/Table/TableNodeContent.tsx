@@ -13,7 +13,7 @@ import {
 import { MoreButton } from "../Diagram/MoreButton";
 import ModalDocument from "../Modals/ModalDocument";
 import ModalAtributes from "../Modals/ModalAtributes";
-import { getSubmodelColor } from "@/lib/submodelColors";
+import { getSubmodelColor } from "@/lib/utils/colors";
 import {
 	AddDocument,
 	Delete,

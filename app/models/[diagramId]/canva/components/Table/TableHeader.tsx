@@ -15,7 +15,7 @@ import {
 	Edit,
 	Plus,
 } from "@/components/icons/TableOptionsIcons";
-import { getSubmodelColor } from "@/lib/submodelColors";
+import { getSubmodelColor } from "@/lib/utils/colors";
 
 interface TableHeaderProps {
 	label: string;

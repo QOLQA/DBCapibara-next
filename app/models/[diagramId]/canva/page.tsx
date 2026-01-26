@@ -1,6 +1,6 @@
-import { transformSolutionModel } from "@/lib/solutionConversion";
+import { transformSolutionModel } from "@/lib/conversions/solution";
 import DiagramClient from "./diagram-client";
-import { getAuthenticatedSolution } from "@/lib/apiServer";
+import { getAuthenticatedSolution } from "@/lib/api/server";
 import { redirect } from "next/navigation";
 
 async function getDiagram(solutionId: string) {

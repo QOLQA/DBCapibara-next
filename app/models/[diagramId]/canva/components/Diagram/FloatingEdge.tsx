@@ -2,7 +2,7 @@
 
 import { BaseEdge, getSmoothStepPath, useInternalNode } from "@xyflow/react";
 import type { EdgeProps } from "@xyflow/react";
-import { getEdgeParams } from "@/lib/edges";
+import { getEdgeParams } from "@/lib/utils/edges";
 import { CardinalityLabel } from "./CardinalityLabel";
 import type { CardinalityType, EdgeData } from "../../types";
 
@@ -61,7 +61,7 @@ export function FloatingEdge({
 
 	// Default cardinality if not set
 	const edgeData = data as EdgeData | undefined;
-	const cardinality: CardinalityType = edgeData?.cardinality ?? "1...n";
+	const cardinality: CardinalityType = edgeData?.cardinality ?? "1 ... n";
 
 	return (
 		<>

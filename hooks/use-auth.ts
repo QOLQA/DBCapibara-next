@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { handleApiError } from "@/lib/api";
+import { handleApiError } from "@/lib/api/client";
 import { useTranslation } from "./use-translation";
 
 export interface User {

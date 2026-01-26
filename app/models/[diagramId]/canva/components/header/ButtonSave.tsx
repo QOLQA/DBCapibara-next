@@ -1,10 +1,10 @@
 import { Save } from "@/components/icons/HeaderIcons";
-import { transformVersionToBackend } from "@/lib/canvaConversion";
-import { saveCanvas, saveSolution } from "@/lib/saveCanvas";
+import { transformVersionToBackend } from "@/lib/conversions/canvas";
+import { saveCanvas, saveSolution } from "@/lib/canvas/save";
 import { useCanvasStore } from "@/state/canvaStore";
 import { getNodesBounds, getViewportForBounds } from "@xyflow/react";
 import { toPng } from "html-to-image";
-import { uploadImage } from "@/lib/imageService";
+import { uploadImage } from "@/lib/services/image";
 import { toast } from "sonner";
 import { useTranslation } from "@/hooks/use-translation";
 

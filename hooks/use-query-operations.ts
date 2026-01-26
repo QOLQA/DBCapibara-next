@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import { useCanvasStore } from "@/state/canvaStore";
-import { api } from "@/lib/api";
+import { api } from "@/lib/api/client";
 import type { Query } from "@/app/models/[diagramId]/canva/types";
 
 /**

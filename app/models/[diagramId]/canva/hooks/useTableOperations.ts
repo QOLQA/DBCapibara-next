@@ -5,7 +5,7 @@ import { type Node, useReactFlow } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import type { Column, TableData } from "../types";
 import { useCanvasStore } from "@/state/canvaStore";
-import getKeySegment from "@/lib/getKeySegment";
+import getKeySegment from "@/lib/utils/keys";
 
 interface TableAttribute {
 	id: string;
