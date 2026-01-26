@@ -3,7 +3,7 @@
 "use client";
 
 import { useCanvasStore } from "@/state/canvaStore";
-import { calculateHandledQueriesPercentage } from "@/lib/getHandledQueries";
+import { calculateHandledQueriesPercentage } from "@/lib/analytics/queries";
 import {
 	Label,
 	PolarGrid,

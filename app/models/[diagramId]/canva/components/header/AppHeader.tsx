@@ -4,6 +4,8 @@ import { ArrowLeft, ArrowRight, Chevron } from "@/components/icons/HeaderIcons";
 
 import { LogoWithSelect } from "./LogoWithSelect";
 import { ButtonSave } from "./ButtonSave";
+import { ButtonDuplicateVersion } from "./ButtonDuplicateVersion";
+
 
 export const AppHeader = ({ title }: { title: string }) => {
 	return (
@@ -19,7 +21,10 @@ export const AppHeader = ({ title }: { title: string }) => {
 					<Chevron className="text-white" />
 				</div>
 			</div>
-			<ButtonSave />
+			<div className="flex items-center gap-4">
+				<ButtonDuplicateVersion />
+				<ButtonSave />
+			</div>
 		</header>
 	);
 };

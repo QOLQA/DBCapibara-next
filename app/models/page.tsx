@@ -1,5 +1,5 @@
 import ModelsClient from "./modelsClient";
-import { getAuthenticatedSolutions } from "@/lib/apiServer";
+import { getAuthenticatedSolutions } from "@/lib/api/server";
 import { redirect } from "next/navigation";
 
 async function getSolutions() {

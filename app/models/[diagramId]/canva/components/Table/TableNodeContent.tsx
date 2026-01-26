@@ -21,9 +21,9 @@ import { MoreButton } from "../Diagram/MoreButton";
 import ModalDocument from "../Modals/ModalDocument";
 
 import { useCanvasStore } from "@/state/canvaStore";
-import getKeySegment from "@/lib/getKeySegment";
+import getKeySegment from "@/lib/utils/keys";
 import ModalAtributes from "../Modals/ModalAtributes";
-import { getSubmodelColor } from "@/lib/submodelColors";
+import { getSubmodelColor } from "@/lib/utils/colors";
 
 import {
 	AddDocument,

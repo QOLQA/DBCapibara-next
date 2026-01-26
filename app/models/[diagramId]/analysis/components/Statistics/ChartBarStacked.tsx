@@ -2,11 +2,11 @@
 
 import { ChartConfig } from "@/components/ui/chart";
 import { useCanvasStore } from "@/state/canvaStore";
-import { getAccessPattern } from "@/lib/getAccessPattern";
-import { getRedundancyMetrics } from "@/lib/getRedundancyMetrics";
-import { getRecoveryCost } from "@/lib/getRecoveryCost";
+import { getAccessPattern } from "@/lib/analytics/accessPattern";
+import { getRedundancyMetrics } from "@/lib/analytics/redundancy";
+import { getRecoveryCost } from "@/lib/analytics/recoveryCost";
 import { useEffect, useState } from "react";
-import { calculateHandledQueriesPercentage } from "@/lib/getHandledQueries";
+import { calculateHandledQueriesPercentage } from "@/lib/analytics/queries";
 import MetricsChart from "./MetricsChart";
 import CompletudeChart from "./CompletudeChart";
 import { TableMetrics } from "./TableMetrics";

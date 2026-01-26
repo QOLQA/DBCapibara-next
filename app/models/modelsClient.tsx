@@ -8,7 +8,7 @@ import AddSolutionModal from "./components/AddSolutionModal";
 import type { SolutionModel } from "./[diagramId]/canva/types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { api } from "@/lib/api";
+import { api } from "@/lib/api/client";
 import { useAuth } from "@/hooks/use-auth";
 import { Logo } from "@/components/icons/HeaderIcons";
 import { cn } from "@/lib/utils";

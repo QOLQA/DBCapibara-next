@@ -2,7 +2,7 @@
 
 import { BaseEdge, getSmoothStepPath, useInternalNode } from "@xyflow/react";
 import type { EdgeProps } from "@xyflow/react";
-import { getEdgeParams } from "@/lib/edges";
+import { getEdgeParams } from "@/lib/utils/edges";
 
 /**
  * FloatingEdge is a custom edge component for React Flow that renders a step edge with 90-degree angles between two nodes.

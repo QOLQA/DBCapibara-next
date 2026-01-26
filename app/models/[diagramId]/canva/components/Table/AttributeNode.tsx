@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreButton } from "../Diagram/MoreButton";
 import { useCanvasStore } from "@/state/canvaStore";
-import getKeySegment from "@/lib/getKeySegment";
+import getKeySegment from "@/lib/utils/keys";
 import {
 	Delete,
 	Edit,

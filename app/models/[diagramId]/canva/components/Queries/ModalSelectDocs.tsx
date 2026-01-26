@@ -3,7 +3,7 @@
 import { Modal } from "@/components/ui/modal";
 import { useCanvasStore } from "@/state/canvaStore";
 import { useUniqueId } from "@/hooks/use-unique-id";
-import { getUniqueTableNames } from "@/lib/getHandledQueries";
+import { getUniqueTableNames } from "@/lib/analytics/queries";
 import { useTableSelection } from "@/hooks/use-table-selection";
 import { useQueryOperations } from "@/hooks/use-query-operations";
 import { WordToggleButtons } from "./WordToggleButtons";

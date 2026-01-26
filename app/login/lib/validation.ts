@@ -1,4 +1,4 @@
-import { validatePassword, validateUsername, validateEmail } from '@/lib/api';
+import { validatePassword, validateUsername, validateEmail } from '@/lib/api/client';
 
 export type LoginFormData = {
 	username: string;
