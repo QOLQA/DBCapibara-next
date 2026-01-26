@@ -1,8 +1,8 @@
 import type { Edge, Node } from "@xyflow/react";
 
-export type CardinalityType = "1...1" | "1...n" | "n...m";
+export type CardinalityType = "1 ... 1" | "1 ... n" | "n ... m";
 
-export const CARDINALITY_OPTIONS: CardinalityType[] = ["1...1", "1...n", "n...m"];
+export const CARDINALITY_OPTIONS: CardinalityType[] = ["1 ... 1", "1 ... n", "n ... m"];
 
 export interface EdgeData {
 	cardinality?: CardinalityType;

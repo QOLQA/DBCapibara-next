@@ -66,7 +66,7 @@ export function transformSolutionModel(solution: SolutionModel): {
 			})),
 			nestedTables: mapNestedNode(nestedNode.nested_nodes || [], submodelIndex),
 			submodelIndex,
-			cardinality: nestedNode.cardinality,
+			cardinality: nestedNode.cardinality ?? '1 ... 1',
 		}));
 	}
 
@@ -74,7 +74,16 @@ export function transformSolutionModel(solution: SolutionModel): {
 		nodes: version.submodels.flatMap((submodel, submodelIndex) =>
 			submodel.nodes.map((node) => mapNode(node, submodelIndex))
 		),
-		edges: version.submodels.flatMap((submodel) => submodel.edges),
+		edges: version.submodels.flatMap((submodel) =>
+			submodel.edges.map((edge) => ({
+				id: edge.id,
+				source: edge.source,
+				target: edge.target,
+				data: {
+					cardinality: edge.cardinality ?? "1 ... 1",
+				},
+			}))
+		),
 		description: version.description,
 		solution_id: version.solution_id,
 		_id: version._id,
