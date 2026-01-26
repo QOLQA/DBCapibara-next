@@ -60,12 +60,14 @@ export interface NestedNode {
 	name: string;
 	cols: Column[];
 	nested_nodes?: NestedNode[];
+	cardinality?: CardinalityType;
 }
 
 export interface EdgeBackend {
 	id: string;
 	source: string;
 	target: string;
+	cardinality?: CardinalityType;
 }
 
 export interface Submodel {
