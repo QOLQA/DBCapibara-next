@@ -102,6 +102,11 @@ export const en = {
 		addAttributes: "Add attributes",
 		addDocuments: "Add documents",
 	},
+
+	// Header
+	header: {
+		newVersion: "Create new version",
+	},
 };
 
 // Type for translation structure (allows different string values per locale)

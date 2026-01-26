@@ -1,5 +1,4 @@
 import { api } from "../api/client";
-import { loadCanva } from "./load";
 import { transformVersionToBackend } from "../conversions/canvas";
 import { useCanvasStore } from "@/state/canvaStore";
 import type { VersionBackend, VersionFrontend, NodeBackend, NestedNode, TableData } from "@/app/models/[diagramId]/canva/types";
@@ -163,6 +162,43 @@ export async function duplicateVersion(
 		return transformedVersion;
 	} catch (error) {
 		console.error("Error duplicating version:", error);
+		throw error;
+	}
+}
+
+/**
+ * Updates the description of a version
+ * @param solutionId - The ID of the solution
+ * @param versionId - The ID of the version to update
+ * @param newDescription - The new description for the version
+ * @returns The updated version
+ */
+export async function updateVersionDescription(
+	solutionId: string,
+	versionId: string,
+	newDescription: string
+): Promise<VersionFrontend> {
+	try {
+		// Update the version description via API
+		const updatedVersion = await api.patch<VersionBackend>(
+			`/solutions/${solutionId}/versions/${versionId}`,
+			{ description: newDescription }
+		);
+
+		// Transform the updated version to frontend format
+		const transformedVersion = transformVersionBackendToFrontend(updatedVersion);
+
+		// Update store: replace the modified version in the versions array
+		const { versions, setVersions } = useCanvasStore.getState();
+		const updatedVersions = versions.map((v) =>
+			v._id === versionId ? transformedVersion : v
+		);
+		
+		setVersions(updatedVersions);
+
+		return transformedVersion;
+	} catch (error) {
+		console.error("Error updating version description:", error);
 		throw error;
 	}
 }
