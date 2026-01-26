@@ -42,6 +42,7 @@ export type CanvasState = {
 	editQuery: (queryId: string, newQuery: Query) => void;
 	removeNode: (nodeId: string) => void;
 	removeEdge: (edgeId: string) => void;
+	editEdge: (edgeId: string, newEdge: Edge) => void;
 	removeQuery: (queryId: string) => void;
 	onNodesChange: (changes: NodeChange<Node<TableData>>[]) => void;
 	onEdgesChange: (changes: EdgeChange[]) => void;
@@ -147,6 +148,14 @@ export const useCanvasStore = create<CanvasState>()(
 					state.edges = state.edges.filter((e) => e.id !== edgeId);
 				});
 			},
+			editEdge: (edgeId, newEdge) => {
+				set((state) => {
+					const index = state.edges.findIndex((edge) => edge.id === edgeId);
+					if (index !== -1) {
+						state.edges[index] = newEdge;
+					}
+				});
+			},
 			removeQuery: (queryId) => {
 				set((state) => {
 					state.queries = state.queries.filter((q) => q._id !== queryId);
@@ -187,6 +196,7 @@ export const canvaSelector = (state: CanvasState) => ({
 	nodes: state.nodes,
 	edges: state.edges,
 	editNode: state.editNode,
+	editEdge: state.editEdge,
 	addEdge: state.addEdge,
 	onNodesChange: state.onNodesChange,
 	onEdgesChange: state.onEdgesChange,

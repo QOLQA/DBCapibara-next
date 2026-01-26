@@ -7,6 +7,7 @@ import type {
 	NestedNode,
 	Submodel,
 	EdgeBackend,
+	CardinalityType,
 } from "@/app/models/[diagramId]/canva/types";
 
 function tableDataToNodeBackend(node: Node<TableData>): NodeBackend {
@@ -18,6 +19,7 @@ function tableDataToNodeBackend(node: Node<TableData>): NodeBackend {
 			name: nestedTable.label,
 			cols: nestedTable.columns,
 			nested_nodes: convertNestedTablesToNestedNodes(nestedTable.nestedTables),
+			cardinality: nestedTable.cardinality,
 		}));
 	};
 
@@ -101,6 +103,7 @@ export function transformVersionToBackend(
 				id: edge.id,
 				source: edge.source,
 				target: edge.target,
+				cardinality: edge.data?.cardinality as CardinalityType || '1 ... 1',
 			}));
 
 		return {
