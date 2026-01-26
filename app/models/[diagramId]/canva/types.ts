@@ -1,5 +1,14 @@
 import type { Edge, Node } from "@xyflow/react";
 
+export type CardinalityType = "1 ... 1" | "1 ... n" | "n ... m";
+
+export const CARDINALITY_OPTIONS: CardinalityType[] = ["1 ... 1", "1 ... n", "n ... m"];
+
+export interface EdgeData {
+	cardinality?: CardinalityType;
+	[key: string]: unknown;
+}
+
 export interface Column {
 	id: string;
 	name: string;
@@ -13,6 +22,7 @@ export interface TableData {
 	columns: Column[];
 	nestedTables?: TableData[];
 	submodelIndex?: number;
+	cardinality?: CardinalityType;
 }
 
 export interface AttributeNodeProps {
@@ -50,12 +60,14 @@ export interface NestedNode {
 	name: string;
 	cols: Column[];
 	nested_nodes?: NestedNode[];
+	cardinality?: CardinalityType;
 }
 
 export interface EdgeBackend {
 	id: string;
 	source: string;
 	target: string;
+	cardinality?: CardinalityType;
 }
 
 export interface Submodel {
