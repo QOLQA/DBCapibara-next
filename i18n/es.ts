@@ -105,4 +105,9 @@ export const es: TranslationKeys = {
 		addAttributes: "Agregar atributos",
 		addDocuments: "Agregar documentos",
 	},
+
+	// Header
+	header: {
+		newVersion: "Crear nueva versión",
+	},
 };
