@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { DropdownProvider } from "@/contexts/dropdown-context";
-import { AuthProvider } from "@/contexts/auth-context";
-import { AuthTokenSync } from "@/components/authTokenSync";
+import { AuthProvider, AuthTokenSync } from "@fsd/app/providers";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {

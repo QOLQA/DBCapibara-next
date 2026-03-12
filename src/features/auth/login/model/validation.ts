@@ -1,4 +1,8 @@
-import { validatePassword, validateUsername, validateEmail } from '@/lib/api/client';
+import {
+	validatePassword,
+	validateUsername,
+	validateEmail,
+} from "@fsd/shared/api";
 
 export type LoginFormData = {
 	username: string;
@@ -12,32 +16,31 @@ export type RegisterFormData = {
 	full_name?: string;
 };
 
-// Validación personalizada para react-hook-form
 export const loginValidation = {
 	username: {
-		required: 'El username es requerido',
+		required: "El username es requerido" as const,
 	},
 	password: {
-		required: 'La contraseña es requerida',
+		required: "La contraseña es requerida" as const,
 	},
 };
 
 export const registerValidation = {
 	username: {
-		required: 'El username es requerido',
+		required: "El username es requerido" as const,
 		validate: (value: string) => {
 			const validation = validateUsername(value);
 			return validation.isValid || validation.errors[0];
 		},
 	},
 	email: {
-		required: 'El email es requerido',
+		required: "El email es requerido" as const,
 		validate: (value: string) => {
-			return validateEmail(value) || 'Email inválido';
+			return validateEmail(value) || "Email inválido";
 		},
 	},
 	password: {
-		required: 'La contraseña es requerida',
+		required: "La contraseña es requerida" as const,
 		validate: (value: string) => {
 			const validation = validatePassword(value);
 			return validation.isValid || validation.errors[0];

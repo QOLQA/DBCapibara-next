@@ -1,30 +1,10 @@
+"use client";
+
 import { useState, useEffect, useCallback } from "react";
-import { handleApiError } from "@/lib/api/client";
-import { useTranslation } from "./use-translation";
+import { handleApiError } from "@fsd/shared/api";
+import { useTranslation } from "@/hooks/use-translation";
+import type { User, LoginCredentials, RegisterData } from "@fsd/entities/user";
 
-export interface User {
-	id: string;
-	username: string;
-	email: string;
-	full_name?: string;
-	avatar?: string;
-	is_active: boolean;
-	created_at: string;
-}
-
-export interface LoginCredentials {
-	username: string;
-	password: string;
-}
-
-export interface RegisterData {
-	username: string;
-	email: string;
-	password: string;
-	full_name?: string;
-}
-
-// Client-side: usa la URL pública accesible desde el navegador
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
 export const useAuth = () => {
@@ -33,7 +13,6 @@ export const useAuth = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
-	// Verificar autenticación al montar
 	const checkAuth = useCallback(async () => {
 		const token = localStorage.getItem("access_token");
 
@@ -53,7 +32,6 @@ export const useAuth = () => {
 				const userData = await response.json();
 				setUser(userData);
 			} else {
-				// Token inválido o expirado
 				localStorage.removeItem("access_token");
 				setUser(null);
 			}
@@ -76,7 +54,6 @@ export const useAuth = () => {
 			setLoading(true);
 
 			try {
-				// OAuth2 requiere FormData con username y password
 				const formData = new URLSearchParams();
 				formData.append("username", credentials.username);
 				formData.append("password", credentials.password);
@@ -98,15 +75,14 @@ export const useAuth = () => {
 				const data = await response.json();
 				localStorage.setItem("access_token", data.access_token);
 
-				// Sincronizar con cookies para server components
 				if (typeof document !== "undefined") {
 					const isProduction = process.env.NODE_ENV === "production";
 					const cookieOptions = [
 						`access_token=${data.access_token}`,
 						"path=/",
-						"max-age=1800", // 30 minutos
-						"SameSite=Lax", // Protección CSRF
-						isProduction ? "Secure" : "", // Solo HTTPS en producción
+						"max-age=1800",
+						"SameSite=Lax",
+						isProduction ? "Secure" : "",
 					]
 						.filter(Boolean)
 						.join("; ");
@@ -114,7 +90,6 @@ export const useAuth = () => {
 					document.cookie = cookieOptions;
 				}
 
-				// Obtener información del usuario
 				await checkAuth();
 
 				return data;
@@ -127,7 +102,7 @@ export const useAuth = () => {
 				setLoading(false);
 			}
 		},
-		[checkAuth]
+		[checkAuth, t]
 	);
 
 	const register = useCallback(
@@ -147,10 +122,9 @@ export const useAuth = () => {
 				if (!response.ok) {
 					const errorData = await response.json().catch(() => ({}));
 
-					// Manejar errores de validación
 					if (Array.isArray(errorData.detail)) {
 						const messages = errorData.detail
-							.map((err: any) => err.msg)
+							.map((err: { msg?: string }) => err.msg)
 							.join(", ");
 						throw new Error(messages);
 					}
@@ -161,7 +135,6 @@ export const useAuth = () => {
 
 				const userData = await response.json();
 
-				// Después de registrar, hacer login automáticamente
 				await login({
 					username: data.username,
 					password: data.password,
@@ -177,13 +150,12 @@ export const useAuth = () => {
 				setLoading(false);
 			}
 		},
-		[login]
+		[login, t]
 	);
 
 	const logout = useCallback(() => {
 		localStorage.removeItem("access_token");
 
-		// Limpiar cookie también
 		if (typeof document !== "undefined") {
 			document.cookie =
 				"access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";

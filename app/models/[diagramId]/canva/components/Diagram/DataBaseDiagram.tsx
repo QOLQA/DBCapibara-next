@@ -53,7 +53,7 @@ const DatabaseDiagram = () => {
 		onNodesChange,
 		onEdgesChange,
 	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
-		useShallow(canvaSelector)
+		useShallow(canvaSelector),
 	);
 
 	const isChangingVersion = useCanvasStore((state) => state.isChangingVersion);
@@ -70,7 +70,7 @@ const DatabaseDiagram = () => {
 			setEdges,
 			onError: () => toast.error(t("databaseDiagram.relationshipExists")),
 		}),
-		[nodes, edges, editNode, addEdge, setEdges, t]
+		[nodes, edges, editNode, addEdge, setEdges, t],
 	);
 
 	const { handleConnect, handleDisconnect, handleNodeRemove } =
@@ -102,7 +102,7 @@ const DatabaseDiagram = () => {
 
 			addNode(newNode);
 		},
-		[addNode, generateId, nodes]
+		[addNode, generateId, nodes],
 	);
 
 	const handleOpenModal = useCallback(() => {
@@ -123,7 +123,7 @@ const DatabaseDiagram = () => {
 
 			onEdgesChange(changes);
 		},
-		[onEdgesChange, handleDisconnect]
+		[onEdgesChange, handleDisconnect],
 	);
 
 	const handleNodesChange = useCallback(
@@ -135,7 +135,7 @@ const DatabaseDiagram = () => {
 			});
 			onNodesChange(changes);
 		},
-		[onNodesChange, handleNodeRemove, nodes]
+		[onNodesChange, handleNodeRemove, nodes],
 	);
 
 	const reactFlowProps = useMemo(
@@ -151,7 +151,7 @@ const DatabaseDiagram = () => {
 			defaultEdgeOptions,
 			fitView: true,
 		}),
-		[nodes, edges, onNodesChange, handleEdgesChange, handleConnect]
+		[nodes, edges, onNodesChange, handleEdgesChange, handleConnect],
 	);
 
 	return (

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@fsd/features/auth';
 
 export default function HomePage() {
 	const { isAuthenticated, loading } = useAuth();

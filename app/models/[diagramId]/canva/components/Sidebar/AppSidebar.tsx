@@ -9,7 +9,7 @@ import { AppQueries } from "../Queries/AppQueries";
 import type { Data, NavItem } from "./types";
 import { AppStatistics } from "../Statistics/AppStatistics";
 import { useParams, useRouter } from "next/navigation";
-import { useAuthContext } from "@/contexts/auth-context";
+import { useAuthContext } from "@fsd/app/providers";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { setOpen } = useSidebar();

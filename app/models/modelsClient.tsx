@@ -9,7 +9,7 @@ import type { SolutionModel } from "./[diagramId]/canva/types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { api } from "@/lib/api/client";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@fsd/features/auth";
 import { Logo } from "@/components/icons/HeaderIcons";
 import { cn } from "@/lib/utils";
 import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
