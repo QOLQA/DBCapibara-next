@@ -12,12 +12,12 @@ interface DeleteSolutionModalProps {
 	solutionName?: string;
 }
 
-const DeleteSolutionModal: React.FC<DeleteSolutionModalProps> = ({
+export function DeleteSolutionModal({
 	open,
 	setOpen,
 	onConfirm,
 	solutionName,
-}) => {
+}: DeleteSolutionModalProps) {
 	const { t } = useTranslation();
 	const [isPending, startTransition] = useTransition();
 	const defaultSolutionName =
@@ -59,6 +59,4 @@ const DeleteSolutionModal: React.FC<DeleteSolutionModalProps> = ({
 			</>
 		</Modal>
 	);
-};
-
-export default DeleteSolutionModal;
+}

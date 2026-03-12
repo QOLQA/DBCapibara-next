@@ -122,16 +122,16 @@ export const Modal = ({
 						{type === "create"
 							? t("common.create")
 							: type === "update"
-							? t("common.update")
-							: type === "next"
-							? t("common.next")
-							: type === "delete"
-							? t("common.delete")
-							: t("common.save")}
+								? t("common.update")
+								: type === "next"
+									? t("common.next")
+									: type === "delete"
+										? t("common.delete")
+										: t("common.save")}
 					</Button>
 				</div>
 			</div>
 		</dialog>,
-		document.body
+		document.body,
 	);
 };

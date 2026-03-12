@@ -4,17 +4,17 @@ import { Modal } from "@/components/ui/modal";
 import { useState, useTransition } from "react";
 import { useTranslation } from "@/hooks/use-translation";
 
-interface AddSolutionalModalProps {
+interface AddSolutionModalProps {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 	onSubmit: (name: string) => Promise<void>;
 }
 
-const AddSolutionModal: React.FC<AddSolutionalModalProps> = ({
+export function AddSolutionModal({
 	open,
 	setOpen,
 	onSubmit,
-}) => {
+}: AddSolutionModalProps) {
 	const { t } = useTranslation();
 	const [docName, setDocName] = useState("");
 	const [isPending, startTransition] = useTransition();
@@ -58,6 +58,4 @@ const AddSolutionModal: React.FC<AddSolutionalModalProps> = ({
 			</>
 		</Modal>
 	);
-};
-
-export default AddSolutionModal;
+}

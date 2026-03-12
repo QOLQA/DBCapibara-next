@@ -1,10 +1,9 @@
-import ModelsClient from "./modelsClient";
-import { getAuthenticatedSolutions } from "@/lib/api/server";
+import { ProjectsPage, getSolutions } from "@fsd/pages/projects";
 import { redirect } from "next/navigation";
 
-async function getSolutions() {
+async function loadSolutions() {
 	try {
-		return await getAuthenticatedSolutions();
+		return await getSolutions();
 	} catch (error) {
 		if (error instanceof Error && error.message === "UNAUTHORIZED") {
 			redirect("/login");
@@ -14,7 +13,7 @@ async function getSolutions() {
 }
 
 export default async function ModelsPage() {
-	const solutions = await getSolutions();
+	const solutions = await loadSolutions();
 
-	return <ModelsClient initialSolutions={solutions} />;
+	return <ProjectsPage initialSolutions={solutions} />;
 }

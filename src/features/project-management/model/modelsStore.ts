@@ -3,20 +3,20 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import type { SolutionModel } from "@/app/models/types";
+import type { SolutionListItem } from "@fsd/entities/solution";
 
 export type ModelsState = {
 	solutionId: string | null;
 	setSolutionId: (id: string) => void;
-	solutionDataToEdit: SolutionModel | null;
-	setSolutionDataToEdit: (data: SolutionModel) => void;
+	solutionDataToEdit: Pick<SolutionListItem, "_id" | "name"> | null;
+	setSolutionDataToEdit: (data: Pick<SolutionListItem, "_id" | "name">) => void;
 	_hasHydrated: boolean;
 	setHasHydrated: (hasHydrated: boolean) => void;
 };
 
 export const useModelsStore = create<ModelsState>()(
 	persist(
-		immer((set, get) => ({
+		immer((set) => ({
 			solutionId: null,
 			solutionDataToEdit: null,
 			setSolutionId: (id) => {
@@ -41,6 +41,6 @@ export const useModelsStore = create<ModelsState>()(
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);
 			},
-		}
-	)
+		},
+	),
 );
