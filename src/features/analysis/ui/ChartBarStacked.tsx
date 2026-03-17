@@ -1,46 +1,30 @@
 "use client";
 
-import { ChartConfig } from "@/components/ui/chart";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
 import {
 	getAccessPattern,
 	getRedundancyMetrics,
 	getRecoveryCost,
+	calculateHandledQueriesPercentage,
 } from "@fsd/shared/lib/analytics";
 import { useEffect, useState } from "react";
-import { calculateHandledQueriesPercentage } from "@fsd/shared/lib/analytics";
-import MetricsChart from "./MetricsChart";
-import CompletudeChart from "./CompletudeChart";
+import { MetricsChart } from "./MetricsChart";
+import { CompletudeChart } from "./CompletudeChart";
 import { TableMetrics } from "./TableMetrics";
-
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-
-export const description = "A stacked bar chart with a legend";
-
-const chartConfig = {
-	redundancy: {
-		label: "Redundancy",
-		color: "#5243AA",
-	},
-	recovery_cost: {
-		label: "Recovery Cost",
-		color: "#00875A",
-	},
-	access_pattern: {
-		label: "Access Pattern",
-		color: "#0052CC",
-	},
-} satisfies ChartConfig;
 
 export function ChartBarStacked() {
 	const router = useRouter();
 	const versions = useCanvasStore((state) => state.versions);
 	const queries = useCanvasStore((state) => state.queries);
-	const [metricsChartData, setMetricsChartData] = useState<any[]>([]);
-	const [completudeChartData, setCompletudeChartData] = useState<any[]>([]);
+	const [metricsChartData, setMetricsChartData] = useState<
+		{ schema: string; redundancy: number; recovery_cost: number; access_pattern: number }[]
+	>([]);
+	const [completudeChartData, setCompletudeChartData] = useState<
+		{ schema: string; completude: number }[]
+	>([]);
 	const [selectedSchemas, setSelectedSchemas] = useState<string[]>([]);
-
 
 	const versionData = versions.map((version) => ({
 		schema_name: version.description,
@@ -49,14 +33,12 @@ export function ChartBarStacked() {
 	}));
 
 	useEffect(() => {
-		const metricsData = versionData.map((version) => {
-			return {
-				schema: version.schema_name,
-				redundancy: getRedundancyMetrics(version.nodes),
-				recovery_cost: getRecoveryCost(version.nodes, version.edges),
-				access_pattern: getAccessPattern(version.nodes, version.edges),
-			};
-		});
+		const metricsData = versionData.map((version) => ({
+			schema: version.schema_name,
+			redundancy: getRedundancyMetrics(version.nodes),
+			recovery_cost: getRecoveryCost(version.nodes, version.edges),
+			access_pattern: getAccessPattern(version.nodes, version.edges),
+		}));
 		setMetricsChartData(metricsData);
 
 		const completudeData = versionData.map((version) => ({
@@ -68,9 +50,8 @@ export function ChartBarStacked() {
 			),
 		}));
 		setCompletudeChartData(completudeData);
-	}, [versions]);
+	}, [versions, queries]);
 
-	// Filtrar datos basados en la selección
 	const filteredMetricsData =
 		selectedSchemas.length > 0
 			? metricsChartData.filter((metric) =>

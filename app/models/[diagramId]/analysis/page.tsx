@@ -1,31 +1,11 @@
-import { transformSolutionModel } from "@fsd/shared/lib/conversions";
-import AnalysisView from "./AnalysisView";
-import { getAuthenticatedSolution } from "@/lib/api/server";
-import { redirect } from "next/navigation";
+import { AnalysisPage, getAnalysisData } from "@fsd/pages/analysis";
 
-async function getSolutionData(solutionId: string) {
-	try {
-		const data = await getAuthenticatedSolution(solutionId);
-		return transformSolutionModel(data);
-	} catch (error) {
-		if (error instanceof Error) {
-			if (error.message === "UNAUTHORIZED") {
-				redirect("/login");
-			}
-			if (error.message === "FORBIDDEN") {
-				redirect("/models");
-			}
-		}
-		throw error;
-	}
-}
-
-export default async function AnalysisPage({
+export default async function AnalysisRoute({
 	params,
 }: {
 	params: Promise<{ diagramId: string }>;
 }) {
 	const { diagramId } = await params;
-	const loaderData = await getSolutionData(diagramId);
-	return <AnalysisView loaderData={loaderData} />;
+	const loaderData = await getAnalysisData(diagramId);
+	return <AnalysisPage loaderData={loaderData} />;
 }

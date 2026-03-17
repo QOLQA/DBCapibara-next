@@ -22,10 +22,13 @@ const chartConfig = {
 	},
 } satisfies ChartConfig;
 
-const MetricsChart = ({ metricsChartData }: { metricsChartData: any[] }) => {
+export function MetricsChart({
+	metricsChartData,
+}: {
+	metricsChartData: unknown[];
+}) {
 	return (
 		<div className="min-h-[100px] w-[48%] flex flex-col gap-20 ">
-			{/* Rotulo de la grafica */}
 			<div className="flex gap-2 flex-row justify-between pl-10">
 				<div className=" text-[#0052CC] flex items-center gap-2">
 					<div className="size-4 bg-[#0052CC] rounded-sm"></div>
@@ -57,7 +60,6 @@ const MetricsChart = ({ metricsChartData }: { metricsChartData: any[] }) => {
 							<ChartTooltipContent hideLabel className="min-w-[10rem]" />
 						}
 					/>
-					{/* <ChartLegend content={<ChartLegendContent />} /> */}
 					<Bar
 						dataKey="redundancy"
 						stackId="a"
@@ -80,6 +82,4 @@ const MetricsChart = ({ metricsChartData }: { metricsChartData: any[] }) => {
 			</ChartContainer>
 		</div>
 	);
-};
-
-export default MetricsChart;
+}

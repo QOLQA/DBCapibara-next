@@ -14,14 +14,13 @@ const chartConfig = {
 	},
 } satisfies ChartConfig;
 
-const CompletudeChart = ({
+export function CompletudeChart({
 	completudeChartData,
 }: {
-	completudeChartData: any[];
-}) => {
+	completudeChartData: unknown[];
+}) {
 	return (
 		<div className="min-h-[100px] w-[45%] flex flex-col gap-20 ">
-			{/* Rotulo de la grafica */}
 			<div className="flex gap-2 flex-row justify-center">
 				<div className=" text-[#E93544] flex items-center gap-2">
 					<div className="size-4 bg-[#E93544] rounded-sm"></div>
@@ -45,7 +44,6 @@ const CompletudeChart = ({
 							<ChartTooltipContent hideLabel className="min-w-[10rem]" />
 						}
 					/>
-					{/* <ChartLegend content={<ChartLegendContent />} /> */}
 					<Bar
 						dataKey="completude"
 						stackId="a"
@@ -56,6 +54,4 @@ const CompletudeChart = ({
 			</ChartContainer>
 		</div>
 	);
-};
-
-export default CompletudeChart;
+}

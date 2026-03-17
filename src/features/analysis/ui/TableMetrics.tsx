@@ -25,32 +25,26 @@ export function TableMetrics({
 	completudeChartData,
 	onSelectionChange,
 }: TableMetricsProps) {
-	// Inicializar todos los schemas como seleccionados
 	const [selectedSchemas, setSelectedSchemas] = useState<Set<string>>(() => {
 		return new Set(metricsChartData.map((metric) => metric.schema));
 	});
 
-	// Checkbox principal (select all)
 	const allSelected =
 		metricsChartData.length > 0 &&
 		selectedSchemas.size === metricsChartData.length &&
 		metricsChartData.every((metric) => selectedSchemas.has(metric.schema));
 
-	// Actualizar selección cuando se agregan nuevos schemas (mantener los ya seleccionados)
 	useEffect(() => {
 		const currentSchemas = new Set(
-			metricsChartData.map((metric) => metric.schema)
+			metricsChartData.map((metric) => metric.schema),
 		);
-		// Si no hay datos, inicializar vacío
 		if (metricsChartData.length === 0) {
 			setSelectedSchemas(new Set());
 			return;
 		}
-		// Agregar nuevos schemas a la selección (mantener los ya seleccionados)
 		setSelectedSchemas((prev) => {
 			const updated = new Set(prev);
 			currentSchemas.forEach((schema) => updated.add(schema));
-			// Remover schemas que ya no existen en los datos
 			Array.from(updated).forEach((schema) => {
 				if (!currentSchemas.has(schema)) {
 					updated.delete(schema);
@@ -60,7 +54,6 @@ export function TableMetrics({
 		});
 	}, [metricsChartData]);
 
-	// Notificar cambios al padre
 	useEffect(() => {
 		if (onSelectionChange) {
 			onSelectionChange(Array.from(selectedSchemas));
@@ -70,7 +63,7 @@ export function TableMetrics({
 	const handleSelectAll = (checked: boolean) => {
 		if (checked) {
 			const allSchemas = new Set(
-				metricsChartData.map((metric) => metric.schema)
+				metricsChartData.map((metric) => metric.schema),
 			);
 			setSelectedSchemas(allSchemas);
 		} else {
@@ -90,7 +83,6 @@ export function TableMetrics({
 
 	return (
 		<div className="flex flex-col w-[70%] h-auto border border-gray rounded-2xl p-6 gap-6 my-16">
-			{/* Rotulo */}
 			<div className="w-full flex flex-row items-center">
 				<div
 					className="w-[10%] flex justify-center items-center text-white cursor-pointer"
@@ -123,7 +115,6 @@ export function TableMetrics({
 				<div className="w-[30%] flex justify-start items-center">
 					<h3 className="text-[20px] font-bold ">Solution name</h3>
 				</div>
-				{/* Metricas */}
 				<div className="w-[15%] flex justify-center items-center">
 					<h3 className="text-[20px] font-bold ">Access Pattern</h3>
 				</div>
@@ -137,9 +128,7 @@ export function TableMetrics({
 					<h3 className="text-[20px] font-bold">Completude</h3>
 				</div>
 			</div>
-			{/* --- */}
 			<div className="w-full h-[2px] bg-gray"></div>
-			{/* data */}
 			{metricsChartData.map((metric) => {
 				const isSelected = selectedSchemas.has(metric.schema);
 				return (
@@ -206,7 +195,7 @@ export function TableMetrics({
 								<h3 className="text-[20px] font-bold text-[#E93544]">
 									{
 										completudeChartData.find(
-											(completude) => completude.schema === metric.schema
+											(completude) => completude.schema === metric.schema,
 										)?.completude
 									}
 								</h3>

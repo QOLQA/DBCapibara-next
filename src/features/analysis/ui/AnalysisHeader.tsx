@@ -2,7 +2,7 @@
 
 import { Logo } from "@/components/icons/HeaderIcons";
 
-export default function AppHeader({ title }: { title: string }) {
+export function AnalysisHeader({ title }: { title: string }) {
 	return (
 		<header className="relative flex flex-row items-center justify-between w-full h-16 bg-secondary-gray p-4 text-white">
 			<Logo className="text-blue" />
