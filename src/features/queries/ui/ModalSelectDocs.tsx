@@ -3,7 +3,7 @@
 import { Modal } from "@fsd/shared/ui/modal";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
 import { useUniqueId } from "../hooks/use-unique-id";
-import { getUniqueTableNames } from "@fsd/shared/lib/analytics";
+import { getUniqueTableNames } from "@fsd/entities/solution/lib/analytics";
 import { useTableSelection } from "../hooks/use-table-selection";
 import { useQueryOperations } from "../hooks/use-query-operations";
 import { WordToggleButtons } from "./WordToggleButtons";

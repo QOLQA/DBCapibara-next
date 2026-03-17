@@ -1,0 +1,28 @@
+---
+description: Domain placement rules for entities/solution (keep Solution/Diagram domain logic out of Shared)
+globs: src/entities/solution/**
+alwaysApply: false
+---
+
+# entities/solution — domain rules
+
+`entities/solution` contiene el **dominio Solution/Diagram** (tipos, modelos, validaciones y librerías del dominio).
+
+## Domain libs
+
+- Cálculos y métricas del dominio (redundancy, recovery cost, access pattern, completude, etc.) deben vivir en:
+  - `src/entities/solution/lib/analytics/*`
+- Transformaciones/mappers del dominio (DTO ↔︎ model, normalización de versions/submodels/canvas) deben vivir en:
+  - `src/entities/solution/lib/conversions/*`
+
+## Documentación obligatoria
+
+- Cada directorio dentro de `src/entities/solution/lib/*` debe incluir un **`README.md`** con:
+  - propósito / alcance
+  - qué se permite / no se permite agregar
+  - 1–2 ejemplos de uso
+
+## Evitar fugas de dominio a Shared
+
+No ubicar lógica específica de Solution/Diagram dentro de `src/shared/lib/*` (Shared no se divide por dominios).
+

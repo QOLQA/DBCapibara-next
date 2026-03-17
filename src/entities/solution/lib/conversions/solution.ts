@@ -95,3 +95,4 @@ export function transformSolutionModel(solution: SolutionModel): {
 		last_version_saved: solution.last_version_saved,
 	};
 }
+

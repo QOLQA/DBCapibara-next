@@ -109,3 +109,4 @@ function withCacheValidation(
 export function getRedundancyMetrics(nodes: Node<TableData>[]): number {
 	return withCacheValidation(nodes, calculateRedundancyMetricsPure);
 }
+

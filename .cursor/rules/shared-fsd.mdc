@@ -1,0 +1,36 @@
+---
+description: FSD conventions for the Shared layer (segments, library rules)
+globs: src/shared/**
+alwaysApply: false
+---
+
+# Shared layer (FSD) — rules
+
+Shared es la base técnica de la app. **No existen dominios de negocio en Shared**, por lo que **no se crean slices por dominio**.
+
+## Segmentos permitidos en `src/shared/`
+
+- `api/` cliente API + helpers para requests a endpoints.
+- `ui/` UI kit sin lógica de negocio (UI logic sí está permitido: dropdowns, autocomplete, etc.).
+- `lib/` librerías internas con **un solo foco** por directorio.
+- `i18n/` setup de traducciones y strings globales.
+- `config/` variables de entorno, feature flags, config global.
+- `routes/` constantes/patrones de rutas.
+
+No crear segmentos con nombres por “esencia” (ej. `hooks/`, `types/`, `components/`) a nivel de `shared/`.
+
+## `shared/lib/*` (librerías internas)
+
+- Cada directorio en `src/shared/lib/*` debe tener **un solo foco** (ej. `classnames`, `image`, `analytics` si fuese genérico).
+- Evitar nombres genéricos: **no** crear `utils/`, `helpers/`, `common/`.
+- **Obligatorio:** cada directorio dentro de `src/shared/lib/*` debe incluir un **`README.md`** con:
+  - propósito / alcance
+  - qué se permite / no se permite agregar
+  - 1–2 ejemplos de uso
+
+## Regla práctica (decidir el destino del código)
+
+- **¿Describe conceptos del dominio (Solution/Diagram)?** → `src/entities/solution/lib/...`
+- **¿Es puramente técnico/genérico (sin dominio)?** → `src/shared/lib/<libraryName>/...`
+- **¿Solo una feature lo usa?** → `src/features/<feature>/lib/...`
+

@@ -6,7 +6,7 @@ import {
 	getRedundancyMetrics,
 	getRecoveryCost,
 	calculateHandledQueriesPercentage,
-} from "@fsd/shared/lib/analytics";
+} from "@fsd/entities/solution/lib/analytics";
 import { useEffect, useState } from "react";
 import { MetricsChart } from "./MetricsChart";
 import { CompletudeChart } from "./CompletudeChart";

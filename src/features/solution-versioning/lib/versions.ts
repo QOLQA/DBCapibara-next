@@ -1,5 +1,5 @@
 import { api } from "@fsd/shared/api";
-import { transformVersionToBackend } from "@fsd/shared/lib/conversions";
+import { transformVersionToBackend } from "@fsd/entities/solution/lib/conversions";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
 import type {
 	NestedNode,

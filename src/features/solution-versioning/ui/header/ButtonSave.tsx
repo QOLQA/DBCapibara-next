@@ -1,5 +1,5 @@
 import { Save } from "@fsd/shared/ui/icons/HeaderIcons";
-import { transformVersionToBackend } from "@fsd/shared/lib/conversions";
+import { transformVersionToBackend } from "@fsd/entities/solution/lib/conversions";
 import { saveCanvas, saveSolution } from "../../lib";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
 import { getNodesBounds, getViewportForBounds } from "@xyflow/react";

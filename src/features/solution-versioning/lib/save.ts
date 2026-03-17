@@ -2,7 +2,7 @@ import type { Query, TableData, VersionBackend } from "@fsd/entities/solution";
 import type { Edge, Node } from "@xyflow/react";
 import { loadCanva } from "./load";
 import { api } from "@fsd/shared/api";
-import { transformVersionToBackend } from "@fsd/shared/lib/conversions";
+import { transformVersionToBackend } from "@fsd/entities/solution/lib/conversions";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
 
 // Cache para evitar guardados innecesarios

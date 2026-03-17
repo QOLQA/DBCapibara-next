@@ -9,7 +9,7 @@ import {
 	getAccessPattern,
 	getRecoveryCost,
 	getRedundancyMetrics,
-} from "@fsd/shared/lib/analytics";
+} from "@fsd/entities/solution/lib/analytics";
 
 export const AppStatistics = () => {
 	const accessPatternValue = useCanvasStore((state) =>

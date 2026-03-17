@@ -1,7 +1,7 @@
 "use client";
 
 import { useCanvasStore } from "@fsd/features/solution-modeling";
-import { calculateHandledQueriesPercentage } from "@fsd/shared/lib/analytics";
+import { calculateHandledQueriesPercentage } from "@fsd/entities/solution/lib/analytics";
 import {
 	Label,
 	PolarGrid,

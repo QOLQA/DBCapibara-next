@@ -132,3 +132,4 @@ function withCacheValidation(
 export function getAccessPattern(nodes: Node<TableData>[], edges: Edge[]) {
 	return withCacheValidation(nodes, edges, calculateAccessPatternPure);
 }
+
