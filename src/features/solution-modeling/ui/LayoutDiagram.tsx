@@ -1,0 +1,33 @@
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "./sidebar/AppSidebar";
+import type { NavItem } from "./sidebar/types";
+
+export function LayoutDiagram({
+	children,
+	title,
+	headerSlot,
+	sidebarNavItems = [],
+}: {
+	children: React.ReactNode;
+	title: string;
+	headerSlot?: React.ReactNode;
+	sidebarNavItems?: NavItem[];
+}) {
+	return (
+		<>
+			<div className="flex flex-col h-screen w-screen z-50 overflow-hidden">
+				{headerSlot ?? null}
+
+				<SidebarProvider
+					className="overflow-hidden h-full w-full bg-secondary-gray gap-4"
+					defaultOpen={false}
+				>
+					<AppSidebar navItems={sidebarNavItems} />
+					<SidebarInset className="h-full w-full ">
+						<div className="h-full w-full overflow-hidden">{children}</div>
+					</SidebarInset>
+				</SidebarProvider>
+			</div>
+		</>
+	);
+}
