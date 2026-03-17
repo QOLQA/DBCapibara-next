@@ -13,7 +13,7 @@ import type { TableData } from "@fsd/entities/solution";
 
 import { nodeTypes } from "../table/TableNode";
 import "@xyflow/react/dist/style.css";
-import { Button } from "@/components/ui/button";
+import { Button } from "@fsd/shared/ui/button";
 import { edgeTypes } from "./FloatingEdge";
 import { useTableConnections } from "../../hooks/use-node-connections";
 import ModalAddCollection from "../modals/ModalAddCollection";

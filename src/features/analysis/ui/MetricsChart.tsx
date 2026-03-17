@@ -2,8 +2,8 @@ import {
 	ChartConfig,
 	ChartContainer,
 	ChartTooltip,
-} from "@/components/ui/chart";
-import { ChartTooltipContent } from "@/components/ui/chart";
+} from "@fsd/shared/ui/chart";
+import { ChartTooltipContent } from "@fsd/shared/ui/chart";
 import React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 

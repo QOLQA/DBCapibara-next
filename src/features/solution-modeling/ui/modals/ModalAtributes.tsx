@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Modal } from "@/components/ui/modal";
+import { Button } from "@fsd/shared/ui/button";
+import { Input } from "@fsd/shared/ui/input";
+import { Modal } from "@fsd/shared/ui/modal";
 import {
 	Select,
 	SelectValue,
@@ -11,7 +11,7 @@ import {
 	SelectContent,
 	SelectLabel,
 	SelectTrigger,
-} from "@/components/ui/select";
+} from "@fsd/shared/ui/select";
 import { Trash } from "lucide-react";
 import React, { useEffect, useCallback, useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Sidebar, useSidebar } from "@/components/ui/sidebar";
+import { Sidebar, useSidebar } from "@fsd/shared/ui/sidebar";
 import { SidebarIcons } from "./SidebarIcons";
 import { useState } from "react";
 import { SidebarContentPrinc } from "./SidebarContent";

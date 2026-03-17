@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@fsd/shared/ui/button";
 import { Plus, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api/client";
 import { useAuth } from "@fsd/features/auth";
-import { Logo } from "@/components/icons/HeaderIcons";
+import { Logo } from "@fsd/shared/ui/icons/HeaderIcons";
 import { useTranslation } from "@/hooks/use-translation";
 import {
 	AddSolutionModal,

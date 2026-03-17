@@ -1,4 +1,4 @@
-import { Save } from "@/components/icons/HeaderIcons";
+import { Save } from "@fsd/shared/ui/icons/HeaderIcons";
 import { transformVersionToBackend } from "@fsd/shared/lib/conversions";
 import { saveCanvas, saveSolution } from "../../lib";
 import { useCanvasStore } from "@fsd/features/solution-modeling";

@@ -5,9 +5,9 @@ import {
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarHeader,
-} from "@/components/ui/sidebar";
+} from "@fsd/shared/ui/sidebar";
 import type { NavItem } from "./types";
-import { Button } from "@/components/ui/button";
+import { Button } from "@fsd/shared/ui/button";
 
 type SidebarContentPrincProps = {
 	activeItem: NavItem;

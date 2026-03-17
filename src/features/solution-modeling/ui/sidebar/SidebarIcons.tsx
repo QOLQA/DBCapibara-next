@@ -9,7 +9,7 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@fsd/shared/ui/sidebar";
 import { NavUser } from "./NavUser";
 import type { Data, NavItem } from "./types";
 

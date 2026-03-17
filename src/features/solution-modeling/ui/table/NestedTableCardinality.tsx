@@ -3,12 +3,12 @@
 import React, { useCallback } from "react";
 import { type Node } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
-import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
+import { ManagedDropdownMenu } from "@fsd/shared/ui/ManagedDropdownMenu";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@fsd/shared/ui/dropdown-menu";
 import { useCanvasStore } from "../../model/canvaStore";
 import {
 	type CardinalityType,

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { DropdownProvider } from "@/contexts/dropdown-context";
+import { DropdownProvider } from "@fsd/shared/lib/dropdown-context";
 import { AuthProvider, AuthTokenSync } from "@fsd/app/providers";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@fsd/shared/ui/sonner";
 
 export const metadata: Metadata = {
 	title: "DBCapibara - Database Modeling Tool",

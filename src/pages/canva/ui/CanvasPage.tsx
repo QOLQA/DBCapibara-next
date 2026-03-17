@@ -6,7 +6,7 @@ import { AppHeader } from "@fsd/features/solution-versioning";
 import { AppQueries } from "@fsd/features/queries";
 import { AppStatistics } from "@fsd/features/statistics";
 import type { VersionFrontend } from "@fsd/entities/solution";
-import { Calendar, Database, DataPie } from "@/components/icons/SidebarIcons";
+import { Calendar, Database, DataPie } from "@fsd/shared/ui/icons/SidebarIcons";
 import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
 

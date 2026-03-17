@@ -88,23 +88,23 @@ export const Trash = ({ className }: { className?: string }) => {
 			<path
 				d="M16.6168 7.46777C16.6168 7.46777 16.0738 14.2028 15.7588 17.0398C15.6088 18.3948 14.7718 19.1888 13.4008 19.2138C10.7918 19.2608 8.17978 19.2638 5.57178 19.2088C4.25278 19.1818 3.42978 18.3778 3.28278 17.0468C2.96578 14.1848 2.42578 7.46777 2.42578 7.46777"
 				stroke="currentColor"
-				stroke-width="1"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeWidth="1"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 			<path
 				d="M18 4.23926H1.04199"
 				stroke="currentColor"
-				stroke-width="1"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeWidth="1"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 			<path
 				d="M14.7326 4.23949C13.9476 4.23949 13.2716 3.68449 13.1176 2.91549L12.8746 1.69949C12.7246 1.13849 12.2166 0.750488 11.6376 0.750488H7.40457C6.82557 0.750488 6.31757 1.13849 6.16757 1.69949L5.92457 2.91549C5.77057 3.68449 5.09457 4.23949 4.30957 4.23949"
 				stroke="currentColor"
-				stroke-width="1"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeWidth="1"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 		</svg>
 	);

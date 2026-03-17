@@ -6,13 +6,13 @@ import { useTranslation } from "@/hooks/use-translation";
 import { useModelsStore } from "@fsd/features/project-management";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
 import { ModelImage } from "./ModelImage";
-import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
+import { ManagedDropdownMenu } from "@fsd/shared/ui/ManagedDropdownMenu";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@fsd/shared/ui/dropdown-menu";
 import type { SolutionListItem } from "@fsd/entities/solution";
 
 interface ModelCardProps extends SolutionListItem {

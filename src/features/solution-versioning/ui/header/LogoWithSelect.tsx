@@ -1,13 +1,13 @@
 "use client";
 
-import { Logo } from "@/components/icons/HeaderIcons";
+import { Logo } from "@fsd/shared/ui/icons/HeaderIcons";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/ui/select";
+} from "@fsd/shared/ui/select";
 import { useCanvasStore, canvaSelector } from "@fsd/features/solution-modeling";
 import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";

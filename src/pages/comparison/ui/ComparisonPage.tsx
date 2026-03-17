@@ -11,7 +11,7 @@ import {
 } from "@fsd/features/comparison";
 import type { NavItem } from "@fsd/features/solution-modeling";
 import type { VersionFrontend } from "@fsd/entities/solution";
-import { DataPie } from "@/components/icons/SidebarIcons";
+import { DataPie } from "@fsd/shared/ui/icons/SidebarIcons";
 import { useMemo } from "react";
 
 interface ComparisonPageProps {

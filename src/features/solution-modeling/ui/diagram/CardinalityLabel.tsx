@@ -2,12 +2,12 @@
 
 import React, { useCallback, useMemo } from "react";
 import { useShallow } from "zustand/shallow";
-import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
+import { ManagedDropdownMenu } from "@fsd/shared/ui/ManagedDropdownMenu";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@fsd/shared/ui/dropdown-menu";
 import { useCanvasStore } from "../../model/canvaStore";
 import {
 	type CardinalityType,

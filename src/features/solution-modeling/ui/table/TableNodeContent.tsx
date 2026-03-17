@@ -2,14 +2,14 @@
 
 import React, { useMemo } from "react";
 
-import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
+import { ManagedDropdownMenu } from "@fsd/shared/ui/ManagedDropdownMenu";
 import type { TableData, TableNodeProps, Column } from "@fsd/entities/solution";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@fsd/shared/ui/dropdown-menu";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
 import ModalDocument from "../modals/ModalDocument";
 import ModalAtributes from "../modals/ModalAtributes";
@@ -19,7 +19,7 @@ import {
 	Delete,
 	Edit,
 	Plus,
-} from "@/components/icons/TableOptionsIcons";
+} from "@fsd/shared/ui/icons/TableOptionsIcons";
 import { useTranslation } from "@/hooks/use-translation";
 import { NestedTableCardinality } from "./NestedTableCardinality";
 import { AttributeNode } from "./AttributeNode";

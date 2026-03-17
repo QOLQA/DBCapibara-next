@@ -1,4 +1,4 @@
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@fsd/shared/ui/sidebar";
 import { AppSidebar } from "./sidebar/AppSidebar";
 import type { NavItem } from "./sidebar/types";
 

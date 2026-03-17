@@ -1,6 +1,6 @@
 "use client";
 
-import { Modal } from "@/components/ui/modal";
+import { Modal } from "@fsd/shared/ui/modal";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
 import { useUniqueId } from "../hooks/use-unique-id";
 import { getUniqueTableNames } from "@fsd/shared/lib/analytics";

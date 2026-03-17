@@ -1,8 +1,8 @@
 "use client";
 
-import { Modal } from "@/components/ui/modal";
+import { Modal } from "@fsd/shared/ui/modal";
 import React, { useCallback, useState } from "react";
-import { Input } from "@/components/ui/input";
+import { Input } from "@fsd/shared/ui/input";
 import { useTranslation } from "@/hooks/use-translation";
 
 interface ModalDocumentProps {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Modal } from "@/components/ui/modal";
+import { Modal } from "@fsd/shared/ui/modal";
 import { useEffect, useState, useTransition } from "react";
 import { ModalSelectDocs } from "./ModalSelectDocs";
 import type { Query } from "@fsd/entities/solution";

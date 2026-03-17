@@ -3,21 +3,21 @@
 import React, { useCallback } from "react";
 import { type Node } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
-import { ManagedDropdownMenu } from "@/components/managedDropdownMenu";
+import { ManagedDropdownMenu } from "@fsd/shared/ui/ManagedDropdownMenu";
 import type { Column, TableData } from "@fsd/entities/solution";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@fsd/shared/ui/dropdown-menu";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
 import { useCanvasStore } from "../../model/canvaStore";
 import { getKeySegment } from "@fsd/shared/lib/utils";
 import {
 	Delete,
 	Edit,
-} from "@/components/icons/TableOptionsIcons";
+} from "@fsd/shared/ui/icons/TableOptionsIcons";
 
 interface AttributeNodeProps {
 	column: Column;

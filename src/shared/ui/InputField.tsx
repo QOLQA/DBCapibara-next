@@ -19,15 +19,15 @@ export default function InputField({
 	name,
 	value,
 	onChange,
-	type = 'text',
+	type = "text",
 	placeholder,
 	required = false,
 	disabled = false,
 	min,
 	max,
 	step,
-	className = '',
-	defaultValue
+	className = "",
+	defaultValue,
 }: InputFieldProps) {
 	return (
 		<div className={`flex flex-col gap-2 ${className}`}>
@@ -46,7 +46,7 @@ export default function InputField({
 				min={min}
 				max={max}
 				step={step}
-				className={`form-input flex w-full resize-none overflow-hidden rounded-xl text-foreground focus:outline-0 focus:ring-0 border border-surface-secondary bg-surface focus:border-surface-tertiary h-14 placeholder:text-text-secondary p-[15px] text-base font-normal leading-normal ${disabled ? 'opacity-50 cursor-not-allowed bg-surface-secondary' : ''}`}
+				className={`form-input flex w-full resize-none overflow-hidden rounded-xl text-foreground focus:outline-0 focus:ring-0 border border-surface-secondary bg-surface focus:border-surface-tertiary h-14 placeholder:text-text-secondary p-[15px] text-base font-normal leading-normal ${disabled ? "opacity-50 cursor-not-allowed bg-surface-secondary" : ""}`}
 			/>
 		</div>
 	);

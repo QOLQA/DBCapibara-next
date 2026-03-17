@@ -1,6 +1,6 @@
 "use client";
 
-import { Modal } from "@/components/ui/modal";
+import { Modal } from "@fsd/shared/ui/modal";
 import React, { useState, useTransition } from "react";
 import { useTranslation } from "@/hooks/use-translation";
 

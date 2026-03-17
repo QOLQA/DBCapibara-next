@@ -8,15 +8,11 @@ import {
 	CheckIcon,
 	X,
 } from "lucide-react";
-// import { useTheme } from "next-themes";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 
 const Toaster = ({ ...props }: ToasterProps) => {
-	// const { theme = "system" } = useTheme();
-
 	return (
 		<Sonner
-			// theme={theme as ToasterProps["theme"]}
 			theme="dark"
 			richColors
 			className="toaster group bg-secondary-gray text-white"

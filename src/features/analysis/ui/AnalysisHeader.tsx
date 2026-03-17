@@ -1,6 +1,6 @@
 "use client";
 
-import { Logo } from "@/components/icons/HeaderIcons";
+import { Logo } from "@fsd/shared/ui/icons/HeaderIcons";
 
 export function AnalysisHeader({ title }: { title: string }) {
 	return (

@@ -1,6 +1,12 @@
-'use client'
+"use client";
 
-import { createContext, useContext, useState, useCallback } from "react";
+import {
+	createContext,
+	useContext,
+	useState,
+	useCallback,
+	type ReactNode,
+} from "react";
 
 type DropdownContextType = {
 	activeDropdownId: string | null;
@@ -15,7 +21,7 @@ const DropdownContext = createContext<DropdownContextType>({
 export const DropdownProvider = ({
 	children,
 }: {
-	children: React.ReactNode;
+	children: ReactNode;
 }) => {
 	const [activeDropdownId, setActiveDropdownId] = useState<string | null>(null);
 
