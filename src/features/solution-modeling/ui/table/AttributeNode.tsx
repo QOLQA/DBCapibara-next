@@ -13,7 +13,7 @@ import {
 } from "@fsd/shared/ui/dropdown-menu";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
 import { useCanvasStore } from "../../model/canvaStore";
-import { getKeySegment } from "@fsd/shared/lib/utils";
+import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
 import {
 	Delete,
 	Edit,

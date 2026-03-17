@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@fsd/shared/api";
 import { useAuth } from "@fsd/features/auth";
 import { Logo } from "@fsd/shared/ui/icons/HeaderIcons";
-import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
+import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import {
 	AddSolutionModal,
 	EditSolutionModal,

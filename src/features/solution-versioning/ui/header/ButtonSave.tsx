@@ -6,7 +6,7 @@ import { getNodesBounds, getViewportForBounds } from "@xyflow/react";
 import { toPng } from "html-to-image";
 import { uploadImage } from "@fsd/shared/lib/image";
 import { toast } from "sonner";
-import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
+import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
 const imageWidth = 1024;
 const imageHeight = 768;

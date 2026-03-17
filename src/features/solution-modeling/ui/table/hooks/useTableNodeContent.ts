@@ -6,7 +6,7 @@ import { useShallow } from "zustand/react/shallow";
 
 import { useCanvasStore } from "../../../model/canvaStore";
 import { useTableConnections } from "../../../hooks/use-node-connections";
-import { getKeySegment } from "@fsd/shared/lib/utils";
+import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
 
 import type { TableData, Column } from "@fsd/entities/solution";
 import {

@@ -36,3 +36,4 @@ export function useTranslation(locale: Locale = defaultLocale) {
 		locale,
 	};
 }
+

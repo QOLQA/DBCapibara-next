@@ -3,7 +3,7 @@
 import React from "react";
 import type { Query } from "@fsd/entities/solution";
 import { DropDownQuerys } from "./DropDownQuerys";
-import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
+import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
 const WordSelector = ({ word }: { word: string }) => {
 	return <span className="text-blue">{`${word} `} </span>;

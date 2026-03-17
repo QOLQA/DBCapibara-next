@@ -2,7 +2,7 @@
 
 import { Modal } from "@fsd/shared/ui/modal";
 import { useState, useTransition } from "react";
-import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
+import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
 interface AddSolutionModalProps {
 	open: boolean;

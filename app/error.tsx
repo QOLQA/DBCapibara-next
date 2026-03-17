@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
+import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
 export default function Error({
 	error,

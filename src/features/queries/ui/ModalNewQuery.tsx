@@ -4,7 +4,7 @@ import { Modal } from "@fsd/shared/ui/modal";
 import { useEffect, useState, useTransition } from "react";
 import { ModalSelectDocs } from "./ModalSelectDocs";
 import type { Query } from "@fsd/entities/solution";
-import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
+import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
 type ModalProps = {
 	open: boolean;

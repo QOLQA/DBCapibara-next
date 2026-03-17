@@ -12,7 +12,7 @@ export const handleApiError = (
 	const getTranslation = (path: string): string => {
 		if (t) return t(path);
 		try {
-			const { useTranslation } = require("@fsd/shared/lib/i18n");
+			const { useTranslation } = require("@fsd/shared/i18n");
 			const { t: defaultT } = useTranslation("en");
 			return defaultT(path);
 		} catch {

@@ -37,3 +37,4 @@ export function getSubmodelIndexFromNodeId(nodeId: string): number {
 	const index = Number.parseInt(parts[0], 10);
 	return Number.isNaN(index) ? 0 : index;
 }
+

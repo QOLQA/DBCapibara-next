@@ -5,3 +5,4 @@ const getKeySegment = (key: string, index: number): string | null => {
 };
 
 export default getKeySegment;
+

@@ -13,14 +13,14 @@ import {
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
 import ModalDocument from "../modals/ModalDocument";
 import ModalAtributes from "../modals/ModalAtributes";
-import { getSubmodelColor } from "@fsd/shared/lib/utils";
+import { getSubmodelColor } from "@fsd/entities/solution/lib/diagram";
 import {
 	AddDocument,
 	Delete,
 	Edit,
 	Plus,
 } from "@fsd/shared/ui/icons/TableOptionsIcons";
-import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
+import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { NestedTableCardinality } from "./NestedTableCardinality";
 import { AttributeNode } from "./AttributeNode";
 import { useTableNodeContent } from "./hooks/useTableNodeContent";

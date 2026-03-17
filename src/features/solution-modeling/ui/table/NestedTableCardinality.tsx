@@ -15,7 +15,7 @@ import {
 	type TableData,
 	CARDINALITY_OPTIONS,
 } from "@fsd/entities/solution";
-import { getKeySegment } from "@fsd/shared/lib/utils";
+import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
 
 interface NestedTableCardinalityProps {
 	tableId: string;
