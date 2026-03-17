@@ -8,15 +8,16 @@ import {
 	MarkerType,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { nodeTypes } from "@/app/models/[diagramId]/canva/components/Table/TableNode";
-import { edgeTypes } from "@/app/models/[diagramId]/canva/components/Diagram/FloatingEdge";
-
-import { useCanvasStore } from "@/state/canvaStore";
-import { canvaSelector } from "@/state/canvaStore";
+import {
+	nodeTypes,
+	useCanvasStore,
+	canvaSelector,
+	edgeTypes,
+	useTableConnections,
+} from "@fsd/features/solution-modeling";
 import { useShallow } from "zustand/shallow";
 import { useState } from "react";
 import { useMemo } from "react";
-import { useTableConnections } from "@/hooks/use-node-connections";
 
 const connectionLineStyle = {
 	stroke: "#4E4E4E",

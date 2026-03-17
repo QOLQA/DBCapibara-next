@@ -1,12 +1,14 @@
 "use client";
 
 import { ChartConfig } from "@/components/ui/chart";
-import { useCanvasStore } from "@/state/canvaStore";
-import { getAccessPattern } from "@/lib/analytics/accessPattern";
-import { getRedundancyMetrics } from "@/lib/analytics/redundancy";
-import { getRecoveryCost } from "@/lib/analytics/recoveryCost";
+import { useCanvasStore } from "@fsd/features/solution-modeling";
+import {
+	getAccessPattern,
+	getRedundancyMetrics,
+	getRecoveryCost,
+} from "@fsd/shared/lib/analytics";
 import { useEffect, useState } from "react";
-import { calculateHandledQueriesPercentage } from "@/lib/analytics/queries";
+import { calculateHandledQueriesPercentage } from "@fsd/shared/lib/analytics";
 import MetricsChart from "./MetricsChart";
 import CompletudeChart from "./CompletudeChart";
 import { TableMetrics } from "./TableMetrics";

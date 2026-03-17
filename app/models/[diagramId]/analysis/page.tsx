@@ -1,4 +1,4 @@
-import { transformSolutionModel } from "@/lib/conversions/solution";
+import { transformSolutionModel } from "@fsd/shared/lib/conversions";
 import AnalysisView from "./AnalysisView";
 import { getAuthenticatedSolution } from "@/lib/api/server";
 import { redirect } from "next/navigation";

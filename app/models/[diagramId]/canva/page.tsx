@@ -1,24 +1,5 @@
-import { transformSolutionModel } from "@/lib/conversions/solution";
-import DiagramClient from "./diagram-client";
-import { getAuthenticatedSolution } from "@/lib/api/server";
-import { redirect } from "next/navigation";
-
-async function getDiagram(solutionId: string) {
-	try {
-		const data = await getAuthenticatedSolution(solutionId);
-		return transformSolutionModel(data);
-	} catch (error) {
-		if (error instanceof Error) {
-			if (error.message === "UNAUTHORIZED") {
-				redirect("/login");
-			}
-			if (error.message === "FORBIDDEN") {
-				redirect("/models");
-			}
-		}
-		throw error;
-	}
-}
+import { getDiagramData } from "@fsd/pages/canva";
+import { CanvasPage } from "@fsd/pages/canva";
 
 export default async function DiagramPage({
 	params,
@@ -26,7 +7,7 @@ export default async function DiagramPage({
 	params: Promise<{ diagramId: string }>;
 }) {
 	const { diagramId } = await params;
-	const loaderData = await getDiagram(diagramId);
+	const loaderData = await getDiagramData(diagramId);
 
-	return <DiagramClient loaderData={loaderData} />;
+	return <CanvasPage loaderData={loaderData} />;
 }
