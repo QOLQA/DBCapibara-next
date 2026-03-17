@@ -1,4 +1,4 @@
-import { getAuthenticatedSolutions } from "@/lib/api/server";
+import { getAuthenticatedSolutions } from "@fsd/shared/api/server";
 
 export async function getSolutions() {
 	return getAuthenticatedSolutions();

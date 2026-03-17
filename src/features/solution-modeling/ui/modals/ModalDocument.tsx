@@ -3,7 +3,7 @@
 import { Modal } from "@fsd/shared/ui/modal";
 import React, { useCallback, useState } from "react";
 import { Input } from "@fsd/shared/ui/input";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 
 interface ModalDocumentProps {
 	onSubmit: (name: string) => void;

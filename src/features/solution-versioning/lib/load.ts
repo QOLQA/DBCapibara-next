@@ -1,7 +1,7 @@
 import { useCanvasStore } from "@fsd/features/solution-modeling";
 import { transformSolutionModel } from "@fsd/shared/lib/conversions";
 import type { SolutionModel, VersionFrontend } from "@fsd/entities/solution";
-import { api } from "@/lib/api/client";
+import { api } from "@fsd/shared/api";
 
 export async function loadCanva(diagramId: string, versionId: string) {
 	try {

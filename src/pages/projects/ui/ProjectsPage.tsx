@@ -5,10 +5,10 @@ import { Plus, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { api } from "@/lib/api/client";
+import { api } from "@fsd/shared/api";
 import { useAuth } from "@fsd/features/auth";
 import { Logo } from "@fsd/shared/ui/icons/HeaderIcons";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 import {
 	AddSolutionModal,
 	EditSolutionModal,

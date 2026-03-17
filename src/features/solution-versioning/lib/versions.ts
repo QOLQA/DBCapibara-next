@@ -1,4 +1,4 @@
-import { api } from "@/lib/api/client";
+import { api } from "@fsd/shared/api";
 import { transformVersionToBackend } from "@fsd/shared/lib/conversions";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
 import type {

@@ -2,7 +2,7 @@ import { useCanvasStore } from "@fsd/features/solution-modeling";
 import { duplicateVersion, saveCanvas } from "../../lib";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 
 const DuplicateIcon = ({ className }: { className?: string }) => {
 	return (

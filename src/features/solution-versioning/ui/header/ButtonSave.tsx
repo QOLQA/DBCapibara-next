@@ -4,9 +4,9 @@ import { saveCanvas, saveSolution } from "../../lib";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
 import { getNodesBounds, getViewportForBounds } from "@xyflow/react";
 import { toPng } from "html-to-image";
-import { uploadImage } from "@/lib/services/image";
+import { uploadImage } from "@fsd/shared/lib/image";
 import { toast } from "sonner";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 
 const imageWidth = 1024;
 const imageHeight = 768;

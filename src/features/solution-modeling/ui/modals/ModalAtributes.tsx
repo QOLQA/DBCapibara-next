@@ -15,7 +15,7 @@ import {
 import { Trash } from "lucide-react";
 import React, { useEffect, useCallback, useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 
 interface TableAttribute {
 	id: string;

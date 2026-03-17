@@ -1,5 +1,5 @@
 import { transformSolutionModel } from "@fsd/shared/lib/conversions";
-import { getAuthenticatedSolution } from "@/lib/api/server";
+import { getAuthenticatedSolution } from "@fsd/shared/api/server";
 import { redirect } from "next/navigation";
 import type { SolutionModel } from "@fsd/entities/solution";
 

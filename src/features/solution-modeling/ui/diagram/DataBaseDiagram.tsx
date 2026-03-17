@@ -22,7 +22,7 @@ import { canvaSelector } from "../../model/selectors";
 import { useShallow } from "zustand/shallow";
 import { useUniqueId } from "../../hooks/use-unique-id";
 import { getNextAvailableSubmodelIndex } from "../../hooks/use-node-connections";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 import { toast } from "sonner";
 
 const connectionLineStyle = {

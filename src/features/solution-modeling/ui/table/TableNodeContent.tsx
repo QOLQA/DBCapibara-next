@@ -20,7 +20,7 @@ import {
 	Edit,
 	Plus,
 } from "@fsd/shared/ui/icons/TableOptionsIcons";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 import { NestedTableCardinality } from "./NestedTableCardinality";
 import { AttributeNode } from "./AttributeNode";
 import { useTableNodeContent } from "./hooks/useTableNodeContent";

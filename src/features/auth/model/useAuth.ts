@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { handleApiError } from "@fsd/shared/api";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 import type { User, LoginCredentials, RegisterData } from "@fsd/entities/user";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";

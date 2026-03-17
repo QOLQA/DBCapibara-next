@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
-import { api } from "@/lib/api/client";
+import { api } from "@fsd/shared/api";
 import type { Query } from "@fsd/entities/solution";
 
 /**

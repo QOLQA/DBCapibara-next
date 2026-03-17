@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "./button";
 import { ArrowLeft, X } from "lucide-react";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 
 interface ModalProps {
 	title: string;

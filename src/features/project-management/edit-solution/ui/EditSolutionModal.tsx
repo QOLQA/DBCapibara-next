@@ -3,7 +3,7 @@
 import { Modal } from "@fsd/shared/ui/modal";
 import { useModelsStore } from "../../model/modelsStore";
 import React, { useState, useTransition } from "react";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 
 interface EditSolutionModalProps {
 	onSubmit: () => void;

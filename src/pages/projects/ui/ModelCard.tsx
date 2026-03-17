@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Edit, Trash } from "lucide-react";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "@fsd/shared/lib/i18n/use-translation";
 import { useModelsStore } from "@fsd/features/project-management";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
 import { ModelImage } from "./ModelImage";
