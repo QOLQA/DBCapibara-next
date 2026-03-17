@@ -7,11 +7,13 @@ export function LayoutDiagram({
 	title,
 	headerSlot,
 	sidebarNavItems = [],
+	sidebarDefaultOpen = false,
 }: {
 	children: React.ReactNode;
 	title: string;
 	headerSlot?: React.ReactNode;
 	sidebarNavItems?: NavItem[];
+	sidebarDefaultOpen?: boolean;
 }) {
 	return (
 		<>
@@ -20,7 +22,7 @@ export function LayoutDiagram({
 
 				<SidebarProvider
 					className="overflow-hidden h-full w-full bg-secondary-gray gap-4"
-					defaultOpen={false}
+					defaultOpen={sidebarDefaultOpen}
 				>
 					<AppSidebar navItems={sidebarNavItems} />
 					<SidebarInset className="h-full w-full ">

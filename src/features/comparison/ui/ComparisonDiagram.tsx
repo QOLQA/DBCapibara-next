@@ -16,8 +16,7 @@ import {
 	useTableConnections,
 } from "@fsd/features/solution-modeling";
 import { useShallow } from "zustand/shallow";
-import { useState } from "react";
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 
 const connectionLineStyle = {
 	stroke: "#4E4E4E",
@@ -30,7 +29,7 @@ const defaultEdgeOptions = {
 	markerEnd: { type: MarkerType.ArrowClosed },
 };
 
-const ComparisonDiagram = () => {
+export function ComparisonDiagram() {
 	const {
 		nodes,
 		edges,
@@ -39,9 +38,7 @@ const ComparisonDiagram = () => {
 		setEdges,
 		onNodesChange,
 		onEdgesChange,
-	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
-		useShallow(canvaSelector)
-	);
+	} = useCanvasStore(useShallow(canvaSelector));
 
 	const [showError, setShowError] = useState(false);
 
@@ -54,7 +51,7 @@ const ComparisonDiagram = () => {
 			setEdges,
 			onError: () => setShowError(true),
 		}),
-		[nodes, edges, editNode, addEdge, setEdges]
+		[nodes, edges, editNode, addEdge, setEdges],
 	);
 
 	const { handleConnect } = useTableConnections(connectionConfig);
@@ -70,10 +67,9 @@ const ComparisonDiagram = () => {
 			connectionLineStyle,
 			defaultEdgeOptions,
 			onConnect: handleConnect,
-
 			fitView: true,
 		}),
-		[nodes, edges, onNodesChange, onEdgesChange, handleConnect]
+		[nodes, edges, onNodesChange, onEdgesChange, handleConnect],
 	);
 
 	return (
@@ -85,6 +81,4 @@ const ComparisonDiagram = () => {
 			</ReactFlow>
 		</div>
 	);
-};
-
-export default ComparisonDiagram;
+}

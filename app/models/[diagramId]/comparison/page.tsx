@@ -1,31 +1,11 @@
-import { transformSolutionModel } from "@fsd/shared/lib/conversions";
-import ComparisonView from "./ComparisonView";
-import { getAuthenticatedSolution } from "@/lib/api/server";
-import { redirect } from "next/navigation";
+import { ComparisonPage, getComparisonData } from "@fsd/pages/comparison";
 
-async function getSolutionData(solutionId: string) {
-	try {
-		const data = await getAuthenticatedSolution(solutionId);
-		return transformSolutionModel(data);
-	} catch (error) {
-		if (error instanceof Error) {
-			if (error.message === "UNAUTHORIZED") {
-				redirect("/login");
-			}
-			if (error.message === "FORBIDDEN") {
-				redirect("/models");
-			}
-		}
-		throw error;
-	}
-}
-
-export default async function ComparisonPage({
+export default async function ComparisonRoute({
 	params,
 }: {
 	params: Promise<{ diagramId: string }>;
 }) {
 	const { diagramId } = await params;
-	const loaderData = await getSolutionData(diagramId);
-	return <ComparisonView loaderData={loaderData} />;
+	const loaderData = await getComparisonData(diagramId);
+	return <ComparisonPage loaderData={loaderData} />;
 }
