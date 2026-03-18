@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { cn } from "@fsd/shared/lib/cn";
+import { cn } from "@fsd/shared/lib/classnames";
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
 	return (

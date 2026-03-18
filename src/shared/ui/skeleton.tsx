@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@fsd/shared/lib/cn";
+import { cn } from "@fsd/shared/lib/classnames";
 
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
 	return (

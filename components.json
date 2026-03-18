@@ -13,7 +13,7 @@
   "iconLibrary": "lucide",
   "aliases": {
     "components": "@fsd/shared/ui",
-    "utils": "@fsd/shared/lib/cn",
+    "utils": "@fsd/shared/lib/classnames",
     "ui": "@fsd/shared/ui",
     "lib": "@fsd/shared/lib",
     "hooks": "@fsd/shared/lib"

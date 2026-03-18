@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { cn } from "@fsd/shared/lib/cn";
+import { cn } from "@fsd/shared/lib/classnames";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
 interface ModelImageProps {
