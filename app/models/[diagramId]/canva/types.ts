@@ -83,7 +83,7 @@ export interface VersionBackend {
 }
 
 export interface SolutionModel {
-	_id: string;
+	id: string;
 	name: string;
 	versions: VersionBackend[];
 	last_version_saved: string;

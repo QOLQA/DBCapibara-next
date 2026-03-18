@@ -29,7 +29,7 @@ interface ModelProps {
 	name: string;
 	submodels: unknown;
 	queries: unknown;
-	_id: string;
+	id: string;
 	src_img: string;
 	last_updated_at?: string;
 	requestDelete: () => void;
@@ -89,7 +89,7 @@ const ModelImage = ({
 };
 
 const Model = ({
-	_id,
+	id,
 	name,
 	src_img,
 	last_updated_at,
@@ -101,23 +101,21 @@ const Model = ({
 	const { setSolutionId } = useModelsStore.getState();
 	const handleRequestDeleteSolution = async (
 		event: React.MouseEvent<HTMLDivElement>,
-		id: string
 	) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		setSolutionId(_id);
+		setSolutionId(id);
 		requestDelete();
 	};
 
 	const handleRequestEditSolution = async (
 		event: React.MouseEvent<HTMLDivElement>,
-		id: string
 	) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		setSolutionId(_id);
+		setSolutionId(id);
 		requestEdit();
 	};
 
@@ -125,7 +123,7 @@ const Model = ({
 		<li className="model">
 			<article
 				onClick={() => {
-					router.push(`/models/${_id}/canva`);
+					router.push(`/models/${id}/canva`);
 				}}
 				className="focus:rounded-2xl"
 			>
@@ -150,7 +148,7 @@ const Model = ({
 							>
 								<DropdownMenuItem
 									type="normal"
-									onClick={(event) => handleRequestEditSolution(event, _id)}
+									onClick={(event) => handleRequestEditSolution(event)}
 								>
 									<Edit className="text-white" />
 									{t("common.edit")}
@@ -161,7 +159,7 @@ const Model = ({
 								<DropdownMenuItem
 									type="delete"
 									className="text-red"
-									onClick={(event) => handleRequestDeleteSolution(event, _id)}
+									onClick={(event) => handleRequestDeleteSolution(event)}
 								>
 									<Trash className="text-red" />
 									{t("common.delete")}
@@ -210,7 +208,7 @@ export default function ModelsClient({
 			});
 
 			// Navigate to the new model's canvas
-			router.push(`/models/${data._id}/canva`);
+			router.push(`/models/${data.id}/canva`);
 		} catch (error) {
 			console.error("Error creating solution:", error);
 			// No rethrow - el manejo de auth está en fetchWithAuth
@@ -232,7 +230,7 @@ export default function ModelsClient({
 
 		try {
 			await api.delete(`/solutions/${id}`);
-			setSolutions(solutions.filter((solution) => solution._id !== id));
+			setSolutions(solutions.filter((solution) => solution.id !== id));
 		} catch (error: any) {
 			if (
 				error?.message?.includes("does not exists") ||
@@ -256,7 +254,7 @@ export default function ModelsClient({
 			});
 			setSolutions(
 				solutions.map((solution) =>
-					solution._id === solutionId
+					solution.id === solutionId
 						? { ...solution, name: solutionDataToEdit?.name }
 						: solution
 				)
@@ -324,7 +322,7 @@ export default function ModelsClient({
 						{solutions.map((solution) => (
 							<Model
 								{...solution}
-								key={solution._id}
+								key={solution.id}
 								requestDelete={handleRequestDeleteSolution}
 								requestEdit={handleRequestEditSolution}
 							/>
@@ -346,7 +344,7 @@ export default function ModelsClient({
 					open={isDeleteSolutionModalOpen}
 					setOpen={setIsDeleteSolutionModalOpen}
 					onConfirm={handleConfirmDeleteSolution}
-					solutionName={solutions.find((s) => s._id === solutionId)?.name}
+					solutionName={solutions.find((s) => s.id === solutionId)?.name}
 				/>
 			)}
 
@@ -355,7 +353,7 @@ export default function ModelsClient({
 					open={isEditSolutionModalOpen}
 					setOpen={setIsEditSolutionModalOpen}
 					onSubmit={handleEditSolution}
-					solutionNameToEdit={solutions.find((s) => s._id === solutionId)?.name}
+					solutionNameToEdit={solutions.find((s) => s.id === solutionId)?.name}
 				/>
 			)}
 		</>

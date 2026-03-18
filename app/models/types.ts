@@ -1,4 +1,4 @@
 export interface SolutionModel {
-	_id: string;
+	id: string;
 	name: string;
 }

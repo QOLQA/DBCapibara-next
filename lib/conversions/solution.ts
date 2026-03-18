@@ -92,7 +92,7 @@ export function transformSolutionModel(solution: SolutionModel): {
 	return {
 		name: solution.name,
 		versions: versions,
-		solutionId: solution._id,
+		solutionId: solution.id,
 		last_version_saved: solution.last_version_saved,
 	};
 }
