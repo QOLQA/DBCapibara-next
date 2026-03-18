@@ -23,7 +23,7 @@ import ModalAddCollection from "@fsd/features/solution-modeling/ui/modals/ModalA
 import { useCanvasStore } from "@fsd/features/solution-modeling/model/canvaStore";
 import { canvaSelector } from "@fsd/features/solution-modeling/model/selectors";
 import { useShallow } from "zustand/shallow";
-import { useUniqueId } from "@fsd/features/solution-modeling/model/use-unique-id";
+import { useUniqueId } from "@fsd/shared/lib/ids/use-unique-id";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { toast } from "sonner";
 
@@ -56,7 +56,7 @@ const DatabaseDiagram = () => {
 		onNodesChange,
 		onEdgesChange,
 	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
-		useShallow(canvaSelector)
+		useShallow(canvaSelector),
 	);
 
 	const isChangingVersion = useCanvasStore((state) => state.isChangingVersion);
@@ -73,7 +73,7 @@ const DatabaseDiagram = () => {
 			setEdges,
 			onError: () => toast.error(t("databaseDiagram.relationshipExists")),
 		}),
-		[nodes, edges, editNode, addEdge, setEdges, t]
+		[nodes, edges, editNode, addEdge, setEdges, t],
 	);
 
 	const { handleConnect, handleDisconnect, handleNodeRemove } =
@@ -105,7 +105,7 @@ const DatabaseDiagram = () => {
 
 			addNode(newNode);
 		},
-		[addNode, generateId, nodes]
+		[addNode, generateId, nodes],
 	);
 
 	const handleOpenModal = useCallback(() => {
@@ -126,7 +126,7 @@ const DatabaseDiagram = () => {
 
 			onEdgesChange(changes);
 		},
-		[onEdgesChange, handleDisconnect, nodes]
+		[onEdgesChange, handleDisconnect, nodes],
 	);
 
 	const handleNodesChange = useCallback(
@@ -138,7 +138,7 @@ const DatabaseDiagram = () => {
 			});
 			onNodesChange(changes);
 		},
-		[onNodesChange, handleNodeRemove, nodes]
+		[onNodesChange, handleNodeRemove, nodes],
 	);
 
 	const reactFlowProps = useMemo(
@@ -154,7 +154,7 @@ const DatabaseDiagram = () => {
 			defaultEdgeOptions,
 			fitView: true,
 		}),
-		[nodes, edges, handleEdgesChange, handleNodesChange, handleConnect]
+		[nodes, edges, handleEdgesChange, handleNodesChange, handleConnect],
 	);
 
 	return (

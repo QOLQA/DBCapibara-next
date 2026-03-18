@@ -11,8 +11,8 @@ import {
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
-import ModalDocument from "./modal-document";
-import ModalAtributes from "./modal-attributes";
+import ModalDocument from "@fsd/features/solution-modeling/ui/modals/ModalDocument";
+import ModalAtributes from "@fsd/features/solution-modeling/ui/modals/ModalAtributes";
 import { getSubmodelColor } from "@fsd/entities/solution/lib/diagram";
 import {
 	AddDocument,
