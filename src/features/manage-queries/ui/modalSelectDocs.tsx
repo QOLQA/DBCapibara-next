@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { useQueryOperations } from "../model/use-query-operations";
 import { useTableSelection } from "../model/use-table-selection";
-import { useUniqueId } from "../model/use-unique-id";
+import { useUniqueId } from "@fsd/shared/lib/ids/use-unique-id";
 import { AddDocumentSection } from "./addDocumentSection";
 import { WordToggleButtons } from "./wordToggleButtons";
 
