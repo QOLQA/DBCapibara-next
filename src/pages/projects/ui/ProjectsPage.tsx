@@ -10,13 +10,12 @@ import { useAuth } from "@fsd/features/auth";
 import { Logo } from "@fsd/shared/ui/icons/HeaderIcons";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import {
-	AddSolutionModal,
-	EditSolutionModal,
-	DeleteSolutionModal,
-	useModelsStore,
-} from "@fsd/features/project-management";
-import { ModelCard } from "./ModelCard";
-import type { SolutionListItem } from "@fsd/entities/solution";
+	AddProjectModal,
+	EditProjectModal,
+	DeleteProjectModal,
+	useProjectsStore,
+} from "@fsd/features/manage-projects";
+import { SolutionCard, type SolutionListItem } from "@fsd/entities/solution";
 
 interface CreateSolutionResponse {
 	_id: string;
@@ -29,9 +28,9 @@ export function ProjectsPage({
 	initialSolutions: SolutionListItem[];
 }) {
 	const { t } = useTranslation();
-	const [isAddSolutionModalOpen, setIsAddSolutionModalOpen] = useState(false);
-	const [isEditSolutionModalOpen, setIsEditSolutionModalOpen] = useState(false);
-	const [isDeleteSolutionModalOpen, setIsDeleteSolutionModalOpen] =
+	const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
+	const [isEditProjectModalOpen, setIsEditProjectModalOpen] = useState(false);
+	const [isDeleteProjectModalOpen, setIsDeleteProjectModalOpen] =
 		useState(false);
 
 	const router = useRouter();
@@ -40,28 +39,30 @@ export function ProjectsPage({
 	const [isPending, startTransition] = useTransition();
 	const [solutions, setSolutions] = useState(initialSolutions);
 
-	const { solutionId } = useModelsStore.getState();
+	const { solutionId } = useProjectsStore.getState();
 
 	const handleAddSolution = async (name: string) => {
-		setIsAddSolutionModalOpen(false);
+		setIsAddProjectModalOpen(false);
 
 		try {
 			const data = await api.post<CreateSolutionResponse>("/solutions", {
 				name: name,
 			});
 
-			router.push(`/models/${data._id}/canva`);
+			router.push(`/projects/${data._id}/canva`);
 		} catch (error) {
 			console.error("Error creating solution:", error);
 		}
 	};
 
-	const handleRequestDeleteSolution = () => {
-		setIsDeleteSolutionModalOpen(true);
+	const handleRequestDeleteSolution = (solutionId: string) => {
+		useProjectsStore.getState().setSolutionId(solutionId);
+		setIsDeleteProjectModalOpen(true);
 	};
 
-	const handleRequestEditSolution = () => {
-		setIsEditSolutionModalOpen(true);
+	const handleRequestEditSolution = (solutionId: string) => {
+		useProjectsStore.getState().setSolutionId(solutionId);
+		setIsEditProjectModalOpen(true);
 	};
 
 	const handleConfirmDeleteSolution = async () => {
@@ -87,7 +88,7 @@ export function ProjectsPage({
 	};
 
 	const handleEditSolution = async () => {
-		const { solutionId: sid, solutionDataToEdit } = useModelsStore.getState();
+		const { solutionId: sid, solutionDataToEdit } = useProjectsStore.getState();
 		if (!sid) return;
 
 		try {
@@ -118,18 +119,18 @@ export function ProjectsPage({
 		<>
 			<header className="bg-secondary-gray pt-[27px] pb-16">
 				<div className="max-w-[1330px] mx-auto flex justify-between items-center">
-					<Link href="/models">
+					<Link href="/projects">
 						<Logo className="text-blue" />
 					</Link>
 					<div className="flex gap-[68px] items-center">
 						<Button
 							type="button"
 							onClick={() => {
-								setIsAddSolutionModalOpen(true);
+								setIsAddProjectModalOpen(true);
 							}}
 							className="text-white font-weight-900 cursor-pointer bg-black hover:bg-primary-gray"
 						>
-							<Plus /> {t("other.newModel")}
+							<Plus /> {t("other.newProject")}
 						</Button>
 						<div className="flex items-center gap-3">
 							{user && (
@@ -160,40 +161,40 @@ export function ProjectsPage({
 						</div>
 					)}
 
-					<ul className="models grid grid-cols-3 gap-10">
+					<ul className="projects grid grid-cols-3 gap-10">
 						{solutions.map((solution) => (
-							<ModelCard
+							<SolutionCard
 								{...solution}
 								key={solution._id}
-								requestDelete={handleRequestDeleteSolution}
-								requestEdit={handleRequestEditSolution}
+								onRequestDelete={handleRequestDeleteSolution}
+								onRequestEdit={handleRequestEditSolution}
 							/>
 						))}
 					</ul>
 				</div>
 			</main>
 
-			{isAddSolutionModalOpen && (
-				<AddSolutionModal
-					open={isAddSolutionModalOpen}
-					setOpen={setIsAddSolutionModalOpen}
+			{isAddProjectModalOpen && (
+				<AddProjectModal
+					open={isAddProjectModalOpen}
+					setOpen={setIsAddProjectModalOpen}
 					onSubmit={handleAddSolution}
 				/>
 			)}
 
-			{isDeleteSolutionModalOpen && (
-				<DeleteSolutionModal
-					open={isDeleteSolutionModalOpen}
-					setOpen={setIsDeleteSolutionModalOpen}
+			{isDeleteProjectModalOpen && (
+				<DeleteProjectModal
+					open={isDeleteProjectModalOpen}
+					setOpen={setIsDeleteProjectModalOpen}
 					onConfirm={handleConfirmDeleteSolution}
 					solutionName={solutions.find((s) => s._id === solutionId)?.name}
 				/>
 			)}
 
-			{isEditSolutionModalOpen && (
-				<EditSolutionModal
-					open={isEditSolutionModalOpen}
-					setOpen={setIsEditSolutionModalOpen}
+			{isEditProjectModalOpen && (
+				<EditProjectModal
+					open={isEditProjectModalOpen}
+					setOpen={setIsEditProjectModalOpen}
 					onSubmit={handleEditSolution}
 					solutionNameToEdit={
 						solutions.find((s) => s._id === solutionId)?.name ?? ""

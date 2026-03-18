@@ -4,17 +4,17 @@ import { Modal } from "@fsd/shared/ui/modal";
 import { useState, useTransition } from "react";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
-interface AddSolutionModalProps {
+interface AddProjectModalProps {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 	onSubmit: (name: string) => Promise<void>;
 }
 
-export function AddSolutionModal({
+export function AddProjectModal({
 	open,
 	setOpen,
 	onSubmit,
-}: AddSolutionModalProps) {
+}: AddProjectModalProps) {
 	const { t } = useTranslation();
 	const [docName, setDocName] = useState("");
 	const [isPending, startTransition] = useTransition();

@@ -12,7 +12,7 @@ async function loadSolutions() {
 	}
 }
 
-export default async function ModelsPage() {
+export default async function ProjectsRoute() {
 	const solutions = await loadSolutions();
 
 	return <ProjectsPage initialSolutions={solutions} />;

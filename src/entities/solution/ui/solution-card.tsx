@@ -3,9 +3,8 @@
 import { useRouter } from "next/navigation";
 import { Edit, Trash } from "lucide-react";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
-import { useModelsStore } from "@fsd/features/project-management";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
-import { ModelImage } from "./ModelImage";
+import { SolutionImage } from "./solution-image";
 import { ManagedDropdownMenu } from "@fsd/shared/ui/ManagedDropdownMenu";
 import {
 	DropdownMenuContent,
@@ -13,55 +12,52 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
-import type { SolutionListItem } from "@fsd/entities/solution";
+import type { SolutionListItem } from "../model/solution";
 
-interface ModelCardProps extends SolutionListItem {
-	requestDelete: () => void;
-	requestEdit: () => void;
+interface SolutionCardProps extends SolutionListItem {
+	onRequestDelete: (solutionId: string) => void;
+	onRequestEdit: (solutionId: string) => void;
 }
 
-export function ModelCard({
+export function SolutionCard({
 	_id,
 	name,
 	src_img = "",
 	last_updated_at,
-	requestDelete,
-	requestEdit,
-}: ModelCardProps) {
+	onRequestDelete,
+	onRequestEdit,
+}: SolutionCardProps) {
 	const { t } = useTranslation();
 	const router = useRouter();
-	const { setSolutionId } = useModelsStore.getState();
 
 	const handleRequestDelete = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
 		event.stopPropagation();
-		setSolutionId(_id);
-		requestDelete();
+		onRequestDelete(_id);
 	};
 
 	const handleRequestEdit = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
 		event.stopPropagation();
-		setSolutionId(_id);
-		requestEdit();
+		onRequestEdit(_id);
 	};
 
 	return (
-		<li className="model">
+		<li className="project">
 			<article
 				onClick={() => {
-					router.push(`/models/${_id}/canva`);
+					router.push(`/projects/${_id}/canva`);
 				}}
 				className="focus:rounded-2xl"
 			>
-				<div className="model__thumbnail">
-					<ModelImage
+				<div className="project__thumbnail">
+					<SolutionImage
 						src={src_img}
-						alt="Model thumbnail"
-						className="model__thumbnail-img"
+						alt="Project thumbnail"
+						className="project__thumbnail-img"
 					/>
 				</div>
-				<div className="model__info">
+				<div className="project__info">
 					<div className="flex items-center justify-between">
 						<p className="text-white text-h3">{name}</p>
 						<ManagedDropdownMenu>

@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import type { SolutionListItem } from "@fsd/entities/solution";
 
-export type ModelsState = {
+export type ProjectsState = {
 	solutionId: string | null;
 	setSolutionId: (id: string) => void;
 	solutionDataToEdit: Pick<SolutionListItem, "_id" | "name"> | null;
@@ -14,7 +14,7 @@ export type ModelsState = {
 	setHasHydrated: (hasHydrated: boolean) => void;
 };
 
-export const useModelsStore = create<ModelsState>()(
+export const useProjectsStore = create<ProjectsState>()(
 	persist(
 		immer((set) => ({
 			solutionId: null,
@@ -33,7 +33,7 @@ export const useModelsStore = create<ModelsState>()(
 			setHasHydrated: (hasHydrated) => set({ _hasHydrated: hasHydrated }),
 		})),
 		{
-			name: "models-storage",
+			name: "projects-storage",
 			partialize: (state) => ({
 				solutionId: state.solutionId,
 				solutionDataToEdit: state.solutionDataToEdit,

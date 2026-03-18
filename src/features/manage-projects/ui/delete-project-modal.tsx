@@ -5,19 +5,19 @@ import { AlertTriangle } from "lucide-react";
 import { useTransition } from "react";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
-interface DeleteSolutionModalProps {
+interface DeleteProjectModalProps {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 	onConfirm: () => Promise<void>;
 	solutionName?: string;
 }
 
-export function DeleteSolutionModal({
+export function DeleteProjectModal({
 	open,
 	setOpen,
 	onConfirm,
 	solutionName,
-}: DeleteSolutionModalProps) {
+}: DeleteProjectModalProps) {
 	const { t } = useTranslation();
 	const [isPending, startTransition] = useTransition();
 	const defaultSolutionName =

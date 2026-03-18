@@ -34,7 +34,7 @@ function LoginContent() {
 	});
 
 	const handleSuccess = () => {
-		const redirect = searchParams?.get("redirect") || "/models";
+		const redirect = searchParams?.get("redirect") || "/projects";
 		router.push(redirect);
 	};
 
@@ -65,7 +65,7 @@ function LoginContent() {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			const redirect = searchParams?.get("redirect") || "/models";
+			const redirect = searchParams?.get("redirect") || "/projects";
 			router.push(redirect);
 		}
 	}, [isAuthenticated, router, searchParams]);

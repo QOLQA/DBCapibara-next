@@ -344,8 +344,8 @@
 	opacity: 1;
 }
 
-/* Modal styles */
-.model__thumbnail {
+/* Project card styles */
+.project__thumbnail {
 	height: 198px;
 	background-color: var(--color-gray);
 	border-radius: 0.75rem 0.75rem 0 0;
@@ -353,21 +353,21 @@
 	overflow: hidden;
 }
 
-.model__info {
+.project__info {
 	border: 1px solid var(--color-gray);
 	padding: 1.25rem;
 	border-radius: 0 0 0.75rem 0.75rem;
 }
 
-.model {
+.project {
 	cursor: pointer;
 }
 
-.model:hover .model__info {
+.project:hover .project__info {
 	background-color: var(--color-terciary-gray);
 }
 
-.model__thumbnail-img {
+.project__thumbnail-img {
 	border-radius: 0.75rem 0.75rem 0 0;
 	height: 100%;
 	width: 100%;

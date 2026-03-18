@@ -5,13 +5,13 @@ import Image from "next/image";
 import { cn } from "@fsd/shared/lib/classnames";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
-interface ModelImageProps {
+interface SolutionImageProps {
 	src: string;
 	alt: string;
 	className: string;
 }
 
-export function ModelImage({ src, alt, className }: ModelImageProps) {
+export function SolutionImage({ src, alt, className }: SolutionImageProps) {
 	const { t } = useTranslation();
 	const [imageError, setImageError] = useState(false);
 	const [imageLoading, setImageLoading] = useState(true);

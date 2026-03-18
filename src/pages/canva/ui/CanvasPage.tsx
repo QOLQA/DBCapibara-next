@@ -44,7 +44,7 @@ export function CanvasPage({ loaderData }: CanvasPageProps) {
 				aditionalToTitle: {
 					type: "button",
 					onClick: () => {
-						router.push(`/models/${diagramId}/analysis`);
+						router.push(`/projects/${diagramId}/analysis`);
 					},
 					titleButton: "Compare schemas",
 				},

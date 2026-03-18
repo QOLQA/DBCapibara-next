@@ -13,7 +13,7 @@ export async function getAnalysisData(solutionId: string) {
 				redirect("/login");
 			}
 			if (error.message === "FORBIDDEN") {
-				redirect("/models");
+				redirect("/projects");
 			}
 		}
 		throw error;

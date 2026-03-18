@@ -1,27 +1,27 @@
 "use client";
 
 import { Modal } from "@fsd/shared/ui/modal";
-import { useModelsStore } from "../../model/modelsStore";
+import { useProjectsStore } from "../model/projectsStore";
 import React, { useState, useTransition } from "react";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 
-interface EditSolutionModalProps {
+interface EditProjectModalProps {
 	onSubmit: () => void;
 	solutionNameToEdit: string;
 	open: boolean;
 	setOpen: (open: boolean) => void;
 }
 
-export const EditSolutionModal = React.memo(function EditSolutionModal({
+export const EditProjectModal = React.memo(function EditProjectModal({
 	onSubmit,
 	solutionNameToEdit = "",
 	open,
 	setOpen,
-}: EditSolutionModalProps) {
+}: EditProjectModalProps) {
 	const { t } = useTranslation();
 	const [solutionName, setSolutionName] = useState(solutionNameToEdit);
 	const [isPending, startTransition] = useTransition();
-	const { setSolutionDataToEdit, solutionId } = useModelsStore.getState();
+	const { setSolutionDataToEdit, solutionId } = useProjectsStore.getState();
 
 	const handleSubmit = () => {
 		startTransition(() => {
