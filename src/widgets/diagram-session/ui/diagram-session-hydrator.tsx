@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useCanvasStore } from "../model/canvaStore";
+import { useCanvasStore } from "@fsd/features/solution-modeling/model/canvaStore";
 import type { VersionFrontend } from "@fsd/entities/solution";
 
 interface DiagramSessionHydratorProps {

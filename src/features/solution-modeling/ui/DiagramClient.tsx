@@ -2,7 +2,7 @@
 
 import { useCanvasStore } from "../model/canvaStore";
 import { DataBaseDiagram } from "./diagram/DataBaseDiagram";
-import { LayoutDiagram } from "./LayoutDiagram";
+import { LayoutDiagram } from "@fsd/widgets/modeling-layout";
 import { useEffect, useState } from "react";
 import type { VersionFrontend } from "@fsd/entities/solution";
 import type { NavItem } from "@fsd/widgets/modeling-sidebar";
