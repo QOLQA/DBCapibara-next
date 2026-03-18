@@ -4,8 +4,8 @@ import { useState, useCallback } from "react";
 import { type Node, useReactFlow } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 
-import { useCanvasStore } from "../../../model/canvaStore";
-import { useTableConnections } from "../../../hooks/use-node-connections";
+import { useCanvasStore } from "@fsd/features/solution-modeling/model/canvaStore";
+import { useTableConnections } from "./use-node-connections";
 import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
 
 import type { TableData, Column } from "@fsd/entities/solution";
@@ -15,7 +15,7 @@ import {
 	addAttributeToNestedTables,
 	addNestedTableRecursively,
 	createNestedTable,
-} from "../utils/tableOperations";
+} from "../lib/table-operations";
 
 interface TableAttribute {
 	id: string;
@@ -73,8 +73,8 @@ export const useTableNodeContent = ({ id, data }: UseTableNodeContentProps) => {
 						}))
 					: newAtributes;
 
-			setNodes((nodes: Node[]) => {
-				return nodes?.map((node: Node) => {
+			setNodes((currentNodes: Node[]) => {
+				return currentNodes?.map((node: Node) => {
 					if (node.id !== id) return node;
 
 					const tableData = node.data as TableData;
@@ -122,8 +122,8 @@ export const useTableNodeContent = ({ id, data }: UseTableNodeContentProps) => {
 				data.submodelIndex
 			);
 
-			setNodes((nodes: Node[]) => {
-				return nodes?.map((node: Node) => {
+			setNodes((currentNodes: Node[]) => {
+				return currentNodes?.map((node: Node) => {
 					if (node.id !== id) return node;
 
 					const tableData = node.data as TableData;
@@ -200,7 +200,7 @@ export const useTableNodeContent = ({ id, data }: UseTableNodeContentProps) => {
 		(tableId: string) => {
 			const numLayers = tableId.split("-").length;
 			let k = 1;
-			const node = nodes?.find((node: Node<TableData>) => node.id === id);
+			const node = nodes?.find((n: Node<TableData>) => n.id === id);
 			let table = node?.data;
 
 			while (k < numLayers) {
@@ -228,7 +228,7 @@ export const useTableNodeContent = ({ id, data }: UseTableNodeContentProps) => {
 		(selectedColumn: Column) => {
 			const numLayers = selectedColumn.id.split("-").length;
 			let k = 1;
-			const node = nodes?.find((node: Node<TableData>) => node.id === id);
+			const node = nodes?.find((n: Node<TableData>) => n.id === id);
 			let table = node?.data;
 
 			while (k < numLayers - 1) {

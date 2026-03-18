@@ -10,45 +10,6 @@ export const generateRandomId = (): string => {
 	return result;
 };
 
-export const deleteColumnRecursively = (
-	nestedTables: TableData,
-	columnId: string,
-	targetColumnId: string,
-	numLayers: number,
-	layer: number
-): TableData => {
-	if (layer > 100) {
-		return nestedTables;
-	}
-
-	if (layer === numLayers - 1) {
-		nestedTables.columns = nestedTables.columns.filter(
-			(col: Column) => col.id !== targetColumnId
-		);
-		return nestedTables;
-	}
-
-	const nestedTableResultId = getKeySegment(columnId, layer + 1);
-
-	const nestedTableResult = nestedTables.nestedTables?.map(
-		(nestedTable: TableData) =>
-			nestedTable.id === nestedTableResultId
-				? deleteColumnRecursively(
-						nestedTable,
-						columnId,
-						targetColumnId,
-						numLayers,
-						layer + 1
-					)
-				: nestedTable
-	) as TableData[];
-
-	return {
-		...nestedTables,
-		nestedTables: nestedTableResult,
-	};
-};
-
 export const deleteTableRecursively = (
 	nestedTables: TableData,
 	tableId: string,
@@ -135,22 +96,6 @@ export const addNestedTableRecursively = (
 
 		return table;
 	});
-};
-
-export const findTableByPath = (
-	rootData: TableData,
-	tableId: string
-): TableData | undefined => {
-	const numLayers = tableId.split("-").length;
-	let table: TableData | undefined = rootData;
-
-	for (let k = 2; k <= numLayers; k++) {
-		const segmentedKey = getKeySegment(tableId, k);
-		table = table?.nestedTables?.find((t: TableData) => t.id === segmentedKey);
-		if (!table) break;
-	}
-
-	return table;
 };
 
 export const createNestedTable = (

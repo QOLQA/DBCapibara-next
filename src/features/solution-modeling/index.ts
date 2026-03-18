@@ -5,6 +5,10 @@ export { DiagramSessionHydrator } from "@fsd/widgets/diagram-session";
 export { LayoutDiagram } from "@fsd/widgets/modeling-layout";
 export { DataBaseDiagram } from "./ui/diagram/DataBaseDiagram";
 export { edgeTypes } from "./ui/diagram/FloatingEdge";
-export { nodeTypes } from "./ui/table/TableNode";
-export { useTableConnections, useTableOperations } from "./hooks";
+export {
+	nodeTypes,
+	useTableConnections,
+	getNextAvailableSubmodelIndex,
+} from "@fsd/entities/table";
+export { useTableOperations } from "./hooks";
 export type { NavItem } from "@fsd/widgets/modeling-sidebar";

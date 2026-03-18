@@ -11,8 +11,8 @@ import {
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
-import ModalDocument from "../modals/ModalDocument";
-import ModalAtributes from "../modals/ModalAtributes";
+import ModalDocument from "./modal-document";
+import ModalAtributes from "./modal-attributes";
 import { getSubmodelColor } from "@fsd/entities/solution/lib/diagram";
 import {
 	AddDocument,
@@ -21,9 +21,9 @@ import {
 	Plus,
 } from "@fsd/shared/ui/icons/TableOptionsIcons";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
-import { NestedTableCardinality } from "./NestedTableCardinality";
-import { AttributeNode } from "./AttributeNode";
-import { useTableNodeContent } from "./hooks/useTableNodeContent";
+import { NestedTableCardinality } from "./nested-table-cardinality";
+import { AttributeNode } from "./attribute-node";
+import { useTableNodeContent } from "../model/use-table-node-content";
 import type { CardinalityType } from "@fsd/entities/solution";
 
 interface TableNodeContentProps extends TableNodeProps {

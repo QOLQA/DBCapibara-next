@@ -11,17 +11,19 @@ import {
 import type { Node, EdgeChange, NodeChange } from "@xyflow/react";
 import type { TableData } from "@fsd/entities/solution";
 
-import { nodeTypes } from "../table/TableNode";
+import {
+	nodeTypes,
+	useTableConnections,
+	getNextAvailableSubmodelIndex,
+} from "@fsd/entities/table";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@fsd/shared/ui/button";
 import { edgeTypes } from "./FloatingEdge";
-import { useTableConnections } from "../../hooks/use-node-connections";
 import ModalAddCollection from "../modals/ModalAddCollection";
 import { useCanvasStore } from "../../model/canvaStore";
 import { canvaSelector } from "../../model/selectors";
 import { useShallow } from "zustand/shallow";
 import { useUniqueId } from "../../hooks/use-unique-id";
-import { getNextAvailableSubmodelIndex } from "../../hooks/use-node-connections";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { toast } from "sonner";
 

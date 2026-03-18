@@ -4,17 +4,9 @@ import { Handle, Position } from "@xyflow/react";
 import type { NodeTypes } from "@xyflow/react";
 
 import type { TableNodeProps } from "@fsd/entities/solution";
-import { TableNodeContent } from "./TableNodeContent";
+import { TableNodeContent } from "./table-node-content";
 
 export const TableNode = ({ data, id }: TableNodeProps) => {
-	const handlePositions = [
-		"0%",
-		"25%",
-		"50%",
-		"75%",
-		"100%",
-	];
-
 	return (
 		<div className="relative w-full h-full ">
 			<Handle
