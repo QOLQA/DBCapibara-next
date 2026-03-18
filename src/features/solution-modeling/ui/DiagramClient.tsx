@@ -5,7 +5,7 @@ import { DataBaseDiagram } from "./diagram/DataBaseDiagram";
 import { LayoutDiagram } from "./LayoutDiagram";
 import { useEffect, useState } from "react";
 import type { VersionFrontend } from "@fsd/entities/solution";
-import type { NavItem } from "./sidebar/types";
+import type { NavItem } from "@fsd/widgets/modeling-sidebar";
 
 interface DiagramClientProps {
 	loaderData: {

@@ -1,9 +1,9 @@
 "use client";
 
 import { Sidebar, useSidebar } from "@fsd/shared/ui/sidebar";
-import { SidebarIcons } from "./SidebarIcons";
+import { SidebarIcons } from "./sidebar-icons";
 import { useState } from "react";
-import { SidebarContentPrinc } from "./SidebarContent";
+import { SidebarContentPrinc } from "./sidebar-content";
 import type { Data, NavItem } from "./types";
 import { useAuthContext } from "@fsd/app/providers";
 
