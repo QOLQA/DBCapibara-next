@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ModalNewQuery } from "./ModalNewQuery";
+import { ModalNewQuery } from "./modalNewQuery";
 
 export const BtnNewQuery = () => {
 	const [open, setOpen] = useState(false);

@@ -103,9 +103,7 @@ export const useQueryOperations = () => {
 
 	const syncQueries = useCallback(async () => {
 		try {
-			const queries = await api.get<Query[]>(
-				`/queries/solution/${solutionId}`
-			);
+			const queries = await api.get<Query[]>(`/queries/solution/${solutionId}`);
 			useCanvasStore.getState().setQueries(queries);
 			return queries;
 		} catch (error) {

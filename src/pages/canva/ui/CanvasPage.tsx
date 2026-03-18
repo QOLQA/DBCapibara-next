@@ -3,7 +3,7 @@
 import { DiagramClient } from "@fsd/features/solution-modeling";
 import type { NavItem } from "@fsd/features/solution-modeling";
 import { AppHeader } from "@fsd/features/solution-versioning";
-import { AppQueries } from "@fsd/features/queries";
+import { QueriesPanel } from "@fsd/widgets/queries-panel";
 import { AppStatistics } from "@fsd/features/statistics";
 import type { VersionFrontend } from "@fsd/entities/solution";
 import { Calendar, Database, DataPie } from "@fsd/shared/ui/icons/SidebarIcons";
@@ -35,7 +35,7 @@ export function CanvasPage({ loaderData }: CanvasPageProps) {
 			{
 				title: "Queries",
 				icon: <Calendar />,
-				content: <AppQueries />,
+				content: <QueriesPanel />,
 			},
 			{
 				title: "Statistics",

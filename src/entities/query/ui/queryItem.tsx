@@ -1,16 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { type ReactNode } from "react";
 import type { Query } from "@fsd/entities/solution";
-import { DropDownQuerys } from "./DropDownQuerys";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
+
+type QueryItemProps = {
+	query: Query;
+	actionsSlot?: ReactNode;
+};
 
 const WordSelector = ({ word }: { word: string }) => {
 	return <span className="text-blue">{`${word} `} </span>;
 };
 
-export const QueryItem = ({ query }: { query: Query }) => {
+export const QueryItem = ({ query, actionsSlot }: QueryItemProps) => {
 	const { t } = useTranslation();
+
 	return (
 		<div className="flex flex-col items-start bg-gray w-full p-4 gap-3 rounded-lg relative">
 			<div className="text-center py-2 px-3 w-full bg-cuartenary-gray rounded-lg text-white">
@@ -36,7 +41,7 @@ export const QueryItem = ({ query }: { query: Query }) => {
 				))}
 			</div>
 
-			<DropDownQuerys editQuery={query} />
+			{actionsSlot}
 		</div>
 	);
 };

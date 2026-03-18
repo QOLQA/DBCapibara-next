@@ -2,15 +2,15 @@
 
 import { Modal } from "@fsd/shared/ui/modal";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
-import { useUniqueId } from "../hooks/use-unique-id";
 import { getUniqueTableNames } from "@fsd/entities/solution/lib/analytics";
-import { useTableSelection } from "../hooks/use-table-selection";
-import { useQueryOperations } from "../hooks/use-query-operations";
-import { WordToggleButtons } from "./WordToggleButtons";
-import { SelectedTablesList } from "./SelectedTablesList";
-import { AddDocumentSection } from "./AddDocumentSection";
 import type { Query } from "@fsd/entities/solution";
 import { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { useQueryOperations } from "../model/use-query-operations";
+import { useTableSelection } from "../model/use-table-selection";
+import { useUniqueId } from "../model/use-unique-id";
+import { AddDocumentSection } from "./addDocumentSection";
+import { WordToggleButtons } from "./wordToggleButtons";
 
 type ModalProps = {
 	open: boolean;
@@ -122,10 +122,28 @@ export const ModalSelectDocs = ({
 					</p>
 
 					<div className="w-full flex flex-col gap-2">
-						<SelectedTablesList
-							selectedTables={selectedTables}
-							onRemove={removeTable}
-						/>
+						{selectedTables.length > 0 && (
+							<div className="w-full flex flex-col gap-2">
+								{selectedTables.map((tableName) => (
+									<div
+										key={tableName}
+										className="flex items-center justify-between px-4 py-3 bg-terciary-gray border border-gray rounded-lg group hover:border-secondary-white transition-colors duration-200"
+									>
+										<span className="text-secondary-white text-h4">
+											{tableName}
+										</span>
+										<button
+											type="button"
+											onClick={() => removeTable(tableName)}
+											className="text-lighter-gray hover:text-red-500 transition-colors duration-200"
+											aria-label={`Remove ${tableName}`}
+										>
+											<Trash2 className="w-5 h-5" />
+										</button>
+									</div>
+								))}
+							</div>
+						)}
 
 						<AddDocumentSection
 							availableTableNames={availableTableNames}

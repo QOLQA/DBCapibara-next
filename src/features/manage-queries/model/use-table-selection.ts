@@ -80,8 +80,7 @@ export function useTableSelection(
 	const toggleWord = (word: string) => {
 		const wordPrefix = word.toLowerCase().slice(0, 3);
 		const matchingTable = availableTableNames.find(
-			(tableName) =>
-				tableName.toLowerCase().slice(0, 3) === wordPrefix
+			(tableName) => tableName.toLowerCase().slice(0, 3) === wordPrefix
 		);
 
 		if (matchingTable) {

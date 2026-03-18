@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { QueryItem } from "@fsd/entities/query";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
-import { useQueryOperations } from "../hooks/use-query-operations";
-import { BtnNewQuery } from "./BtnNewQuery";
-import { QueryItem } from "./QueryItem";
+import { BtnNewQuery, useQueryOperations } from "@fsd/features/manage-queries";
+import { DropdownQueries } from "./dropdownQueries";
 
-export const AppQueries = () => {
+export const QueriesPanel = () => {
 	const queries = useCanvasStore((state) => state.queries);
 	const solutionId = useCanvasStore((state) => state.id);
 	const hasLoadedQueries = useCanvasStore((state) => state.hasLoadedQueries);
@@ -48,6 +48,7 @@ export const AppQueries = () => {
 					<QueryItem
 						key={`${query.collections[0]}-${index}-queries`}
 						query={query}
+						actionsSlot={<DropdownQueries editQuery={query} />}
 					/>
 				))}
 			</div>

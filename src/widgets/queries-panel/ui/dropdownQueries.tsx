@@ -8,12 +8,15 @@ import {
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
-import { useState } from "react";
-import { ModalNewQuery } from "./ModalNewQuery";
+import { ModalNewQuery, useQueryOperations } from "@fsd/features/manage-queries";
 import type { Query } from "@fsd/entities/solution";
-import { useQueryOperations } from "../hooks/use-query-operations";
+import { useState } from "react";
 
-export const DropDownQuerys = ({ editQuery }: { editQuery: Query }) => {
+type DropdownQueriesProps = {
+	editQuery: Query;
+};
+
+export const DropdownQueries = ({ editQuery }: DropdownQueriesProps) => {
 	const [open, setOpen] = useState(false);
 	const [queryText, setQueryText] = useState("");
 	const { deleteQuery } = useQueryOperations();
