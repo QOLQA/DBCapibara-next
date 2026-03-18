@@ -5,4 +5,5 @@ export {
 	useQueryOperations,
 	useTableSelection,
 	useUniqueId,
+	useQueriesStore,
 } from "./model";

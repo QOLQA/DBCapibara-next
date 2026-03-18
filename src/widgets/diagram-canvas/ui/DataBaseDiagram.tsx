@@ -19,11 +19,11 @@ import {
 import "@xyflow/react/dist/style.css";
 import { Button } from "@fsd/shared/ui/button";
 import { edgeTypes } from "./FloatingEdge";
-import ModalAddCollection from "../modals/ModalAddCollection";
-import { useCanvasStore } from "../../model/canvaStore";
-import { canvaSelector } from "../../model/selectors";
+import ModalAddCollection from "@fsd/features/solution-modeling/ui/modals/ModalAddCollection";
+import { useCanvasStore } from "@fsd/features/solution-modeling/model/canvaStore";
+import { canvaSelector } from "@fsd/features/solution-modeling/model/selectors";
 import { useShallow } from "zustand/shallow";
-import { useUniqueId } from "../../hooks/use-unique-id";
+import { useUniqueId } from "@fsd/features/solution-modeling/model/use-unique-id";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { toast } from "sonner";
 

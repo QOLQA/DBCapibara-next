@@ -1,6 +1,7 @@
 "use client";
 
 import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useQueriesStore } from "@fsd/features/manage-queries";
 import { calculateHandledQueriesPercentage } from "@fsd/entities/solution/lib/analytics";
 import {
 	Label,
@@ -12,8 +13,9 @@ import {
 } from "recharts";
 
 export const QueryStatsGraph = () => {
+	const queries = useQueriesStore((state) => state.queries);
 	const handledPercentage = useCanvasStore((state) =>
-		calculateHandledQueriesPercentage(state.queries, state.nodes, state.edges)
+		calculateHandledQueriesPercentage(queries, state.nodes, state.edges)
 	);
 
 	const porcentageAngle = (handledPercentage * 360) / 100;

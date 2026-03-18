@@ -1,6 +1,7 @@
 "use client";
 
 import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useQueriesStore } from "@fsd/features/manage-queries";
 import {
 	getAccessPattern,
 	getRedundancyMetrics,
@@ -17,7 +18,7 @@ import { useRouter } from "next/navigation";
 export function ChartBarStacked() {
 	const router = useRouter();
 	const versions = useCanvasStore((state) => state.versions);
-	const queries = useCanvasStore((state) => state.queries);
+	const queries = useQueriesStore((state) => state.queries);
 	const [metricsChartData, setMetricsChartData] = useState<
 		{ schema: string; redundancy: number; recovery_cost: number; access_pattern: number }[]
 	>([]);

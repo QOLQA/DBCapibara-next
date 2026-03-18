@@ -1,7 +1,6 @@
 import { useCallback } from "react";
-import type { Edge, Connection, Node, EdgeChange } from "@xyflow/react";
+import type { Edge, Connection, Node } from "@xyflow/react";
 import type { TableData } from "@fsd/entities/solution";
-import { useCanvasStore } from "../model/canvaStore";
 
 export const existsConnection = (
 	sourceTable: TableData,
@@ -106,7 +105,7 @@ export const updateSubmodelIndexInNodes = async (
 				visited.add(neighborNodeId);
 				queue.push(neighborNodeId);
 
-				const node = nodes.find((node) => node.id === neighborNodeId);
+				const node = nodes.find((n) => n.id === neighborNodeId);
 				if (node) {
 					let updatedNode = structuredClone(node);
 					updatedNode = updateSubmodelIndexInTable(
@@ -165,7 +164,6 @@ export const useTableConnections = ({
 						node.data.submodelIndex === sourceSubmodelIndex
 					) {
 						let updatedNode = structuredClone(node);
-
 						updatedNode = updateSubmodelIndexInTable(
 							targetSubmodelIndex ?? 0,
 							updatedNode
@@ -195,14 +193,14 @@ export const useTableConnections = ({
 	);
 
 	const handleDisconnect = useCallback(
-		async (edgeId: string, nodes: Node<TableData>[]) => {
+		async (edgeId: string, currentNodes: Node<TableData>[]) => {
 			const edge = edges.find((e) => e.id === edgeId);
 			if (!edge) return;
 
-			const sourceNode = nodes.find(
+			const sourceNode = currentNodes.find(
 				(node) => node.id === edge.source
 			) as Node<TableData>;
-			const targetNode = nodes.find(
+			const targetNode = currentNodes.find(
 				(node) => node.id === edge.target
 			) as Node<TableData>;
 
@@ -218,7 +216,7 @@ export const useTableConnections = ({
 
 			editNode(sourceNode.id, updatedSourceNode);
 
-			const updatedNodes = nodes.map((node) =>
+			const updatedNodes = currentNodes.map((node) =>
 				node.id === sourceNode.id ? updatedSourceNode : node
 			);
 
@@ -232,12 +230,12 @@ export const useTableConnections = ({
 				editNode
 			);
 		},
-		[edges, nodes, editNode, setEdges]
+		[edges, editNode, setEdges]
 	);
 
 	const handleNodeRemove = useCallback(
-		async (nodeId: string, nodes: Node<TableData>[]) => {
-			const nodeToRemove = nodes.find((node) => node.id === nodeId);
+		async (nodeId: string, currentNodes: Node<TableData>[]) => {
+			const nodeToRemove = currentNodes.find((node) => node.id === nodeId);
 			if (!nodeToRemove) return;
 
 			const connectedEdges = edges.filter(
@@ -251,7 +249,7 @@ export const useTableConnections = ({
 
 			for (const edge of connectedEdges) {
 				const otherNodeId = edge.source === nodeId ? edge.target : edge.source;
-				const otherNode = nodes.find((node) => node.id === otherNodeId);
+				const otherNode = currentNodes.find((node) => node.id === otherNodeId);
 
 				if (otherNode) {
 					const updatedNode = structuredClone(otherNode);
@@ -263,7 +261,7 @@ export const useTableConnections = ({
 				}
 			}
 
-			const remainingNodes = nodes.filter((node) => node.id !== nodeId);
+			const remainingNodes = currentNodes.filter((node) => node.id !== nodeId);
 			const updatedNodes = remainingNodes.map((node) => {
 				const updatedNode = structuredClone(node);
 				updatedNode.data.columns = updatedNode.data.columns.filter(
@@ -294,7 +292,7 @@ export const useTableConnections = ({
 				}
 			}
 		},
-		[edges, nodes, editNode, setEdges]
+		[edges, editNode, setEdges]
 	);
 
 	return { handleConnect, handleDisconnect, handleNodeRemove };

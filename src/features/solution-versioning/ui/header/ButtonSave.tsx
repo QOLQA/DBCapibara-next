@@ -2,6 +2,7 @@ import { Save } from "@fsd/shared/ui/icons/HeaderIcons";
 import { transformVersionToBackend } from "@fsd/entities/solution/lib/conversions";
 import { saveCanvas, saveSolution } from "../../lib";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useQueriesStore } from "@fsd/features/manage-queries";
 import { getNodesBounds, getViewportForBounds } from "@xyflow/react";
 import { toPng } from "html-to-image";
 import { uploadImage } from "@fsd/shared/lib/image";
@@ -18,7 +19,7 @@ export const ButtonSave = () => {
 	const versions = useCanvasStore((state) => state.versions);
 	const nodes = useCanvasStore((state) => state.nodes);
 	const edges = useCanvasStore((state) => state.edges);
-	const queries = useCanvasStore((state) => state.queries);
+	const queries = useQueriesStore((state) => state.queries);
 
 	const handleSave = async () => {
 		try {

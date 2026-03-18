@@ -3,11 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import type {
-	Query,
-	TableData,
-	VersionFrontend,
-} from "@fsd/entities/solution";
+import type { TableData, VersionFrontend } from "@fsd/entities/solution";
 import {
 	applyEdgeChanges,
 	applyNodeChanges,
@@ -22,28 +18,20 @@ export type CanvasState = {
 	selectedVersionId: string;
 	nodes: Node<TableData>[];
 	edges: Edge[];
-	queries: Query[];
 	id: string;
 	isChangingVersion: boolean;
-	hasLoadedQueries: boolean;
 	setId: (id: string) => void;
-	setQueries: (queries: Query[]) => void;
 	setNodes: (nodes: Node<TableData>[]) => void;
 	setEdges: (edges: Edge[]) => void;
 	setVersions: (versions: VersionFrontend[]) => void;
 	setSelectedVersionId: (id: string) => void;
 	setIsChangingVersion: (isChanging: boolean) => void;
-	setHasLoadedQueries: (hasLoaded: boolean) => void;
-	getQueryById: (queryId: string) => Query | undefined;
 	addNode: (node: Node<TableData>) => void;
 	addEdge: (edge: Edge) => void;
-	addQuery: (queries: Query) => void;
 	editNode: (nodeId: string, newNode: Node<TableData>) => void;
-	editQuery: (queryId: string, newQuery: Query) => void;
 	removeNode: (nodeId: string) => void;
 	removeEdge: (edgeId: string) => void;
 	editEdge: (edgeId: string, newEdge: Edge) => void;
-	removeQuery: (queryId: string) => void;
 	onNodesChange: (changes: NodeChange<Node<TableData>>[]) => void;
 	onEdgesChange: (changes: EdgeChange[]) => void;
 	_hasHydrated: boolean;
@@ -55,12 +43,10 @@ export const useCanvasStore = create<CanvasState>()(
 		immer((set, get) => ({
 			nodes: [],
 			edges: [],
-			queries: [],
 			id: "",
 			versions: [],
 			selectedVersionId: "",
 			isChangingVersion: false,
-			hasLoadedQueries: false,
 			setSelectedVersionId: (id) => {
 				set((state) => {
 					state.selectedVersionId = id;
@@ -71,19 +57,9 @@ export const useCanvasStore = create<CanvasState>()(
 					state.isChangingVersion = isChanging;
 				});
 			},
-			setHasLoadedQueries: (hasLoaded) => {
-				set((state) => {
-					state.hasLoadedQueries = hasLoaded;
-				});
-			},
 			setId: (id) => {
 				set((state) => {
 					state.id = id;
-				});
-			},
-			setQueries: (queries) => {
-				set((state) => {
-					state.queries = queries;
 				});
 			},
 			setNodes: (nodes) => {
@@ -101,10 +77,6 @@ export const useCanvasStore = create<CanvasState>()(
 					state.versions = versions;
 				});
 			},
-			getQueryById: (queryId) => {
-				const query = get().queries.find((q) => q._id === queryId);
-				return query;
-			},
 			addNode: (node) => {
 				set((state) => {
 					state.nodes.push(node);
@@ -115,26 +87,11 @@ export const useCanvasStore = create<CanvasState>()(
 					state.edges.push(edge);
 				});
 			},
-			addQuery: (query) => {
-				set((state) => {
-					state.queries.push(query);
-				});
-			},
 			editNode: (nodeId, newNode) => {
 				set((state) => {
 					const index = state.nodes.findIndex((node) => node.id === nodeId);
 					if (index !== -1) {
 						state.nodes[index] = newNode;
-					}
-				});
-			},
-			editQuery: (queryId, newQuery) => {
-				set((state) => {
-					const index = state.queries.findIndex(
-						(query) => query._id === queryId
-					);
-					if (index !== -1) {
-						state.queries[index] = newQuery;
 					}
 				});
 			},
@@ -156,11 +113,6 @@ export const useCanvasStore = create<CanvasState>()(
 					}
 				});
 			},
-			removeQuery: (queryId) => {
-				set((state) => {
-					state.queries = state.queries.filter((q) => q._id !== queryId);
-				});
-			},
 			onNodesChange: (changes: NodeChange<Node<TableData>>[]) => {
 				set((state) => {
 					state.nodes = applyNodeChanges<Node<TableData>>(changes, state.nodes);
@@ -180,7 +132,6 @@ export const useCanvasStore = create<CanvasState>()(
 				id: state.id,
 				nodes: state.nodes,
 				edges: state.edges,
-				queries: state.queries,
 				selectedVersionId: state.selectedVersionId,
 				versions: state.versions,
 			}),

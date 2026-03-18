@@ -3,20 +3,32 @@
 import { useEffect, useState } from "react";
 import { QueryItem } from "@fsd/entities/query";
 import { useCanvasStore } from "@fsd/features/solution-modeling";
-import { BtnNewQuery, useQueryOperations } from "@fsd/features/manage-queries";
+import {
+	BtnNewQuery,
+	useQueryOperations,
+	useQueriesStore,
+} from "@fsd/features/manage-queries";
 import { DropdownQueries } from "./dropdownQueries";
 
 export const QueriesPanel = () => {
-	const queries = useCanvasStore((state) => state.queries);
+	const queries = useQueriesStore((state) => state.queries);
 	const solutionId = useCanvasStore((state) => state.id);
-	const hasLoadedQueries = useCanvasStore((state) => state.hasLoadedQueries);
-	const setHasLoadedQueries = useCanvasStore(
-		(state) => state.setHasLoadedQueries
-	);
+	const hasLoadedQueries = useQueriesStore((state) => state.hasLoadedQueries);
+	const loadedSolutionId = useQueriesStore((state) => state.loadedSolutionId);
+	const setHasLoadedQueries = useQueriesStore((state) => state.setHasLoadedQueries);
+	const setLoadedSolutionId = useQueriesStore((state) => state.setLoadedSolutionId);
+	const resetQueries = useQueriesStore((state) => state.resetQueries);
 	const { syncQueries } = useQueryOperations();
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
+		if (!solutionId) return;
+
+		if (loadedSolutionId !== solutionId) {
+			resetQueries();
+			setLoadedSolutionId(solutionId);
+		}
+
 		if (solutionId && !hasLoadedQueries) {
 			setIsLoading(true);
 			syncQueries()
@@ -30,7 +42,15 @@ export const QueriesPanel = () => {
 					setIsLoading(false);
 				});
 		}
-	}, [solutionId, hasLoadedQueries, syncQueries, setHasLoadedQueries]);
+	}, [
+		solutionId,
+		loadedSolutionId,
+		hasLoadedQueries,
+		syncQueries,
+		setHasLoadedQueries,
+		setLoadedSolutionId,
+		resetQueries,
+	]);
 
 	if (isLoading) {
 		return (

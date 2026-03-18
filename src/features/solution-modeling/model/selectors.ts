@@ -15,6 +15,5 @@ export const canvaSelector = (state: CanvasState) => ({
 	setSelectedVersionId: state.setSelectedVersionId,
 	setNodes: state.setNodes,
 	setEdges: state.setEdges,
-	setQueries: state.setQueries,
 	setVersions: state.setVersions,
 });
