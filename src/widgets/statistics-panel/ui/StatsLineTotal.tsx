@@ -1,9 +1,9 @@
 "use client";
 
-import type { StastType } from "@fsd/entities/solution";
+import type { StatType } from "@fsd/entities/solution";
 import { LineStats } from "./LineStats";
 
-export const StatsLineTotal = ({ data }: { data: StastType[] }) => {
+export function StatsLineTotal({ data }: { data: StatType[] }) {
 	const totalValue = data.reduce((sum, stat) => sum + stat.value, 0);
 
 	return (
@@ -18,4 +18,4 @@ export const StatsLineTotal = ({ data }: { data: StastType[] }) => {
 			</div>
 		</div>
 	);
-};
+}

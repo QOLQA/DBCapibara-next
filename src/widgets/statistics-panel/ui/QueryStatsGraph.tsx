@@ -1,8 +1,6 @@
 "use client";
 
-import { useSolutionStore } from "@fsd/entities/solution";
-import { useQueriesStore } from "@fsd/entities/query";
-import { calculateHandledQueriesPercentage } from "@fsd/entities/solution/lib/analytics";
+import { useHandledQueriesPercentage } from "@fsd/features/statistics";
 import {
 	Label,
 	PolarGrid,
@@ -12,20 +10,16 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
-export const QueryStatsGraph = () => {
-	const queries = useQueriesStore((state) => state.queries);
-	const handledPercentage = useSolutionStore((state) =>
-		calculateHandledQueriesPercentage(queries, state.nodes, state.edges)
-	);
-
+export function QueryStatsGraph() {
+	const handledPercentage = useHandledQueriesPercentage();
 	const porcentageAngle = (handledPercentage * 360) / 100;
-
 	const chartData = [
 		{
 			porcentage: handledPercentage,
 			fill: "var(--color-red)",
 		},
 	];
+
 	return (
 		<ResponsiveContainer
 			width="100%"
@@ -96,4 +90,4 @@ export const QueryStatsGraph = () => {
 			</RadialBarChart>
 		</ResponsiveContainer>
 	);
-};
+}

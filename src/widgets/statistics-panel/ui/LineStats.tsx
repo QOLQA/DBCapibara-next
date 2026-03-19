@@ -1,15 +1,14 @@
 "use client";
 
-import type { StastType } from "@fsd/entities/solution";
+import type { StatType } from "@fsd/entities/solution";
 
-export const LineStats = ({ data }: { data: StastType[] }) => {
+export function LineStats({ data }: { data: StatType[] }) {
 	const totalValue = data.reduce((sum, stat) => sum + stat.value, 0);
 
 	return (
 		<div className="flex flex-col items-center justify-center w-full h-full">
 			{data.map((stat, index) => {
-				const percentage =
-					totalValue > 0 ? (stat.value / totalValue) * 100 : 0;
+				const percentage = totalValue > 0 ? (stat.value / totalValue) * 100 : 0;
 
 				return (
 					<div
@@ -26,4 +25,4 @@ export const LineStats = ({ data }: { data: StastType[] }) => {
 			})}
 		</div>
 	);
-};
+}

@@ -22,7 +22,7 @@ export type {
 	EdgeData,
 	AttributeNodeProps,
 	TableNodeProps,
-	StastType,
+	StatType,
 } from "./model/solution-model";
 export { useSolutionStore, type SolutionStore } from "./model/state/solutionStore";
 export { solutionSelector } from "./model/state/selectors";

@@ -10,8 +10,8 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@fsd/shared/ui/sidebar";
-import { NavUser } from "@fsd/widgets/modeling-layout/ui/nav-user";
-import type { Data, NavItem } from "@fsd/widgets/modeling-layout/ui/types";
+import { NavUser } from "./nav-user";
+import type { Data, NavItem } from "./types";
 
 type SidebarIconsProps = {
 	data: Data;

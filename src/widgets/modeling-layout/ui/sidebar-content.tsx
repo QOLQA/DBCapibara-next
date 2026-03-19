@@ -7,7 +7,7 @@ import {
 	SidebarGroupContent,
 	SidebarHeader,
 } from "@fsd/shared/ui/sidebar";
-import type { NavItem } from "@fsd/widgets/modeling-layout/ui/types";
+import type { NavItem } from "./types";
 
 type SidebarContentPrincProps = {
 	activeItem: NavItem;

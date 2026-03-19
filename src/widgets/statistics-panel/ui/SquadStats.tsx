@@ -1,8 +1,8 @@
 "use client";
 
-import type { StastType } from "@fsd/entities/solution";
+import type { StatType } from "@fsd/entities/solution";
 
-export const SquadStats = ({ data }: { data: StastType[] }) => {
+export function SquadStats({ data }: { data: StatType[] }) {
 	return (
 		<div className="flex flex-col items-center gap-3 w-full h-full ">
 			{data.map((stat, index) => (
@@ -17,4 +17,4 @@ export const SquadStats = ({ data }: { data: StastType[] }) => {
 			))}
 		</div>
 	);
-};
+}

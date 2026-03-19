@@ -103,7 +103,7 @@ export interface VersionFrontend {
 	_id: string;
 }
 
-export interface StastType {
+export interface StatType {
 	name: string;
 	value: number;
 	color: string;
