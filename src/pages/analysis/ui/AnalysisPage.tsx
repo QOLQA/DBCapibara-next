@@ -1,6 +1,6 @@
 "use client";
 
-import { DiagramSessionHydrator } from "@fsd/features/solution-modeling";
+import { DiagramSessionHydrator } from "@fsd/widgets/diagram-session";
 import {
 	AnalysisLayout,
 	AnalysisHeader,

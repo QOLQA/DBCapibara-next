@@ -1,10 +1,12 @@
 "use client";
 
-import { DiagramClient } from "@fsd/features/solution-modeling";
-import type { NavItem } from "@fsd/features/solution-modeling";
+import { useInitializeDiagram } from "@fsd/features/solution-modeling";
 import { AppHeader } from "@fsd/features/solution-versioning";
 import { QueriesPanel } from "@fsd/widgets/queries-panel";
 import { AppStatistics } from "@fsd/features/statistics";
+import { DataBaseDiagram } from "@fsd/widgets/diagram-canvas";
+import { LayoutDiagram } from "@fsd/widgets/modeling-layout";
+import type { NavItem } from "@fsd/widgets/modeling-sidebar";
 import type { VersionFrontend } from "@fsd/entities/solution";
 import { Calendar, Database, DataPie } from "@fsd/shared/ui/icons/SidebarIcons";
 import { useParams, useRouter } from "next/navigation";
@@ -24,6 +26,7 @@ export function CanvasPage({ loaderData }: CanvasPageProps) {
 	const { diagramId } = useParams<{ diagramId: string }>() as {
 		diagramId: string;
 	};
+	const isHydrated = useInitializeDiagram(loaderData);
 
 	const sidebarNavItems: NavItem[] = useMemo(
 		() => [
@@ -50,14 +53,16 @@ export function CanvasPage({ loaderData }: CanvasPageProps) {
 				},
 			},
 		],
-		[diagramId, router]
+		[diagramId, router],
 	);
 
 	return (
-		<DiagramClient
-			loaderData={loaderData}
+		<LayoutDiagram
+			title={loaderData.name}
 			headerSlot={<AppHeader title={loaderData.name} />}
 			sidebarNavItems={sidebarNavItems}
-		/>
+		>
+			{isHydrated ? <DataBaseDiagram /> : <div className="h-full w-full" />}
+		</LayoutDiagram>
 	);
 }

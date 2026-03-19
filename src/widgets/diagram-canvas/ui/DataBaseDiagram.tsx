@@ -14,12 +14,12 @@ import type { TableData } from "@fsd/entities/solution";
 import {
 	nodeTypes,
 	useTableConnect,
-	getNextAvailableSubmodelIndex,
+	ModalAddCollection,
 } from "@fsd/features/solution-modeling";
+import { getNextAvailableSubmodelIndex } from "@fsd/entities/table/lib/connection-operations";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@fsd/shared/ui/button";
 import { edgeTypes } from "./FloatingEdge";
-import ModalAddCollection from "@fsd/features/solution-modeling/ui/modals/ModalAddCollection";
 import { useSolutionStore, solutionSelector } from "@fsd/entities/solution";
 import { useShallow } from "zustand/shallow";
 import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
@@ -58,7 +58,9 @@ const DatabaseDiagram = () => {
 		useShallow(solutionSelector),
 	);
 
-	const isChangingVersion = useSolutionStore((state) => state.isChangingVersion);
+	const isChangingVersion = useSolutionStore(
+		(state) => state.isChangingVersion,
+	);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -8,11 +8,8 @@ import {
 	MarkerType,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import {
-	nodeTypes,
-	edgeTypes,
-	useTableConnect,
-} from "@fsd/features/solution-modeling";
+import { nodeTypes, useTableConnect } from "@fsd/features/solution-modeling";
+import { edgeTypes } from "@fsd/widgets/diagram-canvas";
 import { useSolutionStore, solutionSelector } from "@fsd/entities/solution";
 import { useShallow } from "zustand/shallow";
 import { useState, useMemo } from "react";
