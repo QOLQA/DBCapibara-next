@@ -5,7 +5,7 @@ import { type Node, useReactFlow } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import type { Column, TableData } from "@fsd/entities/solution";
 import { useSolutionStore } from "@fsd/entities/solution";
-import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
+import { getKeySegment } from "@fsd/shared/lib/keys";
 import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
 
 interface TableAttribute {

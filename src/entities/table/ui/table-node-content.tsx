@@ -11,7 +11,7 @@ import {
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
-import { getSubmodelColor } from "@fsd/entities/solution/lib/diagram";
+import { getSubmodelColor } from "@fsd/shared/lib/xyflow";
 import {
 	AddDocument,
 	Delete,

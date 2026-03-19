@@ -1,16 +1,16 @@
 import type { TableData, Column } from "@fsd/entities/solution";
-import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
+import { getKeySegment } from "@fsd/shared/lib/keys";
 import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
 
 export const deleteTableRecursively = (
 	nestedTables: TableData,
 	tableId: string,
 	numLayers: number,
-	layer: number
+	layer: number,
 ): TableData => {
 	if (layer === numLayers - 1) {
 		nestedTables.nestedTables = nestedTables.nestedTables?.filter(
-			(nestedTable: TableData) => nestedTable.id !== tableId
+			(nestedTable: TableData) => nestedTable.id !== tableId,
 		);
 		return nestedTables;
 	}
@@ -20,7 +20,7 @@ export const deleteTableRecursively = (
 		(nestedTable: TableData) =>
 			nestedTable.id === nestedTableResultId
 				? deleteTableRecursively(nestedTable, tableId, numLayers, layer + 1)
-				: nestedTable
+				: nestedTable,
 	) as TableData[];
 
 	return {
@@ -33,7 +33,7 @@ export const addAttributeToNestedTables = (
 	nestedTables: TableData[],
 	targetTableId: string,
 	newAttributes: Column[],
-	typeModal: "create" | "update"
+	typeModal: "create" | "update",
 ): TableData[] => {
 	return nestedTables?.map((table: TableData) => {
 		if (table.id === targetTableId) {
@@ -53,7 +53,7 @@ export const addAttributeToNestedTables = (
 					table.nestedTables,
 					targetTableId,
 					newAttributes,
-					typeModal
+					typeModal,
 				),
 			};
 		}
@@ -65,7 +65,7 @@ export const addAttributeToNestedTables = (
 export const addNestedTableRecursively = (
 	nestedTables: TableData[],
 	targetTableId: string,
-	newNestedTable: TableData
+	newNestedTable: TableData,
 ): TableData[] => {
 	return nestedTables?.map((table: TableData) => {
 		if (table.id === targetTableId) {
@@ -81,7 +81,7 @@ export const addNestedTableRecursively = (
 				nestedTables: addNestedTableRecursively(
 					table.nestedTables,
 					targetTableId,
-					newNestedTable
+					newNestedTable,
 				),
 			};
 		}
@@ -93,7 +93,7 @@ export const addNestedTableRecursively = (
 export const createNestedTable = (
 	parentId: string,
 	tableName: string,
-	submodelIndex?: number
+	submodelIndex?: number,
 ): TableData => {
 	const tableId = `${parentId}-${generateRandomId()}`;
 	return {

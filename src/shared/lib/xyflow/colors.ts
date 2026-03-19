@@ -1,6 +1,6 @@
 /**
- * Color palette for submodel headers
- * Each submodel will have a distinct color for its table headers
+ * Color palette for submodel/diagram headers.
+ * Each submodel gets a distinct color for its table headers.
  */
 export const SUBMODEL_COLORS = [
 	"#1e40af", // blue-800
@@ -18,23 +18,18 @@ export const SUBMODEL_COLORS = [
 ];
 
 /**
- * Get a color for a submodel based on its index
- * @param index - The index of the submodel
- * @returns The hex color code
+ * Get a color for a submodel based on its index.
  */
 export function getSubmodelColor(index: number): string {
 	return SUBMODEL_COLORS[index % SUBMODEL_COLORS.length];
 }
 
 /**
- * Get submodel index from node ID
- * The submodelIndex is stored as a prefix in the node ID (e.g., "0-abc123")
- * @param nodeId - The node ID
- * @returns The submodel index
+ * Get submodel index from node ID.
+ * Assumes format "index-rest" (e.g. "0-abc123").
  */
 export function getSubmodelIndexFromNodeId(nodeId: string): number {
 	const parts = nodeId.split("-");
 	const index = Number.parseInt(parts[0], 10);
 	return Number.isNaN(index) ? 0 : index;
 }
-

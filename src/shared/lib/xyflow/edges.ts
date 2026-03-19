@@ -129,4 +129,3 @@ export function createNodesAndEdges(): { nodes: Node[]; edges: Edge[] } {
 
 	return { nodes, edges };
 }
-

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import type { Node } from "@xyflow/react";
-import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
+import { getKeySegment } from "@fsd/shared/lib/keys";
 import type { Column, TableData } from "@fsd/entities/solution";
 import type { TableAttribute } from "./use-attribute-modal";
 

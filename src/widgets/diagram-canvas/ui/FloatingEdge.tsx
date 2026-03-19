@@ -2,7 +2,7 @@
 
 import { BaseEdge, getSmoothStepPath, useInternalNode } from "@xyflow/react";
 import type { EdgeProps } from "@xyflow/react";
-import { getEdgeParams } from "@fsd/entities/solution/lib/diagram";
+import { getEdgeParams } from "@fsd/shared/lib/xyflow";
 import { CardinalityLabel } from "./CardinalityLabel";
 import type { CardinalityType, EdgeData } from "@fsd/entities/solution";
 
