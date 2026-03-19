@@ -1,6 +1,6 @@
 import type { TableData, Column } from "@fsd/entities/solution";
 import { getKeySegment } from "@fsd/shared/lib/keys";
-import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
+import { generateRandomId } from "@fsd/shared/lib/ids";
 
 export const deleteTableRecursively = (
 	nestedTables: TableData,

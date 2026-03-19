@@ -16,13 +16,13 @@ import {
 	useTableConnect,
 	ModalAddCollection,
 } from "@fsd/features/solution-modeling";
-import { getNextAvailableSubmodelIndex } from "@fsd/entities/table/lib/connection-operations";
+import { getNextAvailableSubmodelIndex } from "@fsd/entities/table/lib";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@fsd/shared/ui/button";
 import { edgeTypes } from "./FloatingEdge";
 import { useSolutionStore, solutionSelector } from "@fsd/entities/solution";
 import { useShallow } from "zustand/shallow";
-import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
+import { generateRandomId } from "@fsd/shared/lib/ids";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { toast } from "sonner";
 

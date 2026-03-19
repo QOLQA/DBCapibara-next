@@ -7,7 +7,7 @@ import {
 	getNextAvailableSubmodelIndex,
 	updateSubmodelIndexInNodes,
 	updateSubmodelIndexInTable,
-} from "@fsd/entities/table/lib/connection-operations";
+} from "@fsd/entities/table/lib";
 
 interface UseTableConnectProps {
 	nodes: Node<TableData>[];

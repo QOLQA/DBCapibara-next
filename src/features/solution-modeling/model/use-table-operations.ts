@@ -6,7 +6,7 @@ import { useShallow } from "zustand/react/shallow";
 import type { Column, TableData } from "@fsd/entities/solution";
 import { useSolutionStore } from "@fsd/entities/solution";
 import { getKeySegment } from "@fsd/shared/lib/keys";
-import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
+import { generateRandomId } from "@fsd/shared/lib/ids";
 
 interface TableAttribute {
 	id: string;

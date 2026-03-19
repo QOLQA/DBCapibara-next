@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { useQueryOperations } from "../model/use-query-operations";
 import { useTableSelection } from "../model/use-table-selection";
-import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
+import { generateRandomId } from "@fsd/shared/lib/ids";
 import { AddDocumentSection } from "./addDocumentSection";
 import { WordToggleButtons } from "./wordToggleButtons";
 

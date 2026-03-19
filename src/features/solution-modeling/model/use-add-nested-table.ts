@@ -4,7 +4,7 @@ import type { TableData } from "@fsd/entities/solution";
 import {
 	addNestedTableRecursively,
 	createNestedTable,
-} from "@fsd/entities/table/lib/table-operations";
+} from "@fsd/entities/table/lib";
 
 interface UseAddNestedTableParams {
 	nodeId: string;
