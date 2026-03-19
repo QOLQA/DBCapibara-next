@@ -6,6 +6,7 @@ import { useShallow } from "zustand/react/shallow";
 import type { Column, TableData } from "@fsd/entities/solution";
 import { useSolutionStore } from "@fsd/entities/solution";
 import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
+import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
 
 interface TableAttribute {
 	id: string;
@@ -119,7 +120,7 @@ export const useTableOperations = (id: string, data: TableData) => {
 				});
 			});
 		},
-		[id, idNestedTableSelected, setNodes, generateRandomId]
+		[id, idNestedTableSelected, setNodes]
 	);
 
 	const handleAddNestedTable = useCallback(
@@ -195,7 +196,7 @@ export const useTableOperations = (id: string, data: TableData) => {
 				});
 			});
 		},
-		[id, idNestedTableSelected, setNodes, generateRandomId, data.submodelIndex]
+		[id, idNestedTableSelected, setNodes, data.submodelIndex]
 	);
 
 	const handleDeleteTable = useCallback(

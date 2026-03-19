@@ -22,7 +22,7 @@ import { edgeTypes } from "./FloatingEdge";
 import ModalAddCollection from "@fsd/features/solution-modeling/ui/modals/ModalAddCollection";
 import { useSolutionStore, solutionSelector } from "@fsd/entities/solution";
 import { useShallow } from "zustand/shallow";
-import { useUniqueId } from "@fsd/shared/lib/ids/use-unique-id";
+import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { toast } from "sonner";
 
@@ -61,7 +61,6 @@ const DatabaseDiagram = () => {
 	const isChangingVersion = useSolutionStore((state) => state.isChangingVersion);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const generateId = useUniqueId();
 
 	const connectionConfig = useMemo(
 		() => ({
@@ -80,7 +79,7 @@ const DatabaseDiagram = () => {
 
 	const handleAddDocument = useCallback(
 		(name: string) => {
-			const newIdNode = generateId();
+			const newIdNode = generateRandomId();
 
 			const newSubmodelIndex = getNextAvailableSubmodelIndex(nodes);
 
@@ -92,7 +91,7 @@ const DatabaseDiagram = () => {
 					label: name,
 					columns: [
 						{
-							id: `${newIdNode}-${generateId()}`,
+							id: `${newIdNode}-${generateRandomId()}`,
 							name: `${name}_id`,
 							type: "PRIMARY_KEY",
 						},
@@ -104,7 +103,7 @@ const DatabaseDiagram = () => {
 
 			addNode(newNode);
 		},
-		[addNode, generateId, nodes],
+		[addNode, nodes],
 	);
 
 	const handleOpenModal = useCallback(() => {

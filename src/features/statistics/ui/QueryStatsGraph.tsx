@@ -1,7 +1,7 @@
 "use client";
 
 import { useSolutionStore } from "@fsd/entities/solution";
-import { useQueriesStore } from "@fsd/features/manage-queries";
+import { useQueriesStore } from "@fsd/entities/query";
 import { calculateHandledQueriesPercentage } from "@fsd/entities/solution/lib/analytics";
 import {
 	Label,

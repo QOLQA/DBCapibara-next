@@ -1,13 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { QueryItem } from "@fsd/entities/query";
+import { QueryItem, useQueriesStore } from "@fsd/entities/query";
 import { useSolutionStore } from "@fsd/entities/solution";
-import {
-	BtnNewQuery,
-	useQueryOperations,
-	useQueriesStore,
-} from "@fsd/features/manage-queries";
+import { BtnNewQuery, useQueryOperations } from "@fsd/features/manage-queries";
 import { DropdownQueries } from "./dropdownQueries";
 
 export const QueriesPanel = () => {

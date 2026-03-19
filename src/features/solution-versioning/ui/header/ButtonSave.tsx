@@ -2,7 +2,7 @@ import { Save } from "@fsd/shared/ui/icons/HeaderIcons";
 import { transformVersionToBackend } from "@fsd/entities/solution/lib/conversions";
 import { saveCanvas, saveSolution } from "../../lib";
 import { useSolutionStore } from "@fsd/entities/solution";
-import { useQueriesStore } from "@fsd/features/manage-queries";
+import { useQueriesStore } from "@fsd/entities/query";
 import { getNodesBounds, getViewportForBounds } from "@xyflow/react";
 import { toPng } from "html-to-image";
 import { uploadImage } from "@fsd/shared/lib/image";

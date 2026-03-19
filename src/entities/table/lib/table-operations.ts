@@ -1,14 +1,6 @@
 import type { TableData, Column } from "@fsd/entities/solution";
 import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
-
-export const generateRandomId = (): string => {
-	const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-	let result = "";
-	for (let i = 0; i < 8; i++) {
-		result += characters.charAt(Math.floor(Math.random() * characters.length));
-	}
-	return result;
-};
+import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
 
 export const deleteTableRecursively = (
 	nestedTables: TableData,

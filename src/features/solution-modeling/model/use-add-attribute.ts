@@ -1,10 +1,8 @@
 import { useCallback } from "react";
 import type { Node } from "@xyflow/react";
 import type { Column, TableData } from "@fsd/entities/solution";
-import {
-	addAttributeToNestedTables,
-	generateRandomId,
-} from "@fsd/entities/table/lib/table-operations";
+import { addAttributeToNestedTables } from "@fsd/entities/table/lib/table-operations";
+import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
 import type { AttributeModalType, TableAttribute } from "./use-attribute-modal";
 
 interface UseAddAttributeParams {

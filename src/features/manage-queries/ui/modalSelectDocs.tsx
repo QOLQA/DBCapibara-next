@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { useQueryOperations } from "../model/use-query-operations";
 import { useTableSelection } from "../model/use-table-selection";
-import { useUniqueId } from "@fsd/shared/lib/ids/use-unique-id";
+import { generateRandomId } from "@fsd/shared/lib/ids/generate-random-id";
 import { AddDocumentSection } from "./addDocumentSection";
 import { WordToggleButtons } from "./wordToggleButtons";
 
@@ -32,7 +32,6 @@ export const ModalSelectDocs = ({
 	onReturn,
 }: ModalProps) => {
 	const { nodes } = useSolutionStore();
-	const generateId = useUniqueId();
 	const { createQuery, updateQuery } = useQueryOperations();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -70,7 +69,7 @@ export const ModalSelectDocs = ({
 
 		try {
 			if (mode === "create") {
-				const tempId = generateId();
+				const tempId = generateRandomId();
 				await createQuery(
 					{
 						full_query: queryText,
