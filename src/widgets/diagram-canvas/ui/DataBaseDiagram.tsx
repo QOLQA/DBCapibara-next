@@ -13,7 +13,7 @@ import type { TableData } from "@fsd/entities/solution";
 
 import {
 	nodeTypes,
-	useTableConnections,
+	useTableConnect,
 	getNextAvailableSubmodelIndex,
 } from "@fsd/features/solution-modeling";
 import "@xyflow/react/dist/style.css";
@@ -77,7 +77,7 @@ const DatabaseDiagram = () => {
 	);
 
 	const { handleConnect, handleDisconnect, handleNodeRemove } =
-		useTableConnections(connectionConfig);
+		useTableConnect(connectionConfig);
 
 	const handleAddDocument = useCallback(
 		(name: string) => {

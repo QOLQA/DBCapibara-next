@@ -13,7 +13,7 @@ import {
 	useCanvasStore,
 	canvaSelector,
 	edgeTypes,
-	useTableConnections,
+	useTableConnect,
 } from "@fsd/features/solution-modeling";
 import { useShallow } from "zustand/shallow";
 import { useState, useMemo } from "react";
@@ -54,7 +54,7 @@ export function ComparisonDiagram() {
 		[nodes, edges, editNode, addEdge, setEdges],
 	);
 
-	const { handleConnect } = useTableConnections(connectionConfig);
+	const { handleConnect } = useTableConnect(connectionConfig);
 
 	const reactFlowProps = useMemo(
 		() => ({

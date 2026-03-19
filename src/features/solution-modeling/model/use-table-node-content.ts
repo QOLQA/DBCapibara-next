@@ -4,7 +4,7 @@ import { useReactFlow } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 
 import { useCanvasStore } from "@fsd/features/solution-modeling/model/state/canvaStore";
-import { useTableConnections } from "./use-node-connections";
+import { useTableConnect } from "./use-table-connect";
 import type { TableData } from "@fsd/entities/solution";
 import { useAttributeModal } from "./use-attribute-modal";
 import { useDocumentModal } from "./use-document-modal";
@@ -35,7 +35,7 @@ export const useTableNodeContent = ({ id, data }: UseTableNodeContentProps) => {
 	const attributeModal = useAttributeModal();
 	const documentModal = useDocumentModal();
 
-	const { handleNodeRemove } = useTableConnections({
+	const { handleNodeRemove } = useTableConnect({
 		nodes,
 		edges,
 		editNode,
