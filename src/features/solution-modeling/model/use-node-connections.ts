@@ -4,7 +4,7 @@ import type { TableData } from "@fsd/entities/solution";
 
 export const existsConnection = (
 	sourceTable: TableData,
-	targetTable: TableData
+	targetTable: TableData,
 ) => {
 	const sourceColumns = sourceTable.columns.map((col) => col.name);
 	const targetColumns = targetTable.columns.map((col) => col.name);
@@ -26,21 +26,21 @@ export const getNextAvailableSubmodelIndex = (nodes: Node<TableData>[]) => {
 
 export const updateNestedSubmodelIndex = (
 	sourceSubmodelIndex: number,
-	tables: TableData[] | undefined
+	tables: TableData[] | undefined,
 ): TableData[] | undefined => {
 	return tables?.map((table) => ({
 		...table,
 		submodelIndex: sourceSubmodelIndex,
 		nestedTables: updateNestedSubmodelIndex(
 			sourceSubmodelIndex,
-			table.nestedTables
+			table.nestedTables,
 		),
 	}));
 };
 
 export const updateSubmodelIndexInTable = (
 	sourceSubmodelIndex: number,
-	node: Node<TableData>
+	node: Node<TableData>,
 ): Node<TableData> => {
 	return {
 		...node,
@@ -53,7 +53,7 @@ export const updateSubmodelIndexInTable = (
 					submodelIndex: sourceSubmodelIndex,
 					nestedTables: updateNestedSubmodelIndex(
 						sourceSubmodelIndex,
-						table.nestedTables
+						table.nestedTables,
 					),
 				};
 			}),
@@ -82,7 +82,7 @@ export const updateSubmodelIndexInNodes = async (
 	submodelIndex: number,
 	graph: AdjacencyList,
 	startNodeId: string,
-	editNode: (nodeId: string, newNode: Node<TableData>) => void
+	editNode: (nodeId: string, newNode: Node<TableData>) => void,
 ) => {
 	const visited: Set<string> = new Set();
 	const queue: string[] = [startNodeId];
@@ -108,10 +108,7 @@ export const updateSubmodelIndexInNodes = async (
 				const node = nodes.find((n) => n.id === neighborNodeId);
 				if (node) {
 					let updatedNode = structuredClone(node);
-					updatedNode = updateSubmodelIndexInTable(
-						submodelIndex,
-						updatedNode
-					);
+					updatedNode = updateSubmodelIndexInTable(submodelIndex, updatedNode);
 					await editNode(neighborNodeId, updatedNode);
 				}
 			}
@@ -123,7 +120,7 @@ interface UseTableConnectionsProps {
 	nodes: Node<TableData>[];
 	edges: Edge[];
 	editNode: (nodeId: string, newNode: Node<TableData>) => void;
-	addEdge: (edge: Edge) => void;
+	addEdge?: (edge: Edge) => void;
 	setEdges: (edges: Edge[]) => void;
 	onError?: () => void;
 }
@@ -139,10 +136,10 @@ export const useTableConnections = ({
 	const handleConnect = useCallback(
 		(params: Connection) => {
 			const sourceNode = nodes.find(
-				(node) => node.id === params.source
+				(node) => node.id === params.source,
 			) as Node<TableData>;
 			const targetNode = nodes.find(
-				(node) => node.id === params.target
+				(node) => node.id === params.target,
 			) as Node<TableData>;
 
 			if (!sourceNode || !targetNode) return;
@@ -166,7 +163,7 @@ export const useTableConnections = ({
 						let updatedNode = structuredClone(node);
 						updatedNode = updateSubmodelIndexInTable(
 							targetSubmodelIndex ?? 0,
-							updatedNode
+							updatedNode,
 						);
 						editNode(node.id, updatedNode);
 					}
@@ -174,7 +171,7 @@ export const useTableConnections = ({
 
 				updatedSourceNode = updateSubmodelIndexInTable(
 					targetSubmodelIndex ?? 0,
-					updatedSourceNode
+					updatedSourceNode,
 				);
 				editNode(sourceNode.id, updatedSourceNode);
 
@@ -184,12 +181,12 @@ export const useTableConnections = ({
 					target: targetNode.id,
 				};
 
-				addEdge(newEdge);
+				addEdge?.(newEdge);
 			} else {
 				onError?.();
 			}
 		},
-		[addEdge, nodes, editNode, onError]
+		[addEdge, nodes, editNode, onError],
 	);
 
 	const handleDisconnect = useCallback(
@@ -198,10 +195,10 @@ export const useTableConnections = ({
 			if (!edge) return;
 
 			const sourceNode = currentNodes.find(
-				(node) => node.id === edge.source
+				(node) => node.id === edge.source,
 			) as Node<TableData>;
 			const targetNode = currentNodes.find(
-				(node) => node.id === edge.target
+				(node) => node.id === edge.target,
 			) as Node<TableData>;
 
 			const filteredEdges = edges.filter((e) => e.id !== edgeId);
@@ -211,13 +208,13 @@ export const useTableConnections = ({
 
 			const updatedSourceNode = structuredClone(sourceNode);
 			updatedSourceNode.data.columns = updatedSourceNode.data.columns.filter(
-				(col) => col.id !== `e-${sourceNode.id}-${targetNode.id}`
+				(col) => col.id !== `e-${sourceNode.id}-${targetNode.id}`,
 			);
 
 			editNode(sourceNode.id, updatedSourceNode);
 
 			const updatedNodes = currentNodes.map((node) =>
-				node.id === sourceNode.id ? updatedSourceNode : node
+				node.id === sourceNode.id ? updatedSourceNode : node,
 			);
 
 			const submodelIndex = getNextAvailableSubmodelIndex(updatedNodes);
@@ -227,10 +224,10 @@ export const useTableConnections = ({
 				submodelIndex,
 				graph,
 				sourceNode.id,
-				editNode
+				editNode,
 			);
 		},
-		[edges, editNode, setEdges]
+		[edges, editNode, setEdges],
 	);
 
 	const handleNodeRemove = useCallback(
@@ -239,11 +236,11 @@ export const useTableConnections = ({
 			if (!nodeToRemove) return;
 
 			const connectedEdges = edges.filter(
-				(edge) => edge.source === nodeId || edge.target === nodeId
+				(edge) => edge.source === nodeId || edge.target === nodeId,
 			);
 
 			const filteredEdges = edges.filter(
-				(edge) => edge.source !== nodeId && edge.target !== nodeId
+				(edge) => edge.source !== nodeId && edge.target !== nodeId,
 			);
 			setEdges(filteredEdges);
 
@@ -254,7 +251,7 @@ export const useTableConnections = ({
 				if (otherNode) {
 					const updatedNode = structuredClone(otherNode);
 					updatedNode.data.columns = updatedNode.data.columns.filter(
-						(col) => col.id !== `e-${otherNode.id}-${nodeId}`
+						(col) => col.id !== `e-${otherNode.id}-${nodeId}`,
 					);
 
 					editNode(otherNode.id, updatedNode);
@@ -265,7 +262,7 @@ export const useTableConnections = ({
 			const updatedNodes = remainingNodes.map((node) => {
 				const updatedNode = structuredClone(node);
 				updatedNode.data.columns = updatedNode.data.columns.filter(
-					(col) => !col.id.includes(`-${nodeId}`)
+					(col) => !col.id.includes(`-${nodeId}`),
 				);
 				return updatedNode;
 			});
@@ -275,7 +272,7 @@ export const useTableConnections = ({
 			if (updatedNodes.length > 0) {
 				const nodesToUpdate = updatedNodes.filter((node) => {
 					return connectedEdges.some(
-						(edge) => edge.source === node.id || edge.target === node.id
+						(edge) => edge.source === node.id || edge.target === node.id,
 					);
 				});
 
@@ -286,13 +283,13 @@ export const useTableConnections = ({
 						submodelIndex,
 						graph,
 						node.id,
-						editNode
+						editNode,
 					);
 					submodelIndex = submodelIndex + 1;
 				}
 			}
 		},
-		[edges, editNode, setEdges]
+		[edges, editNode, setEdges],
 	);
 
 	return { handleConnect, handleDisconnect, handleNodeRemove };

@@ -1,95 +1,32 @@
 "use client";
 
 import React, { useCallback } from "react";
-import { type Node } from "@xyflow/react";
-import { useShallow } from "zustand/react/shallow";
 import { ManagedDropdownMenu } from "@fsd/shared/ui/ManagedDropdownMenu";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
-import { useCanvasStore } from "@fsd/features/solution-modeling/model/canvaStore";
 import {
 	type CardinalityType,
-	type TableData,
 	CARDINALITY_OPTIONS,
 } from "@fsd/entities/solution";
-import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
 
 interface NestedTableCardinalityProps {
 	tableId: string;
 	cardinality: CardinalityType;
+	onCardinalityChange: (
+		tableId: string,
+		newCardinality: CardinalityType,
+	) => void;
 }
 
 export const NestedTableCardinality = React.memo(
-	({ tableId, cardinality }: NestedTableCardinalityProps) => {
-		const { nodes, editNode } = useCanvasStore(
-			useShallow((state) => ({
-				nodes: state.nodes,
-				editNode: state.editNode,
-			}))
-		);
-
-		const handleCardinalityChange = useCallback(
-			(newCardinality: CardinalityType) => {
-				const rootId = getKeySegment(tableId, 1);
-				const originalNode = nodes.find(
-					(node) => node.id === rootId
-				) as Node<TableData>;
-				if (!originalNode) return;
-
-				let editableNode: Node<TableData>;
-				try {
-					editableNode = structuredClone(originalNode);
-				} catch (error) {
-					console.error("Error cloning node:", error);
-					return;
-				}
-
-				const recursiveUpdateCardinality = (
-					nestedTables: TableData,
-					layer: number
-				): TableData => {
-					if (layer > 100) {
-						return nestedTables;
-					}
-
-					if (nestedTables.id === tableId) {
-						return {
-							...nestedTables,
-							cardinality: newCardinality,
-						};
-					}
-
-					if (nestedTables.nestedTables && nestedTables.nestedTables.length > 0) {
-						const updatedNestedTables = nestedTables.nestedTables.map(
-							(nestedTable: TableData) => {
-								if (nestedTable.id === tableId) {
-									return {
-										...nestedTable,
-										cardinality: newCardinality,
-									};
-								}
-								return recursiveUpdateCardinality(nestedTable, layer + 1);
-							}
-						);
-
-						return {
-							...nestedTables,
-							nestedTables: updatedNestedTables,
-						};
-					}
-
-					return nestedTables;
-				};
-
-				editableNode.data = recursiveUpdateCardinality(editableNode.data, 1);
-				editNode(rootId as string, editableNode);
-			},
-			[nodes, editNode, tableId]
-		);
-
+	({
+		tableId,
+		cardinality,
+		onCardinalityChange,
+	}: NestedTableCardinalityProps) => {
 		const handleClick = useCallback((e: React.MouseEvent) => {
 			e.stopPropagation();
 		}, []);
@@ -115,7 +52,7 @@ export const NestedTableCardinality = React.memo(
 						<DropdownMenuItem
 							key={option}
 							type="normal"
-							onClick={() => handleCardinalityChange(option)}
+							onClick={() => onCardinalityChange(tableId, option)}
 							className={
 								option === cardinality
 									? "bg-gray text-white"
@@ -128,7 +65,7 @@ export const NestedTableCardinality = React.memo(
 				</DropdownMenuContent>
 			</ManagedDropdownMenu>
 		);
-	}
+	},
 );
 
 NestedTableCardinality.displayName = "NestedTableCardinality";

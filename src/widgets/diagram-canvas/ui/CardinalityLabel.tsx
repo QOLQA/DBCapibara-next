@@ -8,7 +8,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
-import { useCanvasStore } from "@fsd/features/solution-modeling/model/canvaStore";
+import { useCanvasStore } from "@fsd/features/solution-modeling/model/state/canvaStore";
 import {
 	type CardinalityType,
 	type EdgeData,

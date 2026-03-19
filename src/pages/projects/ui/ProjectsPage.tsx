@@ -65,6 +65,10 @@ export function ProjectsPage({
 		setIsEditProjectModalOpen(true);
 	};
 
+	const handleOpenSolution = (solutionId: string) => {
+		router.push(`/projects/${solutionId}/canva`);
+	};
+
 	const handleConfirmDeleteSolution = async () => {
 		if (!solutionId) return;
 
@@ -168,6 +172,7 @@ export function ProjectsPage({
 								key={solution._id}
 								onRequestDelete={handleRequestDeleteSolution}
 								onRequestEdit={handleRequestEditSolution}
+								onOpen={handleOpenSolution}
 							/>
 						))}
 					</ul>

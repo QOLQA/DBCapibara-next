@@ -15,13 +15,13 @@ import {
 	nodeTypes,
 	useTableConnections,
 	getNextAvailableSubmodelIndex,
-} from "@fsd/entities/table";
+} from "@fsd/features/solution-modeling";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@fsd/shared/ui/button";
 import { edgeTypes } from "./FloatingEdge";
 import ModalAddCollection from "@fsd/features/solution-modeling/ui/modals/ModalAddCollection";
-import { useCanvasStore } from "@fsd/features/solution-modeling/model/canvaStore";
-import { canvaSelector } from "@fsd/features/solution-modeling/model/selectors";
+import { useCanvasStore } from "@fsd/features/solution-modeling/model/state/canvaStore";
+import { canvaSelector } from "@fsd/features/solution-modeling/model/state/selectors";
 import { useShallow } from "zustand/shallow";
 import { useUniqueId } from "@fsd/shared/lib/ids/use-unique-id";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";

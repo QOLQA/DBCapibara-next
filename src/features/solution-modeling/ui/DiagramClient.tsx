@@ -1,6 +1,6 @@
 "use client";
 
-import { useCanvasStore } from "../model/canvaStore";
+import { useCanvasStore } from "../model/state/canvaStore";
 import { DataBaseDiagram } from "@fsd/widgets/diagram-canvas";
 import { LayoutDiagram } from "@fsd/widgets/modeling-layout";
 import { useEffect, useState } from "react";

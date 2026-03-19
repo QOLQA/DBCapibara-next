@@ -11,8 +11,6 @@ import {
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
-import ModalDocument from "@fsd/features/solution-modeling/ui/modals/ModalDocument";
-import ModalAtributes from "@fsd/features/solution-modeling/ui/modals/ModalAtributes";
 import { getSubmodelColor } from "@fsd/entities/solution/lib/diagram";
 import {
 	AddDocument,
@@ -23,32 +21,36 @@ import {
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { NestedTableCardinality } from "./nested-table-cardinality";
 import { AttributeNode } from "./attribute-node";
-import { useTableNodeContent } from "../model/use-table-node-content";
 import type { CardinalityType } from "@fsd/entities/solution";
 
 interface TableNodeContentProps extends TableNodeProps {
 	isNested?: boolean;
+	onEditTable?: (tableId: string) => void;
+	onAddAttributes?: (tableId: string) => void;
+	onAddDocuments?: (tableId: string) => void;
+	onDeleteTable?: (tableId: string) => void;
+	onCardinalityChange?: (
+		tableId: string,
+		newCardinality: CardinalityType
+	) => void;
+	onEditAttribute?: (column: Column) => void;
+	onDeleteAttribute?: (columnId: string) => void;
 }
 
 export const TableNodeContent = React.memo(
-	({ data, id, isNested = false }: TableNodeContentProps) => {
+	({
+		data,
+		id,
+		isNested = false,
+		onEditTable = () => {},
+		onAddAttributes = () => {},
+		onAddDocuments = () => {},
+		onDeleteTable = () => {},
+		onCardinalityChange = () => {},
+		onEditAttribute = () => {},
+		onDeleteAttribute = () => {},
+	}: TableNodeContentProps) => {
 		const { t } = useTranslation();
-
-		const {
-			isDocumentModalOpen,
-			isAtributesModalOpen,
-			typeAtributesModal,
-			atributesToUpdate,
-			handleAddAtribute,
-			handleAddNestedTable,
-			handleEditAtribute,
-			handleEditTable,
-			handleAddAttributes,
-			handleAddDocuments,
-			handleDeleteTableClick,
-			handleCloseDocumentModal,
-			handleCloseAtributesModal,
-		} = useTableNodeContent({ id, data });
 
 		const attributeNodes = useMemo(
 			() =>
@@ -57,14 +59,15 @@ export const TableNodeContent = React.memo(
 						<AttributeNode
 							column={column}
 							columnId={column.id}
-							handleEdit={handleEditAtribute}
+							handleEdit={onEditAttribute}
+							handleDelete={onDeleteAttribute}
 						/>
 						{index < data.columns.length - 1 && (
 							<hr className="border border-gray" />
 						)}
 					</React.Fragment>
 				)),
-			[data.columns, handleEditAtribute]
+			[data.columns, onEditAttribute, onDeleteAttribute]
 		);
 
 		const nestedTableNodes = useMemo(
@@ -75,9 +78,26 @@ export const TableNodeContent = React.memo(
 						data={nestedTable}
 						id={id}
 						isNested
+						onEditTable={onEditTable}
+						onAddAttributes={onAddAttributes}
+						onAddDocuments={onAddDocuments}
+						onDeleteTable={onDeleteTable}
+						onCardinalityChange={onCardinalityChange}
+						onEditAttribute={onEditAttribute}
+						onDeleteAttribute={onDeleteAttribute}
 					/>
 				)),
-			[data.nestedTables, id]
+			[
+				data.nestedTables,
+				id,
+				onEditTable,
+				onAddAttributes,
+				onAddDocuments,
+				onDeleteTable,
+				onCardinalityChange,
+				onEditAttribute,
+				onDeleteAttribute,
+			]
 		);
 
 		const headerColor = useMemo(() => {
@@ -100,6 +120,7 @@ export const TableNodeContent = React.memo(
 									cardinality={
 										(data.cardinality as CardinalityType) ?? "1...n"
 									}
+									onCardinalityChange={onCardinalityChange}
 								/>
 							)}
 						</div>
@@ -113,18 +134,27 @@ export const TableNodeContent = React.memo(
 								side="right"
 								variant="menu-1"
 							>
-								<DropdownMenuItem type="normal" onClick={handleEditTable}>
+								<DropdownMenuItem
+									type="normal"
+									onClick={() => onEditTable(data.id)}
+								>
 									<Edit className="text-white" />
 									{t("common.edit")}
 								</DropdownMenuItem>
 
 								<DropdownMenuSeparator className="bg-gray" />
-								<DropdownMenuItem type="normal" onClick={handleAddAttributes}>
+								<DropdownMenuItem
+									type="normal"
+									onClick={() => onAddAttributes(data.id)}
+								>
 									<Plus className="text-white" />
 									{t("other.addAttributes")}
 								</DropdownMenuItem>
 								<DropdownMenuSeparator className="bg-gray" />
-								<DropdownMenuItem type="normal" onClick={handleAddDocuments}>
+								<DropdownMenuItem
+									type="normal"
+									onClick={() => onAddDocuments(data.id)}
+								>
 									<AddDocument className="text-white" />
 									{t("other.addDocuments")}
 								</DropdownMenuItem>
@@ -133,7 +163,7 @@ export const TableNodeContent = React.memo(
 								<DropdownMenuItem
 									type="delete"
 									className="text-red"
-									onClick={handleDeleteTableClick}
+									onClick={() => onDeleteTable(data.id)}
 								>
 									<Delete className="text-red" />
 									{t("common.delete")}
@@ -148,24 +178,6 @@ export const TableNodeContent = React.memo(
 						)}
 					</div>
 				</div>
-				{isDocumentModalOpen && (
-					<ModalDocument
-						open={isDocumentModalOpen}
-						setOpen={handleCloseDocumentModal}
-						onSubmit={handleAddNestedTable}
-					/>
-				)}
-				{isAtributesModalOpen && (
-					<ModalAtributes
-						open={isAtributesModalOpen}
-						setOpen={handleCloseAtributesModal}
-						onSubmit={handleAddAtribute}
-						type={typeAtributesModal}
-						atributesToUpdate={
-							typeAtributesModal === "update" ? atributesToUpdate : undefined
-						}
-					/>
-				)}
 			</>
 		);
 	}

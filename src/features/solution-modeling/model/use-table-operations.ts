@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { type Node, useReactFlow } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import type { Column, TableData } from "@fsd/entities/solution";
-import { useCanvasStore } from "./canvaStore";
+import { useCanvasStore } from "./state/canvaStore";
 import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
 
 interface TableAttribute {

@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Edit, Trash } from "lucide-react";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
@@ -17,6 +16,7 @@ import type { SolutionListItem } from "../model/solution";
 interface SolutionCardProps extends SolutionListItem {
 	onRequestDelete: (solutionId: string) => void;
 	onRequestEdit: (solutionId: string) => void;
+	onOpen: (solutionId: string) => void;
 }
 
 export function SolutionCard({
@@ -26,9 +26,9 @@ export function SolutionCard({
 	last_updated_at,
 	onRequestDelete,
 	onRequestEdit,
+	onOpen,
 }: SolutionCardProps) {
 	const { t } = useTranslation();
-	const router = useRouter();
 
 	const handleRequestDelete = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
@@ -46,7 +46,7 @@ export function SolutionCard({
 		<li className="project">
 			<article
 				onClick={() => {
-					router.push(`/projects/${_id}/canva`);
+					onOpen(_id);
 				}}
 				className="focus:rounded-2xl"
 			>
