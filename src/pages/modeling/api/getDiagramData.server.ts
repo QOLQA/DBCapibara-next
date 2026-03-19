@@ -1,7 +1,7 @@
 import { transformSolutionModel } from "@fsd/entities/solution/lib/conversions";
+import type { SolutionModel } from "@fsd/entities/solution";
 import { getAuthenticatedSolution } from "@fsd/shared/api/server";
 import { redirect } from "next/navigation";
-import type { SolutionModel } from "@fsd/entities/solution";
 
 export async function getDiagramData(solutionId: string) {
 	try {

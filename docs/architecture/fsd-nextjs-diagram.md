@@ -9,7 +9,7 @@ flowchart TB
     routeRoot["/ page.tsx"]
     routeLogin["/login page.tsx"]
     routeModels["/models page.tsx"]
-    routeCanva["/models/[diagramId]/canva page.tsx"]
+    routeCanva["/models/[diagramId]/modeling page.tsx"]
     routeComparison["/models/[diagramId]/comparison page.tsx"]
     routeAnalysis["/models/[diagramId]/analysis page.tsx"]
     routeError["error.tsx"]
@@ -19,7 +19,7 @@ flowchart TB
   subgraph FSDPages ["Capa FSD: pages (src/pages) — composición por ruta"]
     pageLogin["login\nLoginPage"]
     pageProjects["projects\nProjectsPage + getSolutions.server"]
-    pageCanva["canva\nCanvasPage + getDiagramData.server"]
+    pageCanva["modeling\nModelingPage + getDiagramData.server"]
     pageComparison["comparison\nComparisonPage + getComparisonData.server"]
     pageAnalysis["analysis\nAnalysisPage + getAnalysisData.server"]
   end

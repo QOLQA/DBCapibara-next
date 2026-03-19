@@ -1,13 +1,12 @@
 "use client";
 
 import { DiagramSessionHydrator } from "@fsd/widgets/diagram-session";
-import { LayoutDiagram } from "@fsd/widgets/modeling-layout";
+import { LayoutDiagram, type NavItem } from "@fsd/widgets/modeling-layout";
 import { AppHeader } from "@fsd/features/solution-versioning";
 import {
 	ComparisonDiagram,
 	ComparisonSidebarContent,
 } from "@fsd/features/comparison";
-import type { NavItem } from "@fsd/widgets/modeling-sidebar";
 import type { VersionFrontend } from "@fsd/entities/solution";
 import { DataPie } from "@fsd/shared/ui/icons/SidebarIcons";
 import { useMemo } from "react";

@@ -49,7 +49,7 @@ export function ProjectsPage({
 				name: name,
 			});
 
-			router.push(`/projects/${data._id}/canva`);
+			router.push(`/projects/${data._id}/modeling`);
 		} catch (error) {
 			console.error("Error creating solution:", error);
 		}
@@ -66,7 +66,7 @@ export function ProjectsPage({
 	};
 
 	const handleOpenSolution = (solutionId: string) => {
-		router.push(`/projects/${solutionId}/canva`);
+		router.push(`/projects/${solutionId}/modeling`);
 	};
 
 	const handleConfirmDeleteSolution = async () => {

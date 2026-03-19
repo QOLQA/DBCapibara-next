@@ -1,5 +1,4 @@
-import { getDiagramData } from "@fsd/pages/canva";
-import { CanvasPage } from "@fsd/pages/canva";
+import { getDiagramData, ModelingPage } from "@fsd/pages/modeling";
 
 export default async function DiagramPage({
 	params,
@@ -9,5 +8,5 @@ export default async function DiagramPage({
 	const { diagramId } = await params;
 	const loaderData = await getDiagramData(diagramId);
 
-	return <CanvasPage loaderData={loaderData} />;
+	return <ModelingPage loaderData={loaderData} />;
 }

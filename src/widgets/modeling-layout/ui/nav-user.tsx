@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronsUpDown, LogOut } from "lucide-react";
-
+import type { User } from "@fsd/entities/user";
 import { Avatar, AvatarFallback, AvatarImage } from "@fsd/shared/ui/avatar";
 import {
 	DropdownMenu,
@@ -17,7 +17,6 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@fsd/shared/ui/sidebar";
-import type { User } from "@fsd/entities/user";
 
 export function NavUser({ user }: { user: User }) {
 	const { isMobile } = useSidebar();

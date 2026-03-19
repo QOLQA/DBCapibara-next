@@ -7,6 +7,7 @@ Este documento contiene:
 - **Diagramas por feature** (enfoque slice-by-slice).
 
 > Convenciones usadas:
+>
 > - Las capas siguen: `shared → entities → features → pages → app`.
 > - Los imports “permitidos” fluyen de capas superiores hacia inferiores (p. ej. `pages` usa `features/entities/shared`).
 > - Los nombres reflejan las Public APIs (`index.ts`) donde aplica.
@@ -39,7 +40,7 @@ flowchart TB
     appLayout["app/layout.tsx\nRootLayout + Providers"]
     routeLogin["app/login/page.tsx"]
     routeModels["app/models/page.tsx"]
-    routeCanva["app/models/[diagramId]/canva/page.tsx"]
+    routeCanva["app/models/[diagramId]/modeling/page.tsx"]
     routeComparison["app/models/[diagramId]/comparison/page.tsx"]
     routeAnalysis["app/models/[diagramId]/analysis/page.tsx"]
     routeError["app/error.tsx"]
@@ -51,7 +52,7 @@ flowchart TB
   subgraph pagesLayer [pages]
     pageLogin["pages/login\n(LoginPage)"]
     pageProjects["pages/projects\n(ProjectsPage + getSolutions.server)"]
-    pageCanva["pages/canva\n(CanvasPage + getDiagramData.server)"]
+    pageCanva["pages/modeling\n(ModelingPage + getDiagramData.server)"]
     pageComparison["pages/comparison\n(ComparisonPage + getComparisonData.server)"]
     pageAnalysis["pages/analysis\n(AnalysisPage + getAnalysisData.server)"]
   end
@@ -210,7 +211,7 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-  pageCanva["pages/canva\n(CanvasPage)"] --> featSolutionModeling["features/solution-modeling\n(LayoutDiagram + DataBaseDiagram + store)"]
+  pageCanva["pages/modeling\n(ModelingPage)"] --> featSolutionModeling["features/solution-modeling\n(LayoutDiagram + DataBaseDiagram + store)"]
   featSolutionModeling --> sharedUi["@fsd/shared/ui\n(sidebar, modal, dropdown, button, chart, ...)"]
   featSolutionModeling --> sharedLibUtils["@fsd/shared/lib/utils\n(edges/colors/keys)"]
   featSolutionModeling --> sharedLibI18n["@fsd/shared/lib/i18n\n(use-translation)"]
@@ -221,7 +222,7 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-  pageCanva["pages/canva"] --> featSolutionVersioning["features/solution-versioning\n(AppHeader + load/save/duplicate)"]
+  pageCanva["pages/modeling"] --> featSolutionVersioning["features/solution-versioning\n(AppHeader + load/save/duplicate)"]
   featSolutionVersioning --> sharedApi["@fsd/shared/api\n(api client)"]
   featSolutionVersioning --> sharedLibConversions["@fsd/shared/lib/conversions"]
   featSolutionVersioning --> sharedLibImage["@fsd/shared/lib/image\n(uploadImage)"]
@@ -233,7 +234,7 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-  pageCanva["pages/canva"] --> featQueries["features/queries\n(AppQueries + modals + hooks)"]
+  pageCanva["pages/modeling"] --> featQueries["features/queries\n(AppQueries + modals + hooks)"]
   featQueries --> sharedApi["@fsd/shared/api\n(api client)"]
   featQueries --> sharedLibAnalytics["@fsd/shared/lib/analytics\n(getUniqueTableNames, handled%)"]
   featQueries --> sharedUi["@fsd/shared/ui\n(Modal, dropdown-menu, etc.)"]
@@ -245,7 +246,7 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-  pageCanva["pages/canva"] --> featStatistics["features/statistics\n(AppStatistics + graphs)"]
+  pageCanva["pages/modeling"] --> featStatistics["features/statistics\n(AppStatistics + graphs)"]
   featStatistics --> sharedLibAnalytics["@fsd/shared/lib/analytics"]
   featStatistics --> sharedUi["@fsd/shared/ui\n(chart)"]
   featStatistics --> entSolution["@fsd/entities/solution"]
@@ -275,4 +276,4 @@ flowchart TB
 
 ## Apéndice — Public APIs (puntos de entrada)
 
-- `shared`\n  - `src/shared/api/index.ts`\n  - `src/shared/api/server/index.ts`\n  - `src/shared/ui/*`\n  - `src/shared/lib/*`\n- `entities`\n  - `src/entities/solution/index.ts`\n  - `src/entities/user/index.ts`\n- `features`\n  - `src/features/*/index.ts`\n- `pages`\n  - `src/pages/*/index.ts`\n- `app`\n  - `app/**/*.tsx`\n+
+- `shared`\n - `src/shared/api/index.ts`\n - `src/shared/api/server/index.ts`\n - `src/shared/ui/*`\n - `src/shared/lib/*`\n- `entities`\n - `src/entities/solution/index.ts`\n - `src/entities/user/index.ts`\n- `features`\n - `src/features/*/index.ts`\n- `pages`\n - `src/pages/*/index.ts`\n- `app`\n - `app/**/*.tsx`\n+

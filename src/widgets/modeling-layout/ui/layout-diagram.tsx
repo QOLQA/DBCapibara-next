@@ -1,5 +1,6 @@
 import { SidebarInset, SidebarProvider } from "@fsd/shared/ui/sidebar";
-import { AppSidebar, type NavItem } from "@fsd/widgets/modeling-sidebar";
+import { AppSidebar } from "./app-sidebar";
+import type { NavItem } from "./types";
 
 export function LayoutDiagram({
 	children,

@@ -5,14 +5,13 @@ import { AppHeader } from "@fsd/features/solution-versioning";
 import { QueriesPanel } from "@fsd/widgets/queries-panel";
 import { AppStatistics } from "@fsd/features/statistics";
 import { DataBaseDiagram } from "@fsd/widgets/diagram-canvas";
-import { LayoutDiagram } from "@fsd/widgets/modeling-layout";
-import type { NavItem } from "@fsd/widgets/modeling-sidebar";
+import { LayoutDiagram, type NavItem } from "@fsd/widgets/modeling-layout";
 import type { VersionFrontend } from "@fsd/entities/solution";
 import { Calendar, Database, DataPie } from "@fsd/shared/ui/icons/SidebarIcons";
 import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
 
-interface CanvasPageProps {
+interface ModelingPageProps {
 	loaderData: {
 		name: string;
 		versions: VersionFrontend[];
@@ -21,7 +20,7 @@ interface CanvasPageProps {
 	};
 }
 
-export function CanvasPage({ loaderData }: CanvasPageProps) {
+export function ModelingPage({ loaderData }: ModelingPageProps) {
 	const router = useRouter();
 	const { diagramId } = useParams<{ diagramId: string }>() as {
 		diagramId: string;

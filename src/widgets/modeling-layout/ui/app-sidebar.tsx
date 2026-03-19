@@ -1,11 +1,11 @@
 "use client";
 
-import { Sidebar, useSidebar } from "@fsd/shared/ui/sidebar";
-import { SidebarIcons } from "./sidebar-icons";
 import { useState } from "react";
-import { SidebarContentPrinc } from "./sidebar-content";
-import type { Data, NavItem } from "./types";
 import { useAuthContext } from "@fsd/app/providers";
+import { Sidebar, useSidebar } from "@fsd/shared/ui/sidebar";
+import { SidebarContentPrinc } from "@fsd/widgets/modeling-layout/ui/sidebar-content";
+import { SidebarIcons } from "@fsd/widgets/modeling-layout/ui/sidebar-icons";
+import type { Data, NavItem } from "@fsd/widgets/modeling-layout/ui/types";
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
 	navItems: NavItem[];

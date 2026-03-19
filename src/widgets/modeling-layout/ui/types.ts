@@ -6,16 +6,16 @@ export type NavItem = {
 	icon: ReactElement;
 	isActive?: boolean;
 	content?: ReactElement;
-	aditionalToTitle?: aditionalToTitleButton | aditionalToTitleExpand;
+	aditionalToTitle?: AditionalToTitleButton | AditionalToTitleExpand;
 };
 
-export type aditionalToTitleButton = {
+export type AditionalToTitleButton = {
 	type: "button";
 	onClick: () => void;
 	titleButton: string;
 };
 
-export type aditionalToTitleExpand = {
+export type AditionalToTitleExpand = {
 	type: "expand";
 	onClick: () => void;
 };

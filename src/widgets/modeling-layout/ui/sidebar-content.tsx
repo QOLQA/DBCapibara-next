@@ -1,13 +1,13 @@
 "use client";
 
+import { Button } from "@fsd/shared/ui/button";
 import {
 	Sidebar,
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarHeader,
 } from "@fsd/shared/ui/sidebar";
-import type { NavItem } from "./types";
-import { Button } from "@fsd/shared/ui/button";
+import type { NavItem } from "@fsd/widgets/modeling-layout/ui/types";
 
 type SidebarContentPrincProps = {
 	activeItem: NavItem;
