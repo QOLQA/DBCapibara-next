@@ -20,8 +20,7 @@ import "@xyflow/react/dist/style.css";
 import { Button } from "@fsd/shared/ui/button";
 import { edgeTypes } from "./FloatingEdge";
 import ModalAddCollection from "@fsd/features/solution-modeling/ui/modals/ModalAddCollection";
-import { useCanvasStore } from "@fsd/features/solution-modeling/model/state/canvaStore";
-import { canvaSelector } from "@fsd/features/solution-modeling/model/state/selectors";
+import { useSolutionStore, solutionSelector } from "@fsd/entities/solution";
 import { useShallow } from "zustand/shallow";
 import { useUniqueId } from "@fsd/shared/lib/ids/use-unique-id";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
@@ -55,11 +54,11 @@ const DatabaseDiagram = () => {
 		setEdges,
 		onNodesChange,
 		onEdgesChange,
-	} = useCanvasStore<ReturnType<typeof canvaSelector>>(
-		useShallow(canvaSelector),
+	} = useSolutionStore<ReturnType<typeof solutionSelector>>(
+		useShallow(solutionSelector),
 	);
 
-	const isChangingVersion = useCanvasStore((state) => state.isChangingVersion);
+	const isChangingVersion = useSolutionStore((state) => state.isChangingVersion);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const generateId = useUniqueId();

@@ -10,11 +10,10 @@ import {
 import "@xyflow/react/dist/style.css";
 import {
 	nodeTypes,
-	useCanvasStore,
-	canvaSelector,
 	edgeTypes,
 	useTableConnect,
 } from "@fsd/features/solution-modeling";
+import { useSolutionStore, solutionSelector } from "@fsd/entities/solution";
 import { useShallow } from "zustand/shallow";
 import { useState, useMemo } from "react";
 
@@ -38,7 +37,7 @@ export function ComparisonDiagram() {
 		setEdges,
 		onNodesChange,
 		onEdgesChange,
-	} = useCanvasStore(useShallow(canvaSelector));
+	} = useSolutionStore(useShallow(solutionSelector));
 
 	const [showError, setShowError] = useState(false);
 

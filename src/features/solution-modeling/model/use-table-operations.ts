@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { type Node, useReactFlow } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import type { Column, TableData } from "@fsd/entities/solution";
-import { useCanvasStore } from "./state/canvaStore";
+import { useSolutionStore } from "@fsd/entities/solution";
 import { getKeySegment } from "@fsd/entities/solution/lib/diagram";
 
 interface TableAttribute {
@@ -28,7 +28,7 @@ export const useTableOperations = (id: string, data: TableData) => {
 		[]
 	);
 
-	const { nodes, editNode, removeNode } = useCanvasStore(
+	const { nodes, editNode, removeNode } = useSolutionStore(
 		useShallow((state) => ({
 			nodes: state.nodes,
 			editNode: state.editNode,

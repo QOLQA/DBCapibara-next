@@ -3,7 +3,7 @@ import type { Edge, Node } from "@xyflow/react";
 import { loadCanva } from "./load";
 import { api } from "@fsd/shared/api";
 import { transformVersionToBackend } from "@fsd/entities/solution/lib/conversions";
-import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useSolutionStore } from "@fsd/entities/solution";
 
 // Cache para evitar guardados innecesarios
 let lastSavedHash: Map<string, string> = new Map();
@@ -63,7 +63,7 @@ export const saveCanvas = async (
 		const versionKey = `${diagramId}-${versionId}`;
 
 		if (!diagramToSave) {
-			const { versions, nodes, edges } = useCanvasStore.getState();
+			const { versions, nodes, edges } = useSolutionStore.getState();
 
 			const currentHash = generateVersionHash(nodes, edges);
 
@@ -93,7 +93,7 @@ export const saveCanvas = async (
 					edges
 				);
 
-				useCanvasStore.getState().setVersions(updatedVersions);
+				useSolutionStore.getState().setVersions(updatedVersions);
 			}
 
 			lastSavedHash.set(versionKey, currentHash);

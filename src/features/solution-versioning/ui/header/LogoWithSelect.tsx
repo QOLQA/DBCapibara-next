@@ -8,7 +8,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@fsd/shared/ui/select";
-import { useCanvasStore, canvaSelector } from "@fsd/features/solution-modeling";
+import { useSolutionStore, solutionSelector } from "@fsd/entities/solution";
 import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 import { saveCanvas } from "../../lib";
@@ -21,9 +21,9 @@ export const LogoWithSelect = () => {
 		setSelectedVersionId,
 		setNodes,
 		setEdges,
-	} = useCanvasStore(useShallow(canvaSelector));
-	const Id = useCanvasStore((state) => state.id);
-	const setIsChangingVersion = useCanvasStore(
+	} = useSolutionStore(useShallow(solutionSelector));
+	const Id = useSolutionStore((state) => state.id);
+	const setIsChangingVersion = useSolutionStore(
 		(state) => state.setIsChangingVersion
 	);
 
@@ -36,7 +36,7 @@ export const LogoWithSelect = () => {
 			console.error("Error al guardar antes de cambiar de versión:", error);
 		}
 
-		const updatedVersions = useCanvasStore.getState().versions;
+		const updatedVersions = useSolutionStore.getState().versions;
 		const versionIndex = updatedVersions.findIndex(
 			(version) => version._id === newVersionId
 		);

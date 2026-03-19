@@ -8,14 +8,12 @@ import type { Query } from "@fsd/entities/solution";
 export type QueriesState = {
 	queries: Query[];
 	hasLoadedQueries: boolean;
-	loadedSolutionId: string | null;
 	setQueries: (queries: Query[]) => void;
 	addQuery: (query: Query) => void;
 	editQuery: (queryId: string, newQuery: Query) => void;
 	removeQuery: (queryId: string) => void;
 	getQueryById: (queryId: string) => Query | undefined;
 	setHasLoadedQueries: (hasLoaded: boolean) => void;
-	setLoadedSolutionId: (solutionId: string | null) => void;
 	resetQueries: () => void;
 	_hasHydrated: boolean;
 	setHasHydrated: (hasHydrated: boolean) => void;
@@ -26,7 +24,6 @@ export const useQueriesStore = create<QueriesState>()(
 		immer((set, get) => ({
 			queries: [],
 			hasLoadedQueries: false,
-			loadedSolutionId: null,
 			setQueries: (queries) => {
 				set((state) => {
 					state.queries = queries;
@@ -58,11 +55,6 @@ export const useQueriesStore = create<QueriesState>()(
 					state.hasLoadedQueries = hasLoaded;
 				});
 			},
-			setLoadedSolutionId: (solutionId) => {
-				set((state) => {
-					state.loadedSolutionId = solutionId;
-				});
-			},
 			resetQueries: () => {
 				set((state) => {
 					state.queries = [];
@@ -77,11 +69,10 @@ export const useQueriesStore = create<QueriesState>()(
 			partialize: (state) => ({
 				queries: state.queries,
 				hasLoadedQueries: state.hasLoadedQueries,
-				loadedSolutionId: state.loadedSolutionId,
 			}),
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);
 			},
-		}
-	)
+		},
+	),
 );

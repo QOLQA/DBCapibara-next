@@ -1,6 +1,6 @@
 import { api } from "@fsd/shared/api";
 import { transformVersionToBackend } from "@fsd/entities/solution/lib/conversions";
-import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useSolutionStore } from "@fsd/entities/solution";
 import type {
 	NestedNode,
 	NodeBackend,
@@ -93,7 +93,7 @@ export async function createEmptyVersion(
 			setNodes,
 			setEdges,
 			setSelectedVersionId,
-		} = useCanvasStore.getState();
+		} = useSolutionStore.getState();
 		const updatedVersions = [...versions, transformedVersion];
 
 		setVersions(updatedVersions);
@@ -113,7 +113,7 @@ export async function duplicateVersion(
 	versionId: string
 ): Promise<VersionFrontend> {
 	try {
-		const { versions } = useCanvasStore.getState();
+		const { versions } = useSolutionStore.getState();
 
 		const currentVersion = versions.find((v) => v._id === versionId);
 		if (!currentVersion) {
@@ -152,7 +152,7 @@ export async function duplicateVersion(
 			setNodes,
 			setEdges,
 			setSelectedVersionId,
-		} = useCanvasStore.getState();
+		} = useSolutionStore.getState();
 		const updatedVersions = [...currentVersions, transformedVersion];
 
 		setVersions(updatedVersions);
@@ -181,7 +181,7 @@ export async function updateVersionDescription(
 		const transformedVersion =
 			transformVersionBackendToFrontend(updatedVersion);
 
-		const { versions, setVersions } = useCanvasStore.getState();
+		const { versions, setVersions } = useSolutionStore.getState();
 		const updatedVersions = versions.map((v) =>
 			v._id === versionId ? transformedVersion : v
 		);

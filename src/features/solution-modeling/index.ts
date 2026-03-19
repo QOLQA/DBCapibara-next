@@ -1,5 +1,4 @@
-export { useCanvasStore, type CanvasState } from "./model/state/canvaStore";
-export { canvaSelector } from "./model/state/selectors";
+export { useSolutionStore, type SolutionStore, solutionSelector } from "@fsd/entities/solution";
 export { default as DiagramClient } from "./ui/DiagramClient";
 export { DiagramSessionHydrator } from "@fsd/widgets/diagram-session";
 export { LayoutDiagram } from "@fsd/widgets/modeling-layout";

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { QueryItem } from "@fsd/entities/query";
-import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useSolutionStore } from "@fsd/entities/solution";
 import {
 	BtnNewQuery,
 	useQueryOperations,
@@ -12,11 +12,13 @@ import { DropdownQueries } from "./dropdownQueries";
 
 export const QueriesPanel = () => {
 	const queries = useQueriesStore((state) => state.queries);
-	const solutionId = useCanvasStore((state) => state.id);
+	const solutionId = useSolutionStore((state) => state.id);
+	const loadedSolutionId = useSolutionStore((state) => state.loadedSolutionId);
 	const hasLoadedQueries = useQueriesStore((state) => state.hasLoadedQueries);
-	const loadedSolutionId = useQueriesStore((state) => state.loadedSolutionId);
+	const setLoadedSolutionId = useSolutionStore(
+		(state) => state.setLoadedSolutionId
+	);
 	const setHasLoadedQueries = useQueriesStore((state) => state.setHasLoadedQueries);
-	const setLoadedSolutionId = useQueriesStore((state) => state.setLoadedSolutionId);
 	const resetQueries = useQueriesStore((state) => state.resetQueries);
 	const { syncQueries } = useQueryOperations();
 	const [isLoading, setIsLoading] = useState(false);

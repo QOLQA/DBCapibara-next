@@ -1,6 +1,6 @@
 "use client";
 
-import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useSolutionStore } from "@fsd/entities/solution";
 import { useQueriesStore } from "@fsd/features/manage-queries";
 import { calculateHandledQueriesPercentage } from "@fsd/entities/solution/lib/analytics";
 import {
@@ -14,7 +14,7 @@ import {
 
 export const QueryStatsGraph = () => {
 	const queries = useQueriesStore((state) => state.queries);
-	const handledPercentage = useCanvasStore((state) =>
+	const handledPercentage = useSolutionStore((state) =>
 		calculateHandledQueriesPercentage(queries, state.nodes, state.edges)
 	);
 

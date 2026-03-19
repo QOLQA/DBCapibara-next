@@ -4,7 +4,7 @@ import { QueryStatsGraph } from "./QueryStatsGraph";
 import { SquadStats } from "./SquadStats";
 import type { StastType } from "@fsd/entities/solution";
 import { StatsLineTotal } from "./StatsLineTotal";
-import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useSolutionStore } from "@fsd/entities/solution";
 import {
 	getAccessPattern,
 	getRecoveryCost,
@@ -12,16 +12,16 @@ import {
 } from "@fsd/entities/solution/lib/analytics";
 
 export const AppStatistics = () => {
-	const accessPatternValue = useCanvasStore((state) =>
-		getAccessPattern(state.nodes, state.edges)
+	const accessPatternValue = useSolutionStore((state) =>
+		getAccessPattern(state.nodes, state.edges),
 	);
 
-	const recoveryCostValue = useCanvasStore((state) =>
-		getRecoveryCost(state.nodes, state.edges)
+	const recoveryCostValue = useSolutionStore((state) =>
+		getRecoveryCost(state.nodes, state.edges),
 	);
 
-	const redundancyValue = useCanvasStore((state) =>
-		getRedundancyMetrics(state.nodes)
+	const redundancyValue = useSolutionStore((state) =>
+		getRedundancyMetrics(state.nodes),
 	);
 
 	const data: StastType[] = [

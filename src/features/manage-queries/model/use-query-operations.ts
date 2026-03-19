@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback } from "react";
-import { useCanvasStore } from "@fsd/features/solution-modeling";
-import { useQueriesStore } from "./queries-store";
+import { useSolutionStore } from "@fsd/entities/solution";
+import { useQueriesStore } from "@fsd/entities/query";
 import { api } from "@fsd/shared/api";
 import type { Query } from "@fsd/entities/solution";
 
@@ -16,7 +16,7 @@ export const useQueryOperations = () => {
 		removeQuery: removeQueryFromStore,
 		setQueries,
 	} = useQueriesStore();
-	const solutionId = useCanvasStore((state) => state.id);
+	const solutionId = useSolutionStore((state) => state.id);
 
 	const createQuery = useCallback(
 		async (queryData: Omit<Query, "_id">, tempId: string) => {

@@ -13,9 +13,10 @@ import {
 	type NodeChange,
 } from "@xyflow/react";
 
-export type CanvasState = {
+export type SolutionStore = {
 	versions: VersionFrontend[];
 	selectedVersionId: string;
+	loadedSolutionId: string | null;
 	nodes: Node<TableData>[];
 	edges: Edge[];
 	id: string;
@@ -25,6 +26,7 @@ export type CanvasState = {
 	setEdges: (edges: Edge[]) => void;
 	setVersions: (versions: VersionFrontend[]) => void;
 	setSelectedVersionId: (id: string) => void;
+	setLoadedSolutionId: (solutionId: string | null) => void;
 	setIsChangingVersion: (isChanging: boolean) => void;
 	addNode: (node: Node<TableData>) => void;
 	addEdge: (edge: Edge) => void;
@@ -38,7 +40,7 @@ export type CanvasState = {
 	setHasHydrated: (hasHydrated: boolean) => void;
 };
 
-export const useCanvasStore = create<CanvasState>()(
+export const useSolutionStore = create<SolutionStore>()(
 	persist(
 		immer((set, get) => ({
 			nodes: [],
@@ -46,10 +48,16 @@ export const useCanvasStore = create<CanvasState>()(
 			id: "",
 			versions: [],
 			selectedVersionId: "",
+			loadedSolutionId: null,
 			isChangingVersion: false,
 			setSelectedVersionId: (id) => {
 				set((state) => {
 					state.selectedVersionId = id;
+				});
+			},
+			setLoadedSolutionId: (solutionId) => {
+				set((state) => {
+					state.loadedSolutionId = solutionId;
 				});
 			},
 			setIsChangingVersion: (isChanging) => {
@@ -133,11 +141,12 @@ export const useCanvasStore = create<CanvasState>()(
 				nodes: state.nodes,
 				edges: state.edges,
 				selectedVersionId: state.selectedVersionId,
+				loadedSolutionId: state.loadedSolutionId,
 				versions: state.versions,
 			}),
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);
 			},
-		}
-	)
+		},
+	),
 );

@@ -1,4 +1,4 @@
-import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useSolutionStore } from "@fsd/entities/solution";
 import { duplicateVersion, saveCanvas } from "../../lib";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -26,9 +26,9 @@ const DuplicateIcon = ({ className }: { className?: string }) => {
 export const ButtonDuplicateVersion = () => {
 	const { t } = useTranslation();
 	const router = useRouter();
-	const Id = useCanvasStore((state) => state.id);
-	const versionId = useCanvasStore((state) => state.selectedVersionId);
-	const versions = useCanvasStore((state) => state.versions);
+	const Id = useSolutionStore((state) => state.id);
+	const versionId = useSolutionStore((state) => state.selectedVersionId);
+	const versions = useSolutionStore((state) => state.versions);
 
 	const handleDuplicate = async () => {
 		if (!Id || !versionId) {
@@ -47,7 +47,7 @@ export const ButtonDuplicateVersion = () => {
 
 			const newVersion = await duplicateVersion(Id, versionId);
 
-			useCanvasStore.getState().setSelectedVersionId(newVersion._id);
+			useSolutionStore.getState().setSelectedVersionId(newVersion._id);
 
 			router.refresh();
 

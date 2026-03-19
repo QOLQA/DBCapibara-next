@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useCanvasStore } from "@fsd/features/solution-modeling/model/state/canvaStore";
+import { useSolutionStore } from "@fsd/entities/solution";
 import type { VersionFrontend } from "@fsd/entities/solution";
 
 interface DiagramSessionHydratorProps {
@@ -17,14 +17,14 @@ interface DiagramSessionHydratorProps {
  * Ensures the store has the correct solution data when the user arrives directly.
  */
 export function DiagramSessionHydrator({ loaderData }: DiagramSessionHydratorProps) {
-	const id = useCanvasStore((state) => state.id);
+	const id = useSolutionStore((state) => state.id);
 	const {
 		setId,
 		setNodes,
 		setEdges,
 		setVersions,
 		setSelectedVersionId,
-	} = useCanvasStore();
+	} = useSolutionStore();
 
 	useEffect(() => {
 		if (id !== loaderData.solutionId) {

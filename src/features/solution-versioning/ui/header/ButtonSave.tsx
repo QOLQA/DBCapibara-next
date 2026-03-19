@@ -1,7 +1,7 @@
 import { Save } from "@fsd/shared/ui/icons/HeaderIcons";
 import { transformVersionToBackend } from "@fsd/entities/solution/lib/conversions";
 import { saveCanvas, saveSolution } from "../../lib";
-import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useSolutionStore } from "@fsd/entities/solution";
 import { useQueriesStore } from "@fsd/features/manage-queries";
 import { getNodesBounds, getViewportForBounds } from "@xyflow/react";
 import { toPng } from "html-to-image";
@@ -14,11 +14,11 @@ const imageHeight = 768;
 
 export const ButtonSave = () => {
 	const { t } = useTranslation();
-	const Id = useCanvasStore((state) => state.id);
-	const versionId = useCanvasStore((state) => state.selectedVersionId);
-	const versions = useCanvasStore((state) => state.versions);
-	const nodes = useCanvasStore((state) => state.nodes);
-	const edges = useCanvasStore((state) => state.edges);
+	const Id = useSolutionStore((state) => state.id);
+	const versionId = useSolutionStore((state) => state.selectedVersionId);
+	const versions = useSolutionStore((state) => state.versions);
+	const nodes = useSolutionStore((state) => state.nodes);
+	const edges = useSolutionStore((state) => state.edges);
 	const queries = useQueriesStore((state) => state.queries);
 
 	const handleSave = async () => {

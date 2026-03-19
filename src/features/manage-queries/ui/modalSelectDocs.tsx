@@ -1,7 +1,7 @@
 "use client";
 
 import { Modal } from "@fsd/shared/ui/modal";
-import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useSolutionStore } from "@fsd/entities/solution";
 import { getUniqueTableNames } from "@fsd/entities/solution/lib/analytics";
 import type { Query } from "@fsd/entities/solution";
 import { useState } from "react";
@@ -31,7 +31,7 @@ export const ModalSelectDocs = ({
 	setQueryText,
 	onReturn,
 }: ModalProps) => {
-	const { nodes } = useCanvasStore();
+	const { nodes } = useSolutionStore();
 	const generateId = useUniqueId();
 	const { createQuery, updateQuery } = useQueryOperations();
 	const [isSubmitting, setIsSubmitting] = useState(false);

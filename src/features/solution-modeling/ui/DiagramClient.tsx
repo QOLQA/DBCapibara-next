@@ -1,6 +1,6 @@
 "use client";
 
-import { useCanvasStore } from "../model/state/canvaStore";
+import { useSolutionStore } from "@fsd/entities/solution";
 import { DataBaseDiagram } from "@fsd/widgets/diagram-canvas";
 import { LayoutDiagram } from "@fsd/widgets/modeling-layout";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ export default function DiagramClient({
 		setId,
 		setVersions,
 		setSelectedVersionId,
-	} = useCanvasStore();
+	} = useSolutionStore();
 
 	const versionId = loaderData.versions.findIndex(
 		(version: VersionFrontend) =>

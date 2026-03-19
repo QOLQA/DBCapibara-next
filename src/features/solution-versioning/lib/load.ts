@@ -1,4 +1,4 @@
-import { useCanvasStore } from "@fsd/features/solution-modeling";
+import { useSolutionStore } from "@fsd/entities/solution";
 import { transformSolutionModel } from "@fsd/entities/solution/lib/conversions";
 import type { SolutionModel, VersionFrontend } from "@fsd/entities/solution";
 import { api } from "@fsd/shared/api";
@@ -9,7 +9,7 @@ export async function loadCanva(diagramId: string, versionId: string) {
 		const transformed = transformSolutionModel(data as SolutionModel);
 
 		const { setNodes, setEdges, setVersions, setSelectedVersionId } =
-			useCanvasStore.getState();
+			useSolutionStore.getState();
 
 		const indexVersion = transformed.versions.findIndex(
 			(version: VersionFrontend) => versionId === version._id

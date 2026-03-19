@@ -8,7 +8,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
-import { useCanvasStore } from "@fsd/features/solution-modeling/model/state/canvaStore";
+import { useSolutionStore } from "@fsd/entities/solution";
 import {
 	type CardinalityType,
 	type EdgeData,
@@ -25,7 +25,7 @@ interface CardinalityLabelProps {
 
 export const CardinalityLabel = React.memo(
 	({ edgeId, labelX, labelY, cardinality }: CardinalityLabelProps) => {
-		const { edges, editEdge } = useCanvasStore(
+		const { edges, editEdge } = useSolutionStore(
 			useShallow((state) => ({
 				edges: state.edges,
 				editEdge: state.editEdge,

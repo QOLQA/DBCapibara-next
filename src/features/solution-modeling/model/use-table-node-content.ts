@@ -3,7 +3,7 @@
 import { useReactFlow } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 
-import { useCanvasStore } from "@fsd/features/solution-modeling/model/state/canvaStore";
+import { useSolutionStore } from "@fsd/entities/solution";
 import { useTableConnect } from "./use-table-connect";
 import type { TableData } from "@fsd/entities/solution";
 import { useAttributeModal } from "./use-attribute-modal";
@@ -23,7 +23,7 @@ interface UseTableNodeContentProps {
 
 export const useTableNodeContent = ({ id, data }: UseTableNodeContentProps) => {
 	const { setNodes } = useReactFlow();
-	const { nodes, editNode, edges, setEdges, removeNode } = useCanvasStore(
+	const { nodes, editNode, edges, setEdges, removeNode } = useSolutionStore(
 		useShallow((state) => ({
 			nodes: state.nodes,
 			editNode: state.editNode,

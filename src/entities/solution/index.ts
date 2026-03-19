@@ -24,3 +24,5 @@ export type {
 	TableNodeProps,
 	StastType,
 } from "./model/solution-model";
+export { useSolutionStore, type SolutionStore } from "./model/state/solutionStore";
+export { solutionSelector } from "./model/state/selectors";
