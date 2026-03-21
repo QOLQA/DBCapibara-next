@@ -44,7 +44,7 @@ La relevancia de esta capa radica en que expresa la intencion de navegacion del 
 
 ## Capa `widgets`
 
-La capa `widgets` agrupa bloques de interfaz de tamaño medio o grande que ya representan secciones completas de una pantalla, pero que todavia no constituyen una pagina por si mismos. En el proyecto destacan slices como `modeling-layout`, `diagram-canvas`, `diagram-session`, `queries-panel` y `statistics-panel`.
+La capa `widgets` agrupa bloques de interfaz de tamaño medio o grande que ya representan secciones completas de una pantalla, pero que todavia no constituyen una pagina por si mismos. En el proyecto destacan slices como `modeling-layout`, `diagram-canvas`, `queries-panel` y `statistics-panel`.
 
 Dentro de esta capa, los slices mas representativos pueden entenderse asi:
 
@@ -52,8 +52,6 @@ Dentro de esta capa, los slices mas representativos pueden entenderse asi:
   - `ui`: contiene la composicion del layout, la barra lateral, la navegacion lateral y las piezas visuales que estructuran el espacio de trabajo.
 - `diagram-canvas`: concentra la representacion visual del diagrama.
   - `ui`: incluye el componente principal del lienzo y elementos graficos complementarios, como conexiones o etiquetas visuales.
-- `diagram-session`: encapsula la hidratacion de la sesion del diagrama.
-  - `ui`: contiene el componente responsable de inicializar o restaurar el estado necesario para trabajar con el diagrama en otras pantallas.
 - `queries-panel`: representa el panel de consultas usado dentro del flujo de modelado.
   - `ui`: agrupa la composicion visual del panel, el listado de consultas y los componentes auxiliares de esa seccion.
 - `statistics-panel`: organiza la presentacion del resumen estadistico dentro del flujo de modelado.
@@ -81,7 +79,7 @@ Dentro de esta capa, cada slice responde a una capacidad funcional concreta:
   - `model`: contiene hooks y logica de soporte para operaciones sobre queries.
   - `ui`: agrupa botones, modales y componentes auxiliares del flujo de consultas.
 - `solution-modeling`: reune la logica funcional asociada a la construccion y modificacion del diagrama.
-  - `model`: contiene hooks para acciones como agregar, editar, eliminar o conectar elementos del modelo.
+  - `model`: contiene hooks para acciones como agregar, editar, eliminar o conectar elementos del modelo, e hidratar el store del diagrama al entrar en rutas que lo requieren (p. ej. analisis).
   - `ui`: agrupa componentes propios del modelado y modales especializados de este flujo.
 - `solution-versioning`: encapsula la carga, guardado y duplicacion de versiones de una solucion.
   - `lib`: contiene operaciones funcionales asociadas a persistencia, carga y transformacion de versiones.

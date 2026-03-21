@@ -1,6 +1,6 @@
 "use client";
 
-import { DiagramSessionHydrator } from "@fsd/widgets/diagram-session";
+import { useDiagramSessionHydration } from "@fsd/features/solution-modeling";
 import {
 	AnalysisLayout,
 	AnalysisHeader,
@@ -18,21 +18,18 @@ interface AnalysisPageProps {
 }
 
 export function AnalysisPage({ loaderData }: AnalysisPageProps) {
+	useDiagramSessionHydration({
+		solutionId: loaderData.solutionId,
+		versions: loaderData.versions,
+		last_version_saved: loaderData.last_version_saved,
+	});
+
 	return (
-		<>
-			<DiagramSessionHydrator
-				loaderData={{
-					solutionId: loaderData.solutionId,
-					versions: loaderData.versions,
-					last_version_saved: loaderData.last_version_saved,
-				}}
-			/>
-			<AnalysisLayout
-				title={loaderData.name}
-				headerSlot={<AnalysisHeader title={loaderData.name} />}
-			>
-				<AnalysisDashboard />
-			</AnalysisLayout>
-		</>
+		<AnalysisLayout
+			title={loaderData.name}
+			headerSlot={<AnalysisHeader title={loaderData.name} />}
+		>
+			<AnalysisDashboard />
+		</AnalysisLayout>
 	);
 }

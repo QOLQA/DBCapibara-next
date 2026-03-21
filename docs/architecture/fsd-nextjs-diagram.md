@@ -25,7 +25,7 @@ flowchart TB
   subgraph FSDFeatures ["Capa FSD: features (src/features) — acciones de usuario"]
     featAuth["auth\nuseAuth, login UI, actions"]
     featProjectMgmt["project-management\nAdd/Edit/Delete modals, useModelsStore"]
-    featSolutionModeling["solution-modeling\ncanvaStore, LayoutDiagram, DataBaseDiagram, DiagramSessionHydrator"]
+    featSolutionModeling["solution-modeling\ncanvaStore, LayoutDiagram, DataBaseDiagram, useDiagramSessionHydration"]
     featSolutionVersioning["solution-versioning\nAppHeader, load/save/duplicate, versions"]
     featQueries["queries\nAppQueries, useQueryOperations, useTableSelection"]
     featStatistics["statistics\nAppStatistics, QueryStatsGraph"]

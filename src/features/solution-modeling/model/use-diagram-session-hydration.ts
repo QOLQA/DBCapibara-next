@@ -1,35 +1,28 @@
-"use client";
-
 import { useEffect } from "react";
 import { useSolutionStore } from "@fsd/entities/solution";
 import type { VersionFrontend } from "@fsd/entities/solution";
 
-interface DiagramSessionHydratorProps {
-	loaderData: {
-		solutionId: string;
-		versions: VersionFrontend[];
-		last_version_saved: string;
-	};
+export interface DiagramSessionLoaderData {
+	solutionId: string;
+	versions: VersionFrontend[];
+	last_version_saved: string;
 }
 
 /**
- * Hydrates the canvas store when navigating to analysis pages.
- * Ensures the store has the correct solution data when the user arrives directly.
+ * Syncs server-loaded solution/version data into the diagram store when entering
+ * routes that rely on the canvas store (e.g. analysis) after direct navigation.
  */
-export function DiagramSessionHydrator({ loaderData }: DiagramSessionHydratorProps) {
+export function useDiagramSessionHydration(
+	loaderData: DiagramSessionLoaderData,
+) {
 	const id = useSolutionStore((state) => state.id);
-	const {
-		setId,
-		setNodes,
-		setEdges,
-		setVersions,
-		setSelectedVersionId,
-	} = useSolutionStore();
+	const { setId, setNodes, setEdges, setVersions, setSelectedVersionId } =
+		useSolutionStore();
 
 	useEffect(() => {
 		if (id !== loaderData.solutionId) {
 			const versionIndex = loaderData.versions.findIndex(
-				(v) => v._id === loaderData.last_version_saved
+				(v) => v._id === loaderData.last_version_saved,
 			);
 			if (versionIndex >= 0) {
 				const version = loaderData.versions[versionIndex];
@@ -51,6 +44,4 @@ export function DiagramSessionHydrator({ loaderData }: DiagramSessionHydratorPro
 		setVersions,
 		setSelectedVersionId,
 	]);
-
-	return null;
 }

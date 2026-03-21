@@ -175,7 +175,7 @@ flowchart TB
 ```mermaid
 flowchart TB
   pageAnalysis["pages/analysis\n(AnalysisPage)"] --> featAnalysis["features/analysis\n(AnalysisLayout + AnalysisDashboard)"]
-  pageAnalysis --> featSolutionModeling["features/solution-modeling\n(DiagramSessionHydrator + store)"]
+  pageAnalysis --> featSolutionModeling["features/solution-modeling\n(useDiagramSessionHydration + store)"]
   pageAnalysis --> sharedApiServer["@fsd/shared/api/server\n(getAuthenticatedSolution)"]
 
   featAnalysis --> sharedLibAnalytics["@fsd/shared/lib/analytics"]
