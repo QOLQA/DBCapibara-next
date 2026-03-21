@@ -1,20 +1,17 @@
 "use client";
 
-import React, { useCallback, useMemo } from "react";
-import { useShallow } from "zustand/shallow";
+import React, { useCallback } from "react";
 import { ManagedDropdownMenu } from "@fsd/shared/ui/ManagedDropdownMenu";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
-import { useSolutionStore } from "@fsd/entities/solution";
 import {
 	type CardinalityType,
-	type EdgeData,
 	CARDINALITY_OPTIONS,
 } from "@fsd/entities/solution";
-import type { Edge } from "@xyflow/react";
+import { useEditEdgeCardinality } from "../../model/use-edit-edge-cardinality";
 
 interface CardinalityLabelProps {
 	edgeId: string;
@@ -25,34 +22,7 @@ interface CardinalityLabelProps {
 
 export const CardinalityLabel = React.memo(
 	({ edgeId, labelX, labelY, cardinality }: CardinalityLabelProps) => {
-		const { edges, editEdge } = useSolutionStore(
-			useShallow((state) => ({
-				edges: state.edges,
-				editEdge: state.editEdge,
-			}))
-		);
-
-		const currentEdge = useMemo(
-			() => edges.find((e) => e.id === edgeId),
-			[edges, edgeId]
-		);
-
-		const handleCardinalityChange = useCallback(
-			(newCardinality: CardinalityType) => {
-				if (!currentEdge) return;
-
-				const updatedEdge: Edge<EdgeData> = {
-					...currentEdge,
-					data: {
-						...currentEdge.data,
-						cardinality: newCardinality,
-					},
-				};
-
-				editEdge(edgeId, updatedEdge);
-			},
-			[currentEdge, edgeId, editEdge]
-		);
+		const { handleCardinalityChange } = useEditEdgeCardinality(edgeId);
 
 		const handleClick = useCallback((e: React.MouseEvent) => {
 			e.stopPropagation();
@@ -106,7 +76,7 @@ export const CardinalityLabel = React.memo(
 				</div>
 			</foreignObject>
 		);
-	}
+	},
 );
 
 CardinalityLabel.displayName = "CardinalityLabel";

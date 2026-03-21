@@ -4,7 +4,7 @@
 
 El frontend del proyecto `DBCapibara-next` fue desarrollado con `Next.js`, `React`, `TypeScript` y `Tailwind CSS`. Sobre esta base se integran otras tecnologias especializadas que responden a necesidades concretas del sistema. `Zustand` se utiliza para la gestion de estado global de dominios como soluciones y consultas; `@xyflow/react` permite la construccion y manipulacion del lienzo de modelado; `Recharts` se emplea para la representacion grafica de metricas; y los componentes de interfaz se apoyan en primitivas de `Radix UI`, adaptadas a la estructura del proyecto mediante una capa propia en `shared/ui`.
 
-La organizacion del frontend adopta la arquitectura `Feature-Sliced Design` (FSD). Esta decision no se tomo unicamente por razones de orden visual en el arbol de carpetas, sino porque el sistema posee varias areas funcionales claramente diferenciadas: autenticacion, gestion de proyectos, modelado de soluciones, versionado, consultas, comparacion y analisis. En un proyecto con este nivel de crecimiento, una estructura basada solamente en tipos tecnicos como `components`, `hooks`, `utils` o `services` tiende a mezclar responsabilidades, dificulta la localizacion de la logica de negocio y hace mas costosa la evolucion del sistema.
+La organizacion del frontend adopta la arquitectura `Feature-Sliced Design` (FSD). Esta decision no se tomo unicamente por razones de orden visual en el arbol de carpetas, sino porque el sistema posee varias areas funcionales claramente diferenciadas: autenticacion, gestion de proyectos, modelado de soluciones, versionado, consultas y analisis. En un proyecto con este nivel de crecimiento, una estructura basada solamente en tipos tecnicos como `components`, `hooks`, `utils` o `services` tiende a mezclar responsabilidades, dificulta la localizacion de la logica de negocio y hace mas costosa la evolucion del sistema.
 
 FSD ofrece una alternativa orientada al dominio y a los casos de uso. Cada modulo se ubica segun el nivel de abstraccion que representa dentro de la aplicacion, y no solo segun su forma tecnica. Esto mejora la mantenibilidad, facilita la escalabilidad del codigo, reduce el acoplamiento entre modulos y hace mas evidente que elementos pueden reutilizarse y cuales deben permanecer cerca de un flujo funcional especifico. En consecuencia, la arquitectura favorece una evolucion incremental del sistema sin perder claridad estructural.
 
@@ -20,7 +20,7 @@ En este proyecto existe ademas una diferenciacion importante entre la carpeta `a
 
 ## Capa `pages`
 
-La capa `pages` representa las pantallas completas del sistema. Cada slice de esta capa corresponde a una vista principal asociada a un flujo o ruta concreta del producto. En el proyecto actual aparecen slices como `login`, `projects`, `modeling`, `comparison` y `analysis`.
+La capa `pages` representa las pantallas completas del sistema. Cada slice de esta capa corresponde a una vista principal asociada a un flujo o ruta concreta del producto. En el proyecto actual aparecen slices como `login`, `projects`, `modeling` y `analysis`.
 
 La funcion de esta capa no es concentrar toda la logica de negocio, sino orquestar la composicion de lo que una ruta necesita para funcionar. Por ejemplo, una pagina puede reunir widgets, features, entidades y funciones de carga de datos del servidor. En este sentido, `pages` actua como la unidad de ensamblaje que conecta el enrutamiento con los modulos funcionales de capas inferiores.
 
@@ -34,14 +34,11 @@ Dentro de esta capa, los slices principales pueden describirse de la siguiente m
 - `modeling`: representa la pantalla principal de modelado.
   - `ui`: contiene la composicion de la pagina de modelado y articula widgets y features del flujo principal del sistema.
   - `api`: incluye la carga de datos necesaria para hidratar el diagrama desde el servidor.
-- `comparison`: corresponde a la vista orientada a comparar esquemas o versiones.
-  - `ui`: organiza la composicion visual del flujo de comparacion.
-  - `api`: provee la carga inicial de informacion requerida por esta pantalla.
 - `analysis`: representa la pantalla dedicada al analisis de metricas y resultados.
   - `ui`: contiene la estructura visual de la pagina de analisis.
   - `api`: incorpora la carga de datos del servidor necesaria para inicializar este flujo.
 
-Una caracteristica importante del proyecto es que varios slices de `pages` cuentan con un segmento `api` que incluye archivos `*.server.ts`, como `getDiagramData.server.ts`, `getComparisonData.server.ts` o `getAnalysisData.server.ts`. Esto evidencia una adaptacion practica de FSD a `Next.js`: la carga de datos del servidor se mantiene cerca de la pagina que la consume, en lugar de dispersarse en servicios globales sin contexto.
+Una caracteristica importante del proyecto es que varios slices de `pages` cuentan con un segmento `api` que incluye archivos `*.server.ts`, como `getDiagramData.server.ts` o `getAnalysisData.server.ts`. Esto evidencia una adaptacion practica de FSD a `Next.js`: la carga de datos del servidor se mantiene cerca de la pagina que la consume, en lugar de dispersarse en servicios globales sin contexto.
 
 La relevancia de esta capa radica en que expresa la intencion de navegacion del sistema. Cuando se analiza una ruta concreta, la capa `pages` permite identificar rapidamente que piezas funcionales participan en ella y como se compone la experiencia de usuario.
 
@@ -68,7 +65,7 @@ En terminos de FSD, la capa `widgets` cumple una funcion intermedia muy valiosa.
 
 ## Capa `features`
 
-La capa `features` contiene las acciones de usuario y los casos de uso de negocio que generan cambios o interacciones relevantes dentro del sistema. En el proyecto actual esta capa incluye slices como `auth`, `manage-projects`, `manage-queries`, `solution-modeling`, `solution-versioning`, `comparison`, `analysis` y `statistics`.
+La capa `features` contiene las acciones de usuario y los casos de uso de negocio que generan cambios o interacciones relevantes dentro del sistema. En el proyecto actual esta capa incluye slices como `auth`, `manage-projects`, `manage-queries`, `solution-modeling`, `solution-versioning`, `analysis` y `statistics`.
 
 Dentro de esta capa, cada slice responde a una capacidad funcional concreta:
 
@@ -89,8 +86,6 @@ Dentro de esta capa, cada slice responde a una capacidad funcional concreta:
 - `solution-versioning`: encapsula la carga, guardado y duplicacion de versiones de una solucion.
   - `lib`: contiene operaciones funcionales asociadas a persistencia, carga y transformacion de versiones.
   - `ui`: agrupa componentes del encabezado y controles vinculados al versionado.
-- `comparison`: concentra el comportamiento funcional del flujo de comparacion.
-  - `ui`: contiene los componentes propios de la visualizacion y del contenido lateral de la comparacion.
 - `analysis`: se centra en el flujo analitico y la presentacion de resultados de evaluacion.
   - `ui`: contiene layout, dashboard, encabezados y graficos propios del analisis.
 - `statistics`: conserva la logica derivada necesaria para calcular indicadores a partir del estado del dominio.
@@ -167,7 +162,7 @@ La relevancia de los segments esta en que introducen una segunda dimension de or
 
 ## Relevancia global de la arquitectura adoptada
 
-La aplicacion presenta una complejidad suficiente como para justificar una arquitectura explicita. No se trata solamente de mostrar formularios o listas, sino de coordinar autenticacion, modelado grafico, sincronizacion de consultas, versionado de soluciones, comparacion de esquemas y analisis de metricas. Ante esta variedad de responsabilidades, la adopcion de Feature-Sliced Design permite evitar una estructura monolitica y desordenada.
+La aplicacion presenta una complejidad suficiente como para justificar una arquitectura explicita. No se trata solamente de mostrar formularios o listas, sino de coordinar autenticacion, modelado grafico, sincronizacion de consultas, versionado de soluciones y analisis de metricas. Ante esta variedad de responsabilidades, la adopcion de Feature-Sliced Design permite evitar una estructura monolitica y desordenada.
 
 La organizacion por capas, slices y segments facilita la mantenibilidad del sistema, ya que cada cambio puede localizarse con mayor rapidez en el nivel adecuado. Tambien favorece la escalabilidad, porque nuevas funcionalidades pueden incorporarse sin deteriorar el orden ya existente. Adicionalmente, mejora la reutilizacion al distinguir que piezas son compartidas, cuales pertenecen al dominio y cuales deben permanecer cercanas a una accion de usuario o a una pantalla concreta.
 

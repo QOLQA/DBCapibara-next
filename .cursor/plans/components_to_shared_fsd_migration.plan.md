@@ -18,7 +18,7 @@ isProject: false
   - `@/lib/utils` — función `cn` (clsx + twMerge).
   - `@/contexts/dropdown-context` — DropdownProvider, useDropdownContext (usado por ManagedDropdownMenu).
   - `@/hooks/use-mobile` — useIsMobile (usado por sidebar).
-- **Consumidores:** features (analysis, solution-modeling, solution-versioning, queries, project-management), pages (projects, comparison, canva), app/layout, y entre los propios componentes.
+- **Consumidores:** features (analysis, solution-modeling, solution-versioning, queries, project-management), pages (projects, modeling), app/layout, y entre los propios componentes.
 
 ## Objetivo FSD
 

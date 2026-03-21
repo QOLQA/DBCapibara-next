@@ -41,7 +41,6 @@ flowchart TB
     routeLogin["app/login/page.tsx"]
     routeModels["app/models/page.tsx"]
     routeCanva["app/models/[diagramId]/modeling/page.tsx"]
-    routeComparison["app/models/[diagramId]/comparison/page.tsx"]
     routeAnalysis["app/models/[diagramId]/analysis/page.tsx"]
     routeError["app/error.tsx"]
   end
@@ -53,7 +52,6 @@ flowchart TB
     pageLogin["pages/login\n(LoginPage)"]
     pageProjects["pages/projects\n(ProjectsPage + getSolutions.server)"]
     pageCanva["pages/modeling\n(ModelingPage + getDiagramData.server)"]
-    pageComparison["pages/comparison\n(ComparisonPage + getComparisonData.server)"]
     pageAnalysis["pages/analysis\n(AnalysisPage + getAnalysisData.server)"]
   end
 
@@ -67,7 +65,6 @@ flowchart TB
     featSolutionVersioning["solution-versioning\n(AppHeader + load/save/duplicate versions)"]
     featQueries["queries\n(AppQueries + query ops + selection)"]
     featStatistics["statistics\n(AppStatistics + graphs)"]
-    featComparison["comparison\n(ComparisonDiagram + SidebarContent)"]
     featAnalysis["analysis\n(AnalysisLayout + Dashboard + charts)"]
   end
 
@@ -104,7 +101,6 @@ flowchart TB
   routeLogin --> pageLogin
   routeModels --> pageProjects
   routeCanva --> pageCanva
-  routeComparison --> pageComparison
   routeAnalysis --> pageAnalysis
   routeError --> sharedLibI18n
 
@@ -120,10 +116,6 @@ flowchart TB
   pageCanva --> featQueries
   pageCanva --> featStatistics
   pageCanva --> sharedApiServer
-  pageComparison --> featComparison
-  pageComparison --> featSolutionModeling
-  pageComparison --> featSolutionVersioning
-  pageComparison --> sharedApiServer
   pageAnalysis --> featAnalysis
   pageAnalysis --> featSolutionModeling
   pageAnalysis --> sharedApiServer
@@ -160,9 +152,6 @@ flowchart TB
   featStatistics --> sharedLibAnalytics
   featStatistics --> sharedUi
 
-  featComparison --> featSolutionModeling
-  featComparison --> sharedUi
-
   featAnalysis --> featSolutionModeling
   featAnalysis --> sharedLibAnalytics
   featAnalysis --> sharedUi
@@ -175,7 +164,7 @@ flowchart TB
   entUser --> sharedApi
 ```
 
-> Nota: `comparison` y `analysis` consumen `solution-modeling` para hidratar/leer el estado del diagrama (store + types).
+> Nota: `analysis` consume `solution-modeling` para hidratar/leer el estado del diagrama (store + types).
 
 ---
 
@@ -194,20 +183,7 @@ flowchart TB
   featSolutionModeling --> entSolution["@fsd/entities/solution"]
 ```
 
-### 3.2 Feature `comparison`
-
-```mermaid
-flowchart TB
-  pageComparison["pages/comparison\n(ComparisonPage)"] --> featComparison["features/comparison\n(ComparisonDiagram + SidebarContent)"]
-  pageComparison --> featSolutionModeling["features/solution-modeling\n(LayoutDiagram + store + types)"]
-  pageComparison --> featSolutionVersioning["features/solution-versioning\n(AppHeader)"]
-  pageComparison --> sharedApiServer["@fsd/shared/api/server"]
-
-  featComparison --> sharedUi["@fsd/shared/ui\n(sidebar primitives/icons)"]
-  featSolutionModeling --> entSolution["@fsd/entities/solution"]
-```
-
-### 3.3 Feature `solution-modeling`
+### 3.2 Feature `solution-modeling`
 
 ```mermaid
 flowchart TB
@@ -218,7 +194,7 @@ flowchart TB
   featSolutionModeling --> entSolution["@fsd/entities/solution"]
 ```
 
-### 3.4 Feature `solution-versioning`
+### 3.3 Feature `solution-versioning`
 
 ```mermaid
 flowchart TB
@@ -230,7 +206,7 @@ flowchart TB
   featSolutionVersioning --> entSolution["@fsd/entities/solution"]
 ```
 
-### 3.5 Feature `queries`
+### 3.4 Feature `queries`
 
 ```mermaid
 flowchart TB
@@ -242,7 +218,7 @@ flowchart TB
   featQueries --> entSolution["@fsd/entities/solution"]
 ```
 
-### 3.6 Feature `statistics`
+### 3.5 Feature `statistics`
 
 ```mermaid
 flowchart TB
@@ -252,7 +228,7 @@ flowchart TB
   featStatistics --> entSolution["@fsd/entities/solution"]
 ```
 
-### 3.7 Feature `project-management`
+### 3.6 Feature `project-management`
 
 ```mermaid
 flowchart TB
@@ -262,7 +238,7 @@ flowchart TB
   featProjectMgmt --> sharedLibI18n["@fsd/shared/lib/i18n"]
 ```
 
-### 3.8 Feature `auth`
+### 3.7 Feature `auth`
 
 ```mermaid
 flowchart TB

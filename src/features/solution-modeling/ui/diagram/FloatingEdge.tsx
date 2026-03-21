@@ -24,7 +24,7 @@ export function FloatingEdge({
 
 	const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(
 		sourceNode,
-		targetNode
+		targetNode,
 	);
 
 	const [path, labelX, labelY] = getSmoothStepPath({

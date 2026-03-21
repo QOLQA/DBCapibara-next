@@ -13,7 +13,7 @@ interface DiagramSessionHydratorProps {
 }
 
 /**
- * Hydrates the canvas store when navigating to analysis or comparison pages.
+ * Hydrates the canvas store when navigating to analysis pages.
  * Ensures the store has the correct solution data when the user arrives directly.
  */
 export function DiagramSessionHydrator({ loaderData }: DiagramSessionHydratorProps) {

@@ -10,7 +10,6 @@ flowchart TB
     routeLogin["/login page.tsx"]
     routeModels["/models page.tsx"]
     routeCanva["/models/[diagramId]/modeling page.tsx"]
-    routeComparison["/models/[diagramId]/comparison page.tsx"]
     routeAnalysis["/models/[diagramId]/analysis page.tsx"]
     routeError["error.tsx"]
     routeNotFound["not-found.tsx"]
@@ -20,7 +19,6 @@ flowchart TB
     pageLogin["login\nLoginPage"]
     pageProjects["projects\nProjectsPage + getSolutions.server"]
     pageCanva["modeling\nModelingPage + getDiagramData.server"]
-    pageComparison["comparison\nComparisonPage + getComparisonData.server"]
     pageAnalysis["analysis\nAnalysisPage + getAnalysisData.server"]
   end
 
@@ -31,7 +29,6 @@ flowchart TB
     featSolutionVersioning["solution-versioning\nAppHeader, load/save/duplicate, versions"]
     featQueries["queries\nAppQueries, useQueryOperations, useTableSelection"]
     featStatistics["statistics\nAppStatistics, QueryStatsGraph"]
-    featComparison["comparison\nComparisonDiagram, ComparisonSidebarContent"]
     featAnalysis["analysis\nAnalysisLayout, AnalysisDashboard, charts"]
   end
 
@@ -55,7 +52,6 @@ flowchart TB
   routeLogin --> pageLogin
   routeModels --> pageProjects
   routeCanva --> pageCanva
-  routeComparison --> pageComparison
   routeAnalysis --> pageAnalysis
   routeError --> sharedI18n
 
@@ -67,10 +63,6 @@ flowchart TB
   pageCanva --> featQueries
   pageCanva --> featStatistics
   pageCanva --> sharedApiServer
-  pageComparison --> featComparison
-  pageComparison --> featSolutionModeling
-  pageComparison --> featSolutionVersioning
-  pageComparison --> sharedApiServer
   pageAnalysis --> featAnalysis
   pageAnalysis --> featSolutionModeling
   pageAnalysis --> sharedApiServer
@@ -94,8 +86,6 @@ flowchart TB
   featQueries --> sharedI18n
   featStatistics --> entSolution
   featStatistics --> sharedUi
-  featComparison --> featSolutionModeling
-  featComparison --> sharedUi
   featAnalysis --> featSolutionModeling
   featAnalysis --> sharedUi
 
