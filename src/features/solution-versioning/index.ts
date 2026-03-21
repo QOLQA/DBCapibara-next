@@ -6,4 +6,6 @@ export {
 	updateVersionDescription,
 	generateEmptyVersionDescription,
 } from "./lib/versions";
-export { AppHeader } from "./ui/header/AppHeader";
+export { VersionSelect } from "./ui/header/VersionSelect";
+export { ButtonSave } from "./ui/header/ButtonSave";
+export { ButtonDuplicateVersion } from "./ui/header/ButtonDuplicateVersion";

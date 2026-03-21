@@ -2,7 +2,7 @@
 
 import { DiagramSessionHydrator } from "@fsd/widgets/diagram-session";
 import { LayoutDiagram, type NavItem } from "@fsd/widgets/modeling-layout";
-import { AppHeader } from "@fsd/features/solution-versioning";
+import { AppHeader } from "@fsd/widgets/modeling-header";
 import {
 	ComparisonDiagram,
 	ComparisonSidebarContent,

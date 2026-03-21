@@ -1,16 +1,25 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Chevron } from "@fsd/shared/ui/icons/HeaderIcons";
-
-import { LogoWithSelect } from "./LogoWithSelect";
-import { ButtonSave } from "./ButtonSave";
-import { ButtonDuplicateVersion } from "./ButtonDuplicateVersion";
+import {
+	ArrowLeft,
+	ArrowRight,
+	Chevron,
+} from "@fsd/shared/ui/icons/HeaderIcons";
+import { Logo } from "@fsd/shared/ui/logo";
+import {
+	ButtonDuplicateVersion,
+	ButtonSave,
+	VersionSelect,
+} from "@fsd/features/solution-versioning";
 
 export const AppHeader = ({ title }: { title: string }) => {
 	return (
 		<header className="flex flex-row items-center w-full h-16 bg-secondary-gray p-4 text-white relative">
 			<div className="flex-shrink-0">
-				<LogoWithSelect />
+				<div className="flex items-center gap-8">
+					<Logo />
+					<VersionSelect />
+				</div>
 			</div>
 
 			<div className="flex-1 flex items-center justify-center absolute left-1/2 transform -translate-x-1/2">
