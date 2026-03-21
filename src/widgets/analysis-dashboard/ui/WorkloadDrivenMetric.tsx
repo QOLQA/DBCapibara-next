@@ -4,6 +4,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@fsd/shared/ui/chart";
+import type { CompletudeChartRow } from "@fsd/features/analysis";
 import React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
@@ -14,10 +15,10 @@ const chartConfig = {
 	},
 } satisfies ChartConfig;
 
-export function CompletudeChart({
+export function WorkloadDrivenMetric({
 	completudeChartData,
 }: {
-	completudeChartData: unknown[];
+	completudeChartData: CompletudeChartRow[];
 }) {
 	return (
 		<div className="min-h-[100px] w-[45%] flex flex-col gap-20 ">

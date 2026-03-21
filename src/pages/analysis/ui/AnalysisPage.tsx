@@ -1,11 +1,8 @@
 "use client";
 
 import { useDiagramSessionHydration } from "@fsd/features/solution-modeling";
-import {
-	AnalysisLayout,
-	AnalysisHeader,
-	AnalysisDashboard,
-} from "@fsd/features/analysis";
+import { AnalysisDashboard } from "@fsd/widgets/analysis-dashboard";
+import { AnalysisHeader } from "@fsd/widgets/analysis-header";
 import type { VersionFrontend } from "@fsd/entities/solution";
 
 interface AnalysisPageProps {
@@ -25,11 +22,11 @@ export function AnalysisPage({ loaderData }: AnalysisPageProps) {
 	});
 
 	return (
-		<AnalysisLayout
-			title={loaderData.name}
-			headerSlot={<AnalysisHeader title={loaderData.name} />}
-		>
-			<AnalysisDashboard />
-		</AnalysisLayout>
+		<div className="flex flex-col h-screen w-screen z-50 overflow-hidden">
+			<AnalysisHeader title={loaderData.name} />
+			<div className="h-full w-full overflow-hidden bg-secondary-gray px-3 pb-3 ">
+				<AnalysisDashboard />
+			</div>
+		</div>
 	);
 }

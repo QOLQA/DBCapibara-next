@@ -2,7 +2,6 @@
 
 import { Button } from "@fsd/shared/ui/button";
 import { Plus, LogOut } from "lucide-react";
-import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@fsd/shared/api";
@@ -123,9 +122,7 @@ export function ProjectsPage({
 		<>
 			<header className="bg-secondary-gray pt-[27px] pb-16">
 				<div className="max-w-[1330px] mx-auto flex justify-between items-center">
-					<Link href="/projects">
-						<Logo className="text-blue" />
-					</Link>
+					<Logo />
 					<div className="flex gap-[68px] items-center">
 						<Button
 							type="button"

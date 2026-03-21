@@ -29,7 +29,7 @@ flowchart TB
     featSolutionVersioning["solution-versioning\nAppHeader, load/save/duplicate, versions"]
     featQueries["queries\nAppQueries, useQueryOperations, useTableSelection"]
     featStatistics["statistics\nAppStatistics, QueryStatsGraph"]
-    featAnalysis["analysis\nAnalysisLayout, AnalysisDashboard, charts"]
+    featAnalysis["analysis\nhooks + chart types (model)"]
   end
 
   subgraph FSDEntities ["Capa FSD: entities (src/entities) — dominio"]

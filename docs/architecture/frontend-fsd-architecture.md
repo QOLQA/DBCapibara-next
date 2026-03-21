@@ -65,7 +65,7 @@ flowchart TB
     featSolutionVersioning["solution-versioning\n(AppHeader + load/save/duplicate versions)"]
     featQueries["queries\n(AppQueries + query ops + selection)"]
     featStatistics["statistics\n(AppStatistics + graphs)"]
-    featAnalysis["analysis\n(AnalysisLayout + Dashboard + charts)"]
+    featAnalysis["analysis\n(model: hooks + chart types)"]
   end
 
   %% ======================
@@ -174,7 +174,8 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-  pageAnalysis["pages/analysis\n(AnalysisPage)"] --> featAnalysis["features/analysis\n(AnalysisLayout + AnalysisDashboard)"]
+  pageAnalysis["pages/analysis\n(AnalysisPage composes layout)"] --> featAnalysis["features/analysis\n(hooks + types)"]
+  pageAnalysis --> widgetAnalysisDash["widgets/analysis-dashboard\n(AnalysisDashboard)"]
   pageAnalysis --> featSolutionModeling["features/solution-modeling\n(useDiagramSessionHydration + store)"]
   pageAnalysis --> sharedApiServer["@fsd/shared/api/server\n(getAuthenticatedSolution)"]
 

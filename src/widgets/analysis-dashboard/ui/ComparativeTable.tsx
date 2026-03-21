@@ -1,85 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import type {
+	CompletudeChartRow,
+	MetricChartRow,
+} from "@fsd/features/analysis";
+import { useSchemaMetricsSelection } from "@fsd/features/analysis";
 
-interface MetricData {
-	schema: string;
-	redundancy: number;
-	recovery_cost: number;
-	access_pattern: number;
-}
-
-interface CompletudeData {
-	schema: string;
-	completude: number;
-}
-
-interface TableMetricsProps {
-	metricsChartData: MetricData[];
-	completudeChartData: CompletudeData[];
+interface ComparativeTableProps {
+	metricsChartData: MetricChartRow[];
+	completudeChartData: CompletudeChartRow[];
 	onSelectionChange?: (selectedSchemas: string[]) => void;
 }
 
-export function TableMetrics({
+export function ComparativeTable({
 	metricsChartData,
 	completudeChartData,
 	onSelectionChange,
-}: TableMetricsProps) {
-	const [selectedSchemas, setSelectedSchemas] = useState<Set<string>>(() => {
-		return new Set(metricsChartData.map((metric) => metric.schema));
-	});
-
-	const allSelected =
-		metricsChartData.length > 0 &&
-		selectedSchemas.size === metricsChartData.length &&
-		metricsChartData.every((metric) => selectedSchemas.has(metric.schema));
-
-	useEffect(() => {
-		const currentSchemas = new Set(
-			metricsChartData.map((metric) => metric.schema),
-		);
-		if (metricsChartData.length === 0) {
-			setSelectedSchemas(new Set());
-			return;
-		}
-		setSelectedSchemas((prev) => {
-			const updated = new Set(prev);
-			currentSchemas.forEach((schema) => updated.add(schema));
-			Array.from(updated).forEach((schema) => {
-				if (!currentSchemas.has(schema)) {
-					updated.delete(schema);
-				}
-			});
-			return updated;
-		});
-	}, [metricsChartData]);
-
-	useEffect(() => {
-		if (onSelectionChange) {
-			onSelectionChange(Array.from(selectedSchemas));
-		}
-	}, [selectedSchemas, onSelectionChange]);
-
-	const handleSelectAll = (checked: boolean) => {
-		if (checked) {
-			const allSchemas = new Set(
-				metricsChartData.map((metric) => metric.schema),
-			);
-			setSelectedSchemas(allSchemas);
-		} else {
-			setSelectedSchemas(new Set());
-		}
-	};
-
-	const handleToggleSchema = (schema: string) => {
-		const newSelection = new Set(selectedSchemas);
-		if (newSelection.has(schema)) {
-			newSelection.delete(schema);
-		} else {
-			newSelection.add(schema);
-		}
-		setSelectedSchemas(newSelection);
-	};
+}: ComparativeTableProps) {
+	const { allSelected, handleSelectAll, handleToggleSchema, selectedSchemas } =
+		useSchemaMetricsSelection(metricsChartData, onSelectionChange);
 
 	return (
 		<div className="flex flex-col w-[70%] h-auto border border-gray rounded-2xl p-6 gap-6 my-16">

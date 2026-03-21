@@ -4,6 +4,7 @@ import {
 	ChartTooltip,
 } from "@fsd/shared/ui/chart";
 import { ChartTooltipContent } from "@fsd/shared/ui/chart";
+import type { MetricChartRow } from "@fsd/features/analysis";
 import React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
@@ -22,10 +23,10 @@ const chartConfig = {
 	},
 } satisfies ChartConfig;
 
-export function MetricsChart({
+export function ModelIntrinsicMetrics({
 	metricsChartData,
 }: {
-	metricsChartData: unknown[];
+	metricsChartData: MetricChartRow[];
 }) {
 	return (
 		<div className="min-h-[100px] w-[48%] flex flex-col gap-20 ">
