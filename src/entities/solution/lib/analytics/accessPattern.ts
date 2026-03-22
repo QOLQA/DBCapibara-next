@@ -16,7 +16,7 @@ function generateNodeHashWithoutPosition(nodes: Node<TableData>[]): string {
 			data: node.data,
 			type: node.type,
 			// Intentionally exclude position to avoid recalculations on movement
-		}))
+		})),
 	);
 }
 
@@ -30,7 +30,7 @@ function generateEdgeHash(edges: Edge[]): string {
 			source: edge.source,
 			target: edge.target,
 			type: edge.type,
-		}))
+		})),
 	);
 }
 
@@ -44,7 +44,7 @@ function getMaxDepth(nodes: Node<TableData>[]): number {
 		}
 
 		const nestedDepths = tableData.nestedTables.map((nested) =>
-			calculateNestedDepth(nested)
+			calculateNestedDepth(nested),
 		);
 
 		return 1 + Math.max(...nestedDepths);
@@ -82,7 +82,7 @@ function getMaxRelations(edges: Edge[]): number {
  */
 function calculateAccessPatternPure(
 	nodes: Node<TableData>[],
-	edges: Edge[]
+	edges: Edge[],
 ): number {
 	const maxDepth = getMaxDepth(nodes);
 	const maxRelations = getMaxRelations(edges);
@@ -98,7 +98,7 @@ function calculateAccessPatternPure(
 function withCacheValidation(
 	nodes: Node<TableData>[],
 	edges: Edge[],
-	calculationFn: (nodes: Node<TableData>[], edges: Edge[]) => number
+	calculationFn: (nodes: Node<TableData>[], edges: Edge[]) => number,
 ): number {
 	// Generate hashes to detect changes
 	const currentNodeHash = generateNodeHashWithoutPosition(nodes);
@@ -132,4 +132,3 @@ function withCacheValidation(
 export function getAccessPattern(nodes: Node<TableData>[], edges: Edge[]) {
 	return withCacheValidation(nodes, edges, calculateAccessPatternPure);
 }
-

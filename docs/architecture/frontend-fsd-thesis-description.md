@@ -63,7 +63,7 @@ En terminos de FSD, la capa `widgets` cumple una funcion intermedia muy valiosa.
 
 ## Capa `features`
 
-La capa `features` contiene las acciones de usuario y los casos de uso de negocio que generan cambios o interacciones relevantes dentro del sistema. En el proyecto actual esta capa incluye slices como `auth`, `manage-projects`, `manage-queries`, `solution-modeling`, `solution-versioning`, `analysis` y `statistics`.
+La capa `features` contiene las acciones de usuario y los casos de uso de negocio que generan cambios o interacciones relevantes dentro del sistema. En el proyecto actual esta capa incluye slices como `auth`, `manage-projects`, `manage-queries`, `solution-modeling`, `solution-versioning`, `analysis` y `modeling-metrics`.
 
 Dentro de esta capa, cada slice responde a una capacidad funcional concreta:
 
@@ -86,12 +86,12 @@ Dentro de esta capa, cada slice responde a una capacidad funcional concreta:
   - `ui`: agrupa componentes del encabezado y controles vinculados al versionado.
 - `analysis`: se centra en el flujo analitico y la presentacion de resultados de evaluacion.
   - `ui`: contiene layout, dashboard, encabezados y graficos propios del analisis.
-- `statistics`: conserva la logica derivada necesaria para calcular indicadores a partir del estado del dominio.
+- `modeling-metrics`: conserva la logica derivada necesaria para calcular indicadores del diagrama a partir del estado del dominio en el flujo de modelado.
   - `model`: agrupa hooks que transforman el estado de entidades en datos listos para ser mostrados en el panel estadistico.
 
 La relevancia de esta capa es que expresa el comportamiento del sistema desde la perspectiva del usuario. Mientras `entities` modela conceptos del dominio y `widgets` organiza bloques de interfaz, `features` describe que puede hacer el usuario y que logica entra en juego cuando realiza una accion. Esto hace que la arquitectura sea mas comprensible para el desarrollo incremental del producto.
 
-En este proyecto, la capa `features` tambien evidencia una buena separacion entre logica y presentacion. Por ejemplo, en `statistics` la logica derivada de los stores se concentra en hooks dentro de `model`, mientras que el panel visual vive en un widget independiente. Este tipo de decisiones refuerza la idea central de FSD: cada modulo debe quedarse en la capa que mejor represente su responsabilidad real.
+En este proyecto, la capa `features` tambien evidencia una buena separacion entre logica y presentacion. Por ejemplo, en `modeling-metrics` la logica derivada de los stores se concentra en hooks dentro de `model`, mientras que el panel visual vive en un widget independiente (`statistics-panel`). Este tipo de decisiones refuerza la idea central de FSD: cada modulo debe quedarse en la capa que mejor represente su responsabilidad real.
 
 ## Capa `entities`
 
@@ -136,7 +136,7 @@ La relevancia de `shared` esta en evitar duplicacion y consolidar infraestructur
 
 ## Los slices dentro de la arquitectura
 
-Dentro de FSD, un `slice` es una unidad funcional o de dominio con un limite semantico claro. En este proyecto, los slices se observan principalmente como carpetas de primer nivel dentro de cada capa. Por ejemplo, `modeling`, `projects` y `analysis` son slices de `pages`; `solution-modeling`, `manage-queries` y `solution-versioning` son slices de `features`; `solution`, `table` y `query` son slices de `entities`; y `diagram-canvas`, `queries-panel` o `statistics-panel` son slices de `widgets`.
+Dentro de FSD, un `slice` es una unidad funcional o de dominio con un limite semantico claro. En este proyecto, los slices se observan principalmente como carpetas de primer nivel dentro de cada capa. Por ejemplo, `modeling`, `projects` y `analysis` son slices de `pages`; `solution-modeling`, `manage-queries`, `solution-versioning` y `modeling-metrics` son slices de `features`; `solution`, `table` y `query` son slices de `entities`; y `diagram-canvas`, `queries-panel` o `statistics-panel` son slices de `widgets`.
 
 La utilidad de trabajar con slices es que permiten que cada parte del sistema evolucione de forma relativamente independiente. Un desarrollador puede entrar directamente al slice responsable de una funcionalidad sin recorrer grandes bloques de codigo inconexo. Ademas, esta forma de organizacion facilita la definicion de APIs publicas mediante archivos `index.ts`, lo que ayuda a controlar mejor las dependencias entre modulos.
 

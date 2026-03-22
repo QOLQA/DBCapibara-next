@@ -8,6 +8,6 @@ export function useHandledQueriesPercentage(): number {
 	const queries = useQueriesStore((state) => state.queries);
 
 	return useSolutionStore((state) =>
-		calculateHandledQueriesPercentage(queries, state.nodes, state.edges)
+		calculateHandledQueriesPercentage(queries, state.nodes, state.edges),
 	);
 }

@@ -4,9 +4,7 @@
 export type { SolutionListItem } from "./model/solution";
 export { SolutionCard } from "./ui/solution-card";
 export { SolutionImage } from "./ui/solution-image";
-export {
-	CARDINALITY_OPTIONS,
-} from "./model/solution-model";
+export { CARDINALITY_OPTIONS } from "./model/solution-model";
 export type {
 	CardinalityType,
 	Column,
@@ -24,5 +22,8 @@ export type {
 	TableNodeProps,
 	StatType,
 } from "./model/solution-model";
-export { useSolutionStore, type SolutionStore } from "./model/state/solutionStore";
+export {
+	useSolutionStore,
+	type SolutionStore,
+} from "./model/state/solutionStore";
 export { solutionSelector } from "./model/state/selectors";

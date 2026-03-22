@@ -28,7 +28,7 @@ flowchart TB
     featSolutionModeling["solution-modeling\ncanvaStore, LayoutDiagram, DataBaseDiagram, useDiagramSessionHydration"]
     featSolutionVersioning["solution-versioning\nAppHeader, load/save/duplicate, versions"]
     featQueries["queries\nAppQueries, useQueryOperations, useTableSelection"]
-    featStatistics["statistics\nAppStatistics, QueryStatsGraph"]
+    featModelingMetrics["modeling-metrics\nuseStatisticsSummary, QueryStatsGraph"]
     featAnalysis["analysis\nhooks + chart types (model)"]
   end
 
@@ -61,7 +61,7 @@ flowchart TB
   pageCanva --> featSolutionModeling
   pageCanva --> featSolutionVersioning
   pageCanva --> featQueries
-  pageCanva --> featStatistics
+  pageCanva --> featModelingMetrics
   pageCanva --> sharedApiServer
   pageAnalysis --> featAnalysis
   pageAnalysis --> featSolutionModeling
@@ -84,8 +84,8 @@ flowchart TB
   featQueries --> sharedApi
   featQueries --> sharedUi
   featQueries --> sharedI18n
-  featStatistics --> entSolution
-  featStatistics --> sharedUi
+  featModelingMetrics --> entSolution
+  featModelingMetrics --> sharedUi
   featAnalysis --> featSolutionModeling
   featAnalysis --> sharedUi
 

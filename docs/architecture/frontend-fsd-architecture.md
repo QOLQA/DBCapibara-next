@@ -64,7 +64,7 @@ flowchart TB
     featSolutionModeling["solution-modeling\n(canvas store + LayoutDiagram + DiagramHydration)"]
     featSolutionVersioning["solution-versioning\n(AppHeader + load/save/duplicate versions)"]
     featQueries["queries\n(AppQueries + query ops + selection)"]
-    featStatistics["statistics\n(AppStatistics + graphs)"]
+    featModelingMetrics["modeling-metrics\n(hooks: summary + queries %)"]
     featAnalysis["analysis\n(model: hooks + chart types)"]
   end
 
@@ -114,7 +114,7 @@ flowchart TB
   pageCanva --> featSolutionModeling
   pageCanva --> featSolutionVersioning
   pageCanva --> featQueries
-  pageCanva --> featStatistics
+  pageCanva --> featModelingMetrics
   pageCanva --> sharedApiServer
   pageAnalysis --> featAnalysis
   pageAnalysis --> featSolutionModeling
@@ -148,9 +148,9 @@ flowchart TB
   featQueries --> sharedUi
   featQueries --> sharedLibI18n
 
-  featStatistics --> entSolution
-  featStatistics --> sharedLibAnalytics
-  featStatistics --> sharedUi
+  featModelingMetrics --> entSolution
+  featModelingMetrics --> sharedLibAnalytics
+  featModelingMetrics --> sharedUi
 
   featAnalysis --> featSolutionModeling
   featAnalysis --> sharedLibAnalytics
@@ -219,14 +219,14 @@ flowchart TB
   featQueries --> entSolution["@fsd/entities/solution"]
 ```
 
-### 3.5 Feature `statistics`
+### 3.5 Feature `modeling-metrics`
 
 ```mermaid
 flowchart TB
-  pageCanva["pages/modeling"] --> featStatistics["features/statistics\n(AppStatistics + graphs)"]
-  featStatistics --> sharedLibAnalytics["@fsd/shared/lib/analytics"]
-  featStatistics --> sharedUi["@fsd/shared/ui\n(chart)"]
-  featStatistics --> entSolution["@fsd/entities/solution"]
+  pageCanva["pages/modeling"] --> featModelingMetrics["features/modeling-metrics\n(useStatisticsSummary + useHandledQueriesPercentage)"]
+  featModelingMetrics --> sharedLibAnalytics["@fsd/shared/lib/analytics"]
+  featModelingMetrics --> sharedUi["@fsd/shared/ui\n(chart)"]
+  featModelingMetrics --> entSolution["@fsd/entities/solution"]
 ```
 
 ### 3.6 Feature `project-management`

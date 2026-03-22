@@ -1,6 +1,6 @@
 "use client";
 
-import { useStatisticsSummary } from "@fsd/features/statistics";
+import { useStatisticsSummary } from "@fsd/features/modeling-metrics";
 import { QueryStatsGraph } from "./QueryStatsGraph";
 import { SquadStats } from "./SquadStats";
 import { StatsLineTotal } from "./StatsLineTotal";
