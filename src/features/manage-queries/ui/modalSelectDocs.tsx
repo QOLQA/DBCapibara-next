@@ -2,7 +2,7 @@
 
 import { Modal } from "@fsd/shared/ui/modal";
 import { useSolutionStore } from "@fsd/entities/solution";
-import { getUniqueTableNames } from "@fsd/entities/solution/lib/analytics";
+import { getUniqueTableNames } from "@fsd/entities/solution/lib/metrics";
 import type { Query } from "@fsd/entities/solution";
 import { useState } from "react";
 import { Trash2 } from "lucide-react";

@@ -73,6 +73,7 @@ flowchart TB
   %% ======================
   subgraph entitiesLayer [entities]
     entSolution["solution\n(types: SolutionModel, VersionFrontend, Query, TableData, ...)"]
+    entSolutionLibMetrics["solution/lib/metrics\n(redundancy, recoveryCost, accessPattern, queries)"]
     entUser["user\n(types: User, LoginCredentials, RegisterData)"]
   end
 
@@ -82,7 +83,6 @@ flowchart TB
   subgraph sharedLayer [shared]
     sharedApi["shared/api\n(client + validators + handleApiError)"]
     sharedApiServer["shared/api/server\n(getAuthenticatedSolution(s), serverFetchWithAuth, ...)"]
-    sharedLibAnalytics["shared/lib/analytics\n(redundancy, recoveryCost, accessPattern, queries)"]
     sharedLibConversions["shared/lib/conversions\n(transformSolutionModel, transformVersionToBackend)"]
     sharedLibUtils["shared/lib/utils\n(edges/colors/keys helpers)"]
     sharedLibI18n["shared/lib/i18n\n(translations + use-translation hook)"]
@@ -144,16 +144,16 @@ flowchart TB
 
   featQueries --> entSolution
   featQueries --> sharedApi
-  featQueries --> sharedLibAnalytics
+  featQueries --> entSolutionLibMetrics
   featQueries --> sharedUi
   featQueries --> sharedLibI18n
 
   featModelingMetrics --> entSolution
-  featModelingMetrics --> sharedLibAnalytics
+  featModelingMetrics --> entSolutionLibMetrics
   featModelingMetrics --> sharedUi
 
   featAnalysis --> featSolutionModeling
-  featAnalysis --> sharedLibAnalytics
+  featAnalysis --> entSolutionLibMetrics
   featAnalysis --> sharedUi
 
   %% ======================
@@ -161,6 +161,7 @@ flowchart TB
   %% ======================
   entSolution --> sharedLibUtils
   entSolution --> sharedLibConversions
+  entSolution --> entSolutionLibMetrics
   entUser --> sharedApi
 ```
 
@@ -179,7 +180,7 @@ flowchart TB
   pageAnalysis --> featSolutionModeling["features/solution-modeling\n(useDiagramSessionHydration + store)"]
   pageAnalysis --> sharedApiServer["@fsd/shared/api/server\n(getAuthenticatedSolution)"]
 
-  featAnalysis --> sharedLibAnalytics["@fsd/shared/lib/analytics"]
+  featAnalysis --> entSolutionLibMetrics["@fsd/entities/solution/lib/metrics"]
   featAnalysis --> sharedUi["@fsd/shared/ui\n(chart, layout bits, icons)"]
   featSolutionModeling --> entSolution["@fsd/entities/solution"]
 ```
@@ -213,7 +214,7 @@ flowchart TB
 flowchart TB
   pageCanva["pages/modeling"] --> featQueries["features/queries\n(AppQueries + modals + hooks)"]
   featQueries --> sharedApi["@fsd/shared/api\n(api client)"]
-  featQueries --> sharedLibAnalytics["@fsd/shared/lib/analytics\n(getUniqueTableNames, handled%)"]
+  featQueries --> entSolutionLibMetrics["@fsd/entities/solution/lib/metrics\n(getUniqueTableNames)"]
   featQueries --> sharedUi["@fsd/shared/ui\n(Modal, dropdown-menu, etc.)"]
   featQueries --> sharedLibI18n["@fsd/shared/lib/i18n"]
   featQueries --> entSolution["@fsd/entities/solution"]
@@ -224,7 +225,7 @@ flowchart TB
 ```mermaid
 flowchart TB
   pageCanva["pages/modeling"] --> featModelingMetrics["features/modeling-metrics\n(useStatisticsSummary + useHandledQueriesPercentage)"]
-  featModelingMetrics --> sharedLibAnalytics["@fsd/shared/lib/analytics"]
+  featModelingMetrics --> entSolutionLibMetrics["@fsd/entities/solution/lib/metrics"]
   featModelingMetrics --> sharedUi["@fsd/shared/ui\n(chart)"]
   featModelingMetrics --> entSolution["@fsd/entities/solution"]
 ```

@@ -33,7 +33,7 @@ flowchart TB
   end
 
   subgraph FSDEntities ["Capa FSD: entities (src/entities) — dominio"]
-    entSolution["solution\ntypes, constants + lib/analytics, lib/conversions, lib/diagram"]
+    entSolution["solution\ntypes, constants + lib/metrics, lib/conversions, lib/diagram"]
     entUser["user\nUser, LoginCredentials, RegisterData"]
   end
 

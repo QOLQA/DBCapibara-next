@@ -8,7 +8,7 @@ import {
 	getRedundancyMetrics,
 	getRecoveryCost,
 	calculateHandledQueriesPercentage,
-} from "@fsd/entities/solution/lib/analytics";
+} from "@fsd/entities/solution/lib/metrics";
 import type { CompletudeChartRow, MetricChartRow } from "./types";
 
 export function useAnalysisChartData() {

@@ -11,7 +11,7 @@ alwaysApply: false
 ## Domain libs
 
 - Cálculos y métricas del dominio (redundancy, recovery cost, access pattern, completude, etc.) deben vivir en:
-  - `src/entities/solution/lib/analytics/*`
+  - `src/entities/solution/lib/metrics/*`
 - Transformaciones/mappers del dominio (DTO ↔︎ model, normalización de versions/submodels/canvas) deben vivir en:
   - `src/entities/solution/lib/conversions/*`
 

@@ -5,7 +5,7 @@ import {
 	getAccessPattern,
 	getRecoveryCost,
 	getRedundancyMetrics,
-} from "@fsd/entities/solution/lib/analytics";
+} from "@fsd/entities/solution/lib/metrics";
 
 export function useStatisticsSummary(): StatType[] {
 	return useSolutionStore((state) => [

@@ -1,4 +1,4 @@
-# analytics
+# metrics
 
 Métricas del dominio **Solution/Diagram**.
 
@@ -25,8 +25,7 @@ Esta librería contiene cálculos de métricas sobre el diagrama/modelo:
 ## Ejemplos
 
 ```ts
-import { getRedundancyMetrics } from "@fsd/entities/solution/lib/analytics";
+import { getRedundancyMetrics } from "@fsd/entities/solution/lib/metrics";
 
 const redundancy = getRedundancyMetrics(nodes);
 ```
-
