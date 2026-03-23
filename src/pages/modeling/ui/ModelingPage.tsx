@@ -5,7 +5,7 @@ import { AppHeader } from "@fsd/widgets/modeling-header";
 import { QueriesPanel } from "@fsd/widgets/queries-panel";
 import { DataBaseDiagram } from "@fsd/widgets/diagram-canvas";
 import { LayoutDiagram, type NavItem } from "@fsd/widgets/modeling-layout";
-import { StatisticsPanel } from "@fsd/widgets/statistics-panel";
+import { MetricsPanel } from "@fsd/widgets/metrics-panel";
 import type { VersionFrontend } from "@fsd/entities/solution";
 import { Calendar, Database, DataPie } from "@fsd/shared/ui/icons/SidebarIcons";
 import { useParams, useRouter } from "next/navigation";
@@ -42,7 +42,7 @@ export function ModelingPage({ loaderData }: ModelingPageProps) {
 			{
 				title: "Statistics",
 				icon: <DataPie />,
-				content: <StatisticsPanel />,
+				content: <MetricsPanel />,
 				aditionalToTitle: {
 					type: "button",
 					onClick: () => {

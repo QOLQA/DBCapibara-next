@@ -44,7 +44,7 @@ La relevancia de esta capa radica en que expresa la intencion de navegacion del 
 
 ## Capa `widgets`
 
-La capa `widgets` agrupa bloques de interfaz de tamaño medio o grande que ya representan secciones completas de una pantalla, pero que todavia no constituyen una pagina por si mismos. En el proyecto destacan slices como `modeling-layout`, `diagram-canvas`, `queries-panel` y `statistics-panel`.
+La capa `widgets` agrupa bloques de interfaz de tamaño medio o grande que ya representan secciones completas de una pantalla, pero que todavia no constituyen una pagina por si mismos. En el proyecto destacan slices como `modeling-layout`, `diagram-canvas`, `queries-panel` y `metrics-panel`.
 
 Dentro de esta capa, los slices mas representativos pueden entenderse asi:
 
@@ -54,7 +54,7 @@ Dentro de esta capa, los slices mas representativos pueden entenderse asi:
   - `ui`: incluye el componente principal del lienzo y elementos graficos complementarios, como conexiones o etiquetas visuales.
 - `queries-panel`: representa el panel de consultas usado dentro del flujo de modelado.
   - `ui`: agrupa la composicion visual del panel, el listado de consultas y los componentes auxiliares de esa seccion.
-- `statistics-panel`: organiza la presentacion del resumen estadistico dentro del flujo de modelado.
+- `metrics-panel`: organiza la presentacion del resumen de metricas del diagrama dentro del flujo de modelado.
   - `ui`: contiene el panel principal y los componentes visuales empleados para mostrar metricas y graficos.
 
 Estos widgets son importantes porque encapsulan composiciones visuales relevantes y reutilizables. Gracias a ello, una pagina puede apoyarse en bloques completos ya estructurados, en lugar de reconstruir continuamente la misma interfaz.
@@ -91,7 +91,7 @@ Dentro de esta capa, cada slice responde a una capacidad funcional concreta:
 
 La relevancia de esta capa es que expresa el comportamiento del sistema desde la perspectiva del usuario. Mientras `entities` modela conceptos del dominio y `widgets` organiza bloques de interfaz, `features` describe que puede hacer el usuario y que logica entra en juego cuando realiza una accion. Esto hace que la arquitectura sea mas comprensible para el desarrollo incremental del producto.
 
-En este proyecto, la capa `features` tambien evidencia una buena separacion entre logica y presentacion. Por ejemplo, en `modeling-metrics` la logica derivada de los stores se concentra en hooks dentro de `model`, mientras que el panel visual vive en un widget independiente (`statistics-panel`). Este tipo de decisiones refuerza la idea central de FSD: cada modulo debe quedarse en la capa que mejor represente su responsabilidad real.
+En este proyecto, la capa `features` tambien evidencia una buena separacion entre logica y presentacion. Por ejemplo, en `modeling-metrics` la logica derivada de los stores se concentra en hooks dentro de `model`, mientras que el panel visual vive en un widget independiente (`metrics-panel`). Este tipo de decisiones refuerza la idea central de FSD: cada modulo debe quedarse en la capa que mejor represente su responsabilidad real.
 
 ## Capa `entities`
 
@@ -136,7 +136,7 @@ La relevancia de `shared` esta en evitar duplicacion y consolidar infraestructur
 
 ## Los slices dentro de la arquitectura
 
-Dentro de FSD, un `slice` es una unidad funcional o de dominio con un limite semantico claro. En este proyecto, los slices se observan principalmente como carpetas de primer nivel dentro de cada capa. Por ejemplo, `modeling`, `projects` y `analysis` son slices de `pages`; `solution-modeling`, `manage-queries`, `solution-versioning` y `modeling-metrics` son slices de `features`; `solution`, `table` y `query` son slices de `entities`; y `diagram-canvas`, `queries-panel` o `statistics-panel` son slices de `widgets`.
+Dentro de FSD, un `slice` es una unidad funcional o de dominio con un limite semantico claro. En este proyecto, los slices se observan principalmente como carpetas de primer nivel dentro de cada capa. Por ejemplo, `modeling`, `projects` y `analysis` son slices de `pages`; `solution-modeling`, `manage-queries`, `solution-versioning` y `modeling-metrics` son slices de `features`; `solution`, `table` y `query` son slices de `entities`; y `diagram-canvas`, `queries-panel` o `metrics-panel` son slices de `widgets`.
 
 La utilidad de trabajar con slices es que permiten que cada parte del sistema evolucione de forma relativamente independiente. Un desarrollador puede entrar directamente al slice responsable de una funcionalidad sin recorrer grandes bloques de codigo inconexo. Ademas, esta forma de organizacion facilita la definicion de APIs publicas mediante archivos `index.ts`, lo que ayuda a controlar mejor las dependencias entre modulos.
 

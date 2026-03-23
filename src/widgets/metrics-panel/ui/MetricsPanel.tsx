@@ -5,7 +5,7 @@ import { QueryStatsGraph } from "./QueryStatsGraph";
 import { SquadStats } from "./SquadStats";
 import { StatsLineTotal } from "./StatsLineTotal";
 
-export function StatisticsPanel() {
+export function MetricsPanel() {
 	const data = useStatisticsSummary();
 
 	return (
