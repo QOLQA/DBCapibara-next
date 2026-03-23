@@ -2,9 +2,11 @@
 
 import type { TableNodeProps } from "@fsd/entities/solution";
 import { TableNodeContent } from "@fsd/entities/table";
-import ModalDocument from "./modals/ModalDocument";
-import ModalAtributes from "./modals/ModalAtributes";
-import { useTableNodeContent } from "../model/use-table-node-content";
+import {
+	ModalAtributes,
+	ModalDocument,
+	useTableNodeContent,
+} from "@fsd/features/modeling-solution";
 
 interface TableNodeContainerProps extends TableNodeProps {
 	isNested?: boolean;

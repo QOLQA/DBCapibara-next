@@ -5,10 +5,10 @@ import "@xyflow/react/dist/style.css";
 import { Button } from "@fsd/shared/ui/button";
 import {
 	useDatabaseDiagram,
-	nodeTypes,
 	edgeTypes,
 	ModalAddCollection,
 } from "@fsd/features/modeling-solution";
+import { nodeTypes } from "./TableNode";
 
 const DatabaseDiagram = () => {
 	const {
