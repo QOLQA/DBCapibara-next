@@ -35,7 +35,7 @@ export async function isAuthenticated(): Promise<boolean> {
  */
 export async function serverFetchWithAuth(
 	endpoint: string,
-	options: RequestInit = {}
+	options: RequestInit = {},
 ): Promise<Response> {
 	const token = await getServerAuthToken();
 
@@ -55,56 +55,4 @@ export async function serverFetchWithAuth(
 		headers,
 		cache: "no-store", // Siempre obtener datos frescos para datos autenticados
 	});
-}
-
-/**
- * Helper para obtener soluciones del usuario autenticado
- */
-export async function getAuthenticatedSolutions() {
-	const response = await serverFetchWithAuth("/solutions");
-
-	if (!response.ok) {
-		if (response.status === 401) {
-			throw new Error("UNAUTHORIZED");
-		}
-		throw new Error("Failed to fetch solutions");
-	}
-
-	return response.json();
-}
-
-export async function deleteAuthenticatedSolution(id: string) {
-	const options: RequestInit = {
-		method: "DELETE",
-	};
-
-	const response = await serverFetchWithAuth(`/solutions/${id}`, options);
-
-	if (!response.ok) {
-		if (response.status === 401) {
-			throw new Error("UNAUTHORIZED");
-		}
-		throw new Error("Failed to delete solution");
-	}
-
-	return response.json();
-}
-
-/**
- * Helper para obtener una solución específica
- */
-export async function getAuthenticatedSolution(id: string) {
-	const response = await serverFetchWithAuth(`/solutions/${id}`);
-
-	if (!response.ok) {
-		if (response.status === 401) {
-			throw new Error("UNAUTHORIZED");
-		}
-		if (response.status === 403) {
-			throw new Error("FORBIDDEN");
-		}
-		throw new Error("Failed to fetch solution");
-	}
-
-	return response.json();
 }

@@ -1,5 +1,5 @@
-import { getAuthenticatedSolutions } from "@fsd/shared/api/server";
+import { getSolutionsRequest } from "@fsd/entities/solution/api";
 
 export async function getSolutions() {
-	return getAuthenticatedSolutions();
+	return getSolutionsRequest();
 }
