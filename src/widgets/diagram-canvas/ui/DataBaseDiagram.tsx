@@ -8,7 +8,7 @@ import {
 	nodeTypes,
 	edgeTypes,
 	ModalAddCollection,
-} from "@fsd/features/solution-modeling";
+} from "@fsd/features/modeling-solution";
 
 const DatabaseDiagram = () => {
 	const {

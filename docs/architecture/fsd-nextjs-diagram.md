@@ -25,7 +25,7 @@ flowchart TB
   subgraph FSDFeatures ["Capa FSD: features (src/features) — acciones de usuario"]
     featAuth["auth\nuseAuth, login UI, actions"]
     featProjectMgmt["project-management\nAdd/Edit/Delete modals, useModelsStore"]
-    featSolutionModeling["solution-modeling\ncanvaStore, LayoutDiagram, DataBaseDiagram, useDiagramSessionHydration"]
+    featModelingSolution["modeling-solution\ncanvaStore, LayoutDiagram, DataBaseDiagram, useDiagramSessionHydration"]
     featSolutionVersioning["solution-versioning\nAppHeader, load/save/duplicate, versions"]
     featQueries["queries\nAppQueries, useQueryOperations, useTableSelection"]
     featModelingMetrics["modeling-metrics\nuseStatisticsSummary, QueryStatsGraph"]
@@ -58,13 +58,13 @@ flowchart TB
   pageLogin --> featAuth
   pageProjects --> featProjectMgmt
   pageProjects --> sharedApiServer
-  pageCanva --> featSolutionModeling
+  pageCanva --> featModelingSolution
   pageCanva --> featSolutionVersioning
   pageCanva --> featQueries
   pageCanva --> featModelingMetrics
   pageCanva --> sharedApiServer
   pageAnalysis --> featAnalysis
-  pageAnalysis --> featSolutionModeling
+  pageAnalysis --> featModelingSolution
   pageAnalysis --> sharedApiServer
 
   featAuth --> entUser
@@ -72,9 +72,9 @@ flowchart TB
   featAuth --> sharedI18n
   featProjectMgmt --> sharedUi
   featProjectMgmt --> sharedI18n
-  featSolutionModeling --> entSolution
-  featSolutionModeling --> sharedUi
-  featSolutionModeling --> sharedI18n
+  featModelingSolution --> entSolution
+  featModelingSolution --> sharedUi
+  featModelingSolution --> sharedI18n
   featSolutionVersioning --> entSolution
   featSolutionVersioning --> sharedApi
   featSolutionVersioning --> sharedLibImage
@@ -86,7 +86,7 @@ flowchart TB
   featQueries --> sharedI18n
   featModelingMetrics --> entSolution
   featModelingMetrics --> sharedUi
-  featAnalysis --> featSolutionModeling
+  featAnalysis --> featModelingSolution
   featAnalysis --> sharedUi
 
   entSolution --> sharedUi

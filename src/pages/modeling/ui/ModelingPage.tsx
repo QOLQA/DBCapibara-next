@@ -1,6 +1,6 @@
 "use client";
 
-import { useInitializeDiagram } from "@fsd/features/solution-modeling";
+import { useInitializeDiagram } from "@fsd/features/modeling-solution";
 import { AppHeader } from "@fsd/widgets/modeling-header";
 import { QueriesPanel } from "@fsd/widgets/queries-panel";
 import { DataBaseDiagram } from "@fsd/widgets/diagram-canvas";

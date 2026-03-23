@@ -63,7 +63,7 @@ En terminos de FSD, la capa `widgets` cumple una funcion intermedia muy valiosa.
 
 ## Capa `features`
 
-La capa `features` contiene las acciones de usuario y los casos de uso de negocio que generan cambios o interacciones relevantes dentro del sistema. En el proyecto actual esta capa incluye slices como `auth`, `manage-projects`, `manage-queries`, `solution-modeling`, `solution-versioning`, `analysis` y `modeling-metrics`.
+La capa `features` contiene las acciones de usuario y los casos de uso de negocio que generan cambios o interacciones relevantes dentro del sistema. En el proyecto actual esta capa incluye slices como `auth`, `manage-projects`, `manage-queries`, `modeling-solution`, `solution-versioning`, `analysis` y `modeling-metrics`.
 
 Dentro de esta capa, cada slice responde a una capacidad funcional concreta:
 
@@ -78,7 +78,7 @@ Dentro de esta capa, cada slice responde a una capacidad funcional concreta:
 - `manage-queries`: gestiona la creacion, seleccion y sincronizacion de consultas.
   - `model`: contiene hooks y logica de soporte para operaciones sobre queries.
   - `ui`: agrupa botones, modales y componentes auxiliares del flujo de consultas.
-- `solution-modeling`: reune la logica funcional asociada a la construccion y modificacion del diagrama.
+- `modeling-solution`: reune la logica funcional asociada a la construccion y modificacion del diagrama.
   - `model`: contiene hooks para acciones como agregar, editar, eliminar o conectar elementos del modelo, e hidratar el store del diagrama al entrar en rutas que lo requieren (p. ej. analisis).
   - `ui`: agrupa componentes propios del modelado y modales especializados de este flujo.
 - `solution-versioning`: encapsula la carga, guardado y duplicacion de versiones de una solucion.
@@ -136,7 +136,7 @@ La relevancia de `shared` esta en evitar duplicacion y consolidar infraestructur
 
 ## Los slices dentro de la arquitectura
 
-Dentro de FSD, un `slice` es una unidad funcional o de dominio con un limite semantico claro. En este proyecto, los slices se observan principalmente como carpetas de primer nivel dentro de cada capa. Por ejemplo, `modeling`, `projects` y `analysis` son slices de `pages`; `solution-modeling`, `manage-queries`, `solution-versioning` y `modeling-metrics` son slices de `features`; `solution`, `table` y `query` son slices de `entities`; y `diagram-canvas`, `queries-panel` o `metrics-panel` son slices de `widgets`.
+Dentro de FSD, un `slice` es una unidad funcional o de dominio con un limite semantico claro. En este proyecto, los slices se observan principalmente como carpetas de primer nivel dentro de cada capa. Por ejemplo, `modeling`, `projects` y `analysis` son slices de `pages`; `modeling-solution`, `manage-queries`, `solution-versioning` y `modeling-metrics` son slices de `features`; `solution`, `table` y `query` son slices de `entities`; y `diagram-canvas`, `queries-panel` o `metrics-panel` son slices de `widgets`.
 
 La utilidad de trabajar con slices es que permiten que cada parte del sistema evolucione de forma relativamente independiente. Un desarrollador puede entrar directamente al slice responsable de una funcionalidad sin recorrer grandes bloques de codigo inconexo. Ademas, esta forma de organizacion facilita la definicion de APIs publicas mediante archivos `index.ts`, lo que ayuda a controlar mejor las dependencias entre modulos.
 

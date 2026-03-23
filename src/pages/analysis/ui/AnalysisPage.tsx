@@ -1,6 +1,6 @@
 "use client";
 
-import { useDiagramSessionHydration } from "@fsd/features/solution-modeling";
+import { useDiagramSessionHydration } from "@fsd/features/modeling-solution";
 import { AnalysisDashboard } from "@fsd/widgets/analysis-dashboard";
 import { AnalysisHeader } from "@fsd/widgets/analysis-header";
 import type { VersionFrontend } from "@fsd/entities/solution";

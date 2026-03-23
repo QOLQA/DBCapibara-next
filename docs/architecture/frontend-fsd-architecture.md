@@ -61,7 +61,7 @@ flowchart TB
   subgraph featuresLayer [features]
     featAuth["auth\n(useAuth + login UI/actions)"]
     featProjectMgmt["project-management\n(Add/Edit/Delete + modelsStore)"]
-    featSolutionModeling["solution-modeling\n(canvas store + LayoutDiagram + DiagramHydration)"]
+    featModelingSolution["modeling-solution\n(canvas store + LayoutDiagram + DiagramHydration)"]
     featSolutionVersioning["solution-versioning\n(AppHeader + load/save/duplicate versions)"]
     featQueries["queries\n(AppQueries + query ops + selection)"]
     featModelingMetrics["modeling-metrics\n(hooks: summary + queries %)"]
@@ -111,13 +111,13 @@ flowchart TB
   pageProjects --> featAuth
   pageProjects --> featProjectMgmt
   pageProjects --> sharedApiServer
-  pageCanva --> featSolutionModeling
+  pageCanva --> featModelingSolution
   pageCanva --> featSolutionVersioning
   pageCanva --> featQueries
   pageCanva --> featModelingMetrics
   pageCanva --> sharedApiServer
   pageAnalysis --> featAnalysis
-  pageAnalysis --> featSolutionModeling
+  pageAnalysis --> featModelingSolution
   pageAnalysis --> sharedApiServer
 
   %% ======================
@@ -130,10 +130,10 @@ flowchart TB
   featProjectMgmt --> sharedUi
   featProjectMgmt --> sharedLibI18n
 
-  featSolutionModeling --> entSolution
-  featSolutionModeling --> sharedUi
-  featSolutionModeling --> sharedLibUtils
-  featSolutionModeling --> sharedLibI18n
+  featModelingSolution --> entSolution
+  featModelingSolution --> sharedUi
+  featModelingSolution --> sharedLibUtils
+  featModelingSolution --> sharedLibI18n
 
   featSolutionVersioning --> entSolution
   featSolutionVersioning --> sharedApi
@@ -152,7 +152,7 @@ flowchart TB
   featModelingMetrics --> entSolutionLibMetrics
   featModelingMetrics --> sharedUi
 
-  featAnalysis --> featSolutionModeling
+  featAnalysis --> featModelingSolution
   featAnalysis --> entSolutionLibMetrics
   featAnalysis --> sharedUi
 
@@ -165,7 +165,7 @@ flowchart TB
   entUser --> sharedApi
 ```
 
-> Nota: `analysis` consume `solution-modeling` para hidratar/leer el estado del diagrama (store + types).
+> Nota: `analysis` consume `modeling-solution` para hidratar/leer el estado del diagrama (store + types).
 
 ---
 
@@ -177,23 +177,23 @@ flowchart TB
 flowchart TB
   pageAnalysis["pages/analysis\n(AnalysisPage composes layout)"] --> featAnalysis["features/analysis\n(hooks + types)"]
   pageAnalysis --> widgetAnalysisDash["widgets/analysis-dashboard\n(AnalysisDashboard)"]
-  pageAnalysis --> featSolutionModeling["features/solution-modeling\n(useDiagramSessionHydration + store)"]
+  pageAnalysis --> featModelingSolution["features/modeling-solution\n(useDiagramSessionHydration + store)"]
   pageAnalysis --> sharedApiServer["@fsd/shared/api/server\n(getAuthenticatedSolution)"]
 
   featAnalysis --> entSolutionLibMetrics["@fsd/entities/solution/lib/metrics"]
   featAnalysis --> sharedUi["@fsd/shared/ui\n(chart, layout bits, icons)"]
-  featSolutionModeling --> entSolution["@fsd/entities/solution"]
+  featModelingSolution --> entSolution["@fsd/entities/solution"]
 ```
 
-### 3.2 Feature `solution-modeling`
+### 3.2 Feature `modeling-solution`
 
 ```mermaid
 flowchart TB
-  pageCanva["pages/modeling\n(ModelingPage)"] --> featSolutionModeling["features/solution-modeling\n(LayoutDiagram + DataBaseDiagram + store)"]
-  featSolutionModeling --> sharedUi["@fsd/shared/ui\n(sidebar, modal, dropdown, button, chart, ...)"]
-  featSolutionModeling --> sharedLibUtils["@fsd/shared/lib/utils\n(edges/colors/keys)"]
-  featSolutionModeling --> sharedLibI18n["@fsd/shared/lib/i18n\n(use-translation)"]
-  featSolutionModeling --> entSolution["@fsd/entities/solution"]
+  pageCanva["pages/modeling\n(ModelingPage)"] --> featModelingSolution["features/modeling-solution\n(LayoutDiagram + DataBaseDiagram + store)"]
+  featModelingSolution --> sharedUi["@fsd/shared/ui\n(sidebar, modal, dropdown, button, chart, ...)"]
+  featModelingSolution --> sharedLibUtils["@fsd/shared/lib/utils\n(edges/colors/keys)"]
+  featModelingSolution --> sharedLibI18n["@fsd/shared/lib/i18n\n(use-translation)"]
+  featModelingSolution --> entSolution["@fsd/entities/solution"]
 ```
 
 ### 3.3 Feature `solution-versioning`
