@@ -4,10 +4,18 @@ import { useInitializeDiagram } from "@fsd/features/modeling-solution";
 import { AppHeader } from "@fsd/widgets/modeling-header";
 import { QueriesPanel } from "@fsd/widgets/queries-panel";
 import { DataBaseDiagram } from "@fsd/widgets/diagram-canvas";
-import { LayoutDiagram, type NavItem } from "@fsd/widgets/modeling-layout";
+import { JsonEditor } from "@fsd/widgets/json-editor";
+import {
+	LayoutDiagram,
+	type NavItem,
+} from "@fsd/widgets/modeling-layout";
 import { MetricsPanel } from "@fsd/widgets/metrics-panel";
 import type { VersionFrontend } from "@fsd/entities/solution";
-import { Calendar, Database, DataPie } from "@fsd/shared/ui/icons/SidebarIcons";
+import {
+	Calendar,
+	Database,
+	DataPie,
+} from "@fsd/shared/ui/icons/SidebarIcons";
 import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
 
@@ -50,6 +58,11 @@ export function ModelingPage({ loaderData }: ModelingPageProps) {
 					},
 					titleButton: "Compare schemas",
 				},
+			},
+			{
+				title: "JSON Editor",
+				icon: <Database />,
+				content: <JsonEditor />,
 			},
 		],
 		[diagramId, router],
