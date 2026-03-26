@@ -1,12 +1,11 @@
 import { transformSolutionModel } from "@fsd/entities/solution/lib/conversions";
-import { getAuthenticatedSolution } from "@fsd/shared/api/server";
 import { redirect } from "next/navigation";
-import type { SolutionModel } from "@fsd/entities/solution";
+import { getSolutionRequest } from "@fsd/entities/solution/api";
 
 export async function getAnalysisData(solutionId: string) {
 	try {
-		const data = await getAuthenticatedSolution(solutionId);
-		return transformSolutionModel(data as SolutionModel);
+		const data = await getSolutionRequest(solutionId);
+		return transformSolutionModel(data);
 	} catch (error) {
 		if (error instanceof Error) {
 			if (error.message === "UNAUTHORIZED") {

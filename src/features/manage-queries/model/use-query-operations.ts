@@ -2,8 +2,13 @@
 
 import { useCallback } from "react";
 import { useSolutionStore } from "@fsd/entities/solution";
-import { useQueriesStore } from "@fsd/entities/query";
-import { api } from "@fsd/shared/api";
+import {
+	createQueryRequest,
+	updateQueryRequest,
+	deleteQueryRequest,
+	getQueriesBySolutionRequest,
+} from "@fsd/entities/query/api";
+import { useQueriesStore } from "@fsd/entities/query/model/state/queriesStore";
 import type { Query } from "@fsd/entities/solution";
 
 /**
@@ -32,7 +37,7 @@ export const useQueryOperations = () => {
 					solution_id: solutionId,
 				};
 
-				const createdQuery = await api.post<Query>("/queries", createData);
+				const createdQuery = await createQueryRequest(createData);
 
 				editQueryInStore(tempId, createdQuery);
 
@@ -43,7 +48,7 @@ export const useQueryOperations = () => {
 				throw error;
 			}
 		},
-		[addQueryToStore, editQueryInStore, removeQueryFromStore, solutionId]
+		[addQueryToStore, editQueryInStore, removeQueryFromStore, solutionId],
 	);
 
 	const updateQuery = useCallback(
@@ -63,10 +68,7 @@ export const useQueryOperations = () => {
 			editQueryInStore(queryId, updatedQuery);
 
 			try {
-				const backendQuery = await api.patch<Query>(
-					`/queries/${queryId}`,
-					updates
-				);
+				const backendQuery = await updateQueryRequest(queryId, updates);
 
 				editQueryInStore(queryId, backendQuery);
 
@@ -77,7 +79,7 @@ export const useQueryOperations = () => {
 				throw error;
 			}
 		},
-		[editQueryInStore]
+		[editQueryInStore],
 	);
 
 	const deleteQuery = useCallback(
@@ -93,19 +95,19 @@ export const useQueryOperations = () => {
 			removeQueryFromStore(queryId);
 
 			try {
-				await api.delete(`/queries/${queryId}`);
+				await deleteQueryRequest(queryId);
 			} catch (error) {
 				addQueryToStore(queryToDelete);
 				console.error("Failed to delete query:", error);
 				throw error;
 			}
 		},
-		[removeQueryFromStore, addQueryToStore]
+		[removeQueryFromStore, addQueryToStore],
 	);
 
 	const syncQueries = useCallback(async () => {
 		try {
-			const queries = await api.get<Query[]>(`/queries/solution/${solutionId}`);
+			const queries = await getQueriesBySolutionRequest(solutionId);
 			setQueries(queries);
 			return queries;
 		} catch (error) {
