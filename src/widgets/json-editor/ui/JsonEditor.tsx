@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import { useShallow } from "zustand/react/shallow";
 import Editor, { OnMount } from "@monaco-editor/react";
 import { useSolutionStore as useCanvasStore } from "@fsd/entities/solution";
 import { Button } from "@fsd/shared/ui/button";
@@ -8,12 +9,14 @@ import type { Node, Edge } from "@xyflow/react";
 
 export function JsonEditor() {
   const editorRef = useRef<any>(null);
-  const { nodes, edges, setNodes, setEdges } = useCanvasStore((state: any) => ({
-    nodes: state.nodes,
-    edges: state.edges,
-    setNodes: state.setNodes,
-    setEdges: state.setEdges,
-  }));
+  const { nodes, edges, setNodes, setEdges } = useCanvasStore(
+    useShallow((state: any) => ({
+      nodes: state.nodes,
+      edges: state.edges,
+      setNodes: state.setNodes,
+      setEdges: state.setEdges,
+    })),
+  );
 
   const initialContent = JSON.stringify({ nodes, edges }, null, 2);
 

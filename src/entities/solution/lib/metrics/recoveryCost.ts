@@ -37,13 +37,26 @@ function generateEdgeHash(edges: Edge[]): string {
 }
 
 /**
- * Counts all attributes (columns) in nodes including nested tables
+ * Checks if a column type is complex (e.g., array[])
+ */
+function isComplexAttribute(type: string): boolean {
+	if (!type) return false;
+	const lowerType = type.toLowerCase();
+	return lowerType.includes("[]") || lowerType.includes("array");
+}
+
+/**
+ * Counts all simple attributes (columns) in nodes including nested tables.
+ * Excludes complex attributes like arrays.
  */
 function getTotalAttributes(nodes: Node<TableData>[]): number {
 	let totalAttributes = 0;
 
 	const countAttributesRecursively = (table: TableData): number => {
-		let count = table.columns ? table.columns.length : 0;
+		// Only count columns that are NOT complex
+		let count = table.columns
+			? table.columns.filter((col) => !isComplexAttribute(col.type)).length
+			: 0;
 
 		// Process nested tables if they exist
 		if (table.nestedTables && table.nestedTables.length > 0) {
@@ -63,7 +76,7 @@ function getTotalAttributes(nodes: Node<TableData>[]): number {
 }
 
 /**
- * Counts all nested tables in the entire model
+ * Counts all complex elements: nested tables and complex columns (arrays)
  */
 function getTotalNestedTables(nodes: Node<TableData>[]): number {
 	let totalNestedTables = 0;
@@ -71,11 +84,16 @@ function getTotalNestedTables(nodes: Node<TableData>[]): number {
 	const countNestedTablesRecursively = (table: TableData): number => {
 		let count = 0;
 
+		// Count columns that ARE complex
+		if (table.columns) {
+			count += table.columns.filter((col) => isComplexAttribute(col.type)).length;
+		}
+
 		// Process nested tables if they exist
 		if (table.nestedTables && table.nestedTables.length > 0) {
 			count += table.nestedTables.length;
 
-			// Recursively count nested tables within nested tables
+			// Recursively count complex elements within nested tables
 			table.nestedTables.forEach((nestedTable) => {
 				count += countNestedTablesRecursively(nestedTable);
 			});
@@ -101,6 +119,12 @@ function calculateRecoveryCostPure(
 	const totalAttributes = getTotalAttributes(nodes);
 	const totalNestedTables = getTotalNestedTables(nodes);
 	const accessPattern = getAccessPattern(nodes, edges || []);
+
+	console.log("--- Recovery Cost Debug ---");
+	console.log("Simple Attributes (totalAttributes):", totalAttributes);
+	console.log("Complex Elements (totalNestedTables + Array Columns):", totalNestedTables);
+	console.log("Access Pattern (Raw):", accessPattern);
+	console.log("Coefficients: Attributes * 0.51, Nested * 0.49");
 
 	const recoveryCost =
 		totalAttributes * 0.51 + totalNestedTables * 0.49 + accessPattern;
