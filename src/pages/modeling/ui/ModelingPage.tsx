@@ -59,11 +59,11 @@ export function ModelingPage({ loaderData }: ModelingPageProps) {
 					titleButton: "Compare schemas",
 				},
 			},
-			{
+			/* {
 				title: "JSON Editor",
 				icon: <Database />,
 				content: <JsonEditor />,
-			},
+			}, */
 		],
 		[diagramId, router],
 	);
