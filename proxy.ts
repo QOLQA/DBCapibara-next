@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Rutas protegidas que requieren autenticación
-const protectedRoutes = ['/models'];
+const protectedRoutes = ['/projects'];
 
 // Rutas públicas (login, registro, etc)
 const publicRoutes = ['/login', '/'];
@@ -51,9 +51,9 @@ export default async function proxy(request: NextRequest) {
 		return NextResponse.redirect(loginUrl);
 	}
 
-	// Redirigir a /models si intenta acceder a ruta pública estando autenticado
+	// Redirigir a /projects si intenta acceder a ruta pública estando autenticado
 	if (isPublicRoute && hasToken && !isTokenExpired) {
-		return NextResponse.redirect(new URL('/models', request.url));
+		return NextResponse.redirect(new URL('/projects', request.url));
 	}
 
 	return NextResponse.next();

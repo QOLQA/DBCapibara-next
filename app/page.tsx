@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@fsd/features/auth';
 
 export default function HomePage() {
 	const { isAuthenticated, loading } = useAuth();
@@ -11,7 +11,7 @@ export default function HomePage() {
 	useEffect(() => {
 		if (!loading) {
 			if (isAuthenticated) {
-				router.push('/models');
+				router.push('/projects');
 			} else {
 				router.push('/login');
 			}
