@@ -1,6 +1,7 @@
 "use client";
 
 import { useInitializeDiagram } from "@fsd/features/modeling-solution";
+import { useSyncQueriesForSolution } from "@fsd/features/manage-queries";
 import { AppHeader } from "@fsd/widgets/modeling-header";
 import { QueriesPanel } from "@fsd/widgets/queries-panel";
 import { DataBaseDiagram } from "@fsd/widgets/diagram-canvas";
@@ -34,6 +35,7 @@ export function ModelingPage({ loaderData }: ModelingPageProps) {
 		diagramId: string;
 	};
 	const isHydrated = useInitializeDiagram(loaderData);
+	useSyncQueriesForSolution(loaderData.solutionId);
 
 	const sidebarNavItems: NavItem[] = useMemo(
 		() => [

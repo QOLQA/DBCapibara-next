@@ -8,12 +8,15 @@ import type { Query } from "@fsd/entities/solution";
 export type QueriesState = {
 	queries: Query[];
 	hasLoadedQueries: boolean;
+	/** True while GET queries for the active solution is in flight (not persisted). */
+	isSyncingQueries: boolean;
 	setQueries: (queries: Query[]) => void;
 	addQuery: (query: Query) => void;
 	editQuery: (queryId: string, newQuery: Query) => void;
 	removeQuery: (queryId: string) => void;
 	getQueryById: (queryId: string) => Query | undefined;
 	setHasLoadedQueries: (hasLoaded: boolean) => void;
+	setIsSyncingQueries: (syncing: boolean) => void;
 	resetQueries: () => void;
 	_hasHydrated: boolean;
 	setHasHydrated: (hasHydrated: boolean) => void;
@@ -24,6 +27,7 @@ export const useQueriesStore = create<QueriesState>()(
 		immer((set, get) => ({
 			queries: [],
 			hasLoadedQueries: false,
+			isSyncingQueries: false,
 			setQueries: (queries) => {
 				set((state) => {
 					state.queries = queries;
@@ -55,10 +59,16 @@ export const useQueriesStore = create<QueriesState>()(
 					state.hasLoadedQueries = hasLoaded;
 				});
 			},
+			setIsSyncingQueries: (syncing) => {
+				set((state) => {
+					state.isSyncingQueries = syncing;
+				});
+			},
 			resetQueries: () => {
 				set((state) => {
 					state.queries = [];
 					state.hasLoadedQueries = false;
+					state.isSyncingQueries = false;
 				});
 			},
 			_hasHydrated: false,
