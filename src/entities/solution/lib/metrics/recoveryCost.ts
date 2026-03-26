@@ -120,12 +120,6 @@ function calculateRecoveryCostPure(
 	const totalNestedTables = getTotalNestedTables(nodes);
 	const accessPattern = getAccessPattern(nodes, edges || []);
 
-	console.log("--- Recovery Cost Debug ---");
-	console.log("Simple Attributes (totalAttributes):", totalAttributes);
-	console.log("Complex Elements (totalNestedTables + Array Columns):", totalNestedTables);
-	console.log("Access Pattern (Raw):", accessPattern);
-	console.log("Coefficients: Attributes * 0.51, Nested * 0.49");
-
 	const recoveryCost =
 		totalAttributes * 0.51 + totalNestedTables * 0.49 + accessPattern;
 
