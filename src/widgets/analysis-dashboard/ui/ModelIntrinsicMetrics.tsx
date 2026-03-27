@@ -29,21 +29,7 @@ export function ModelIntrinsicMetrics({
 	metricsChartData: MetricChartRow[];
 }) {
 	return (
-		<div className="min-h-[100px] w-[48%] flex flex-col gap-20 ">
-			<div className="flex gap-2 flex-row justify-between pl-10">
-				<div className=" text-[#0052CC] flex items-center gap-2">
-					<div className="size-4 bg-[#0052CC] rounded-sm"></div>
-					<p>Access Pattern</p>
-				</div>
-				<div className=" text-[#00875A] flex items-center gap-2">
-					<div className="size-4 bg-[#00875A] rounded-sm"></div>
-					<p>Recovery Cost</p>
-				</div>
-				<div className=" text-[#5243AA] flex items-center gap-2">
-					<div className="size-4 bg-[#5243AA] rounded-sm"></div>
-					<p>Redundancy</p>
-				</div>
-			</div>
+		<div className="min-h-[100px] w-[48%] flex flex-col gap-10 ">
 			<ChartContainer config={chartConfig} className="w-full h-full">
 				<BarChart accessibilityLayer barSize={20} data={metricsChartData}>
 					<CartesianGrid vertical={false} />
@@ -81,6 +67,21 @@ export function ModelIntrinsicMetrics({
 					/>
 				</BarChart>
 			</ChartContainer>
+
+			<div className="flex gap-2 flex-row justify-between pl-10">
+				<div className=" text-[#0052CC] flex items-center gap-2">
+					<div className="size-4 bg-[#0052CC] rounded-sm"></div>
+					<p>Access Pattern</p>
+				</div>
+				<div className=" text-[#00875A] flex items-center gap-2">
+					<div className="size-4 bg-[#00875A] rounded-sm"></div>
+					<p>Recovery Cost</p>
+				</div>
+				<div className=" text-[#5243AA] flex items-center gap-2">
+					<div className="size-4 bg-[#5243AA] rounded-sm"></div>
+					<p>Redundancy</p>
+				</div>
+			</div>
 		</div>
 	);
 }

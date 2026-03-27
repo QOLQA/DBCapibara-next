@@ -54,16 +54,21 @@ export function ComparativeTable({
 				<div className="w-[30%] flex justify-start items-center">
 					<h3 className="text-[20px] font-bold ">Solution name</h3>
 				</div>
-				<div className="w-[15%] flex justify-center items-center">
+				<div className="w-[12%] flex justify-center items-center">
 					<h3 className="text-[20px] font-bold ">Access Pattern</h3>
 				</div>
-				<div className="w-[15%] flex justify-center items-center">
+				<div className="w-[12%] flex justify-center items-center">
 					<h3 className="text-[20px] font-bold">Recovery Cost</h3>
 				</div>
-				<div className="w-[15%] flex justify-center items-center">
+				<div className="w-[12%] flex justify-center items-center">
 					<h3 className="text-[20px] font-bold ">Redundancy</h3>
 				</div>
-				<div className="w-[15%] flex justify-center items-center">
+				<div className="w-[12%] flex justify-center items-center">
+					<h3 className="px-6 py-1 text-[20px] font-bold bg-cuartenary-gray/80 rounded-lg border border-none text-white">
+						Total
+					</h3>
+				</div>
+				<div className="w-[12%] flex justify-center items-center">
 					<h3 className="text-[20px] font-bold">Completude</h3>
 				</div>
 			</div>
