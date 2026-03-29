@@ -9,7 +9,7 @@ import { Logo } from "@fsd/shared/ui/logo";
 import {
 	ButtonDuplicateVersion,
 	ButtonSave,
-	VersionSelect,
+	VersionDropdown,
 } from "@fsd/features/solution-versioning";
 
 export const AppHeader = ({ title }: { title: string }) => {
@@ -18,7 +18,7 @@ export const AppHeader = ({ title }: { title: string }) => {
 			<div className="flex-shrink-0">
 				<div className="flex items-center gap-8">
 					<Logo />
-					<VersionSelect />
+					<VersionDropdown />
 				</div>
 			</div>
 
