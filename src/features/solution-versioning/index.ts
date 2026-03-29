@@ -4,8 +4,11 @@ export {
 	createEmptyVersion,
 	duplicateVersion,
 	updateVersionDescription,
-	generateEmptyVersionDescription,
+	deleteVersion,
+	parseVersion,
+	generateNextMajorVersion,
+	generateNextMinorVersion,
 } from "./lib/versions";
-export { VersionSelect } from "./ui/header/VersionSelect";
+export { VersionDropdown } from "./ui/header/VersionDropdown";
 export { ButtonSave } from "./ui/header/ButtonSave";
 export { ButtonDuplicateVersion } from "./ui/header/ButtonDuplicateVersion";

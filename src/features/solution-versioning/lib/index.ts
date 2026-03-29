@@ -8,5 +8,8 @@ export {
 	createEmptyVersion,
 	duplicateVersion,
 	updateVersionDescription,
-	generateEmptyVersionDescription,
+	deleteVersion,
+	parseVersion,
+	generateNextMajorVersion,
+	generateNextMinorVersion,
 } from "./versions";

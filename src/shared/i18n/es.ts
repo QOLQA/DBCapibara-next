@@ -52,6 +52,14 @@ export const es = {
 			defaultProjectName: "este proyecto",
 			deleting: "Eliminando proyecto...",
 		},
+		deleteVersion: {
+			title: "Eliminar versión",
+			confirmMessage: "¿Estás seguro de que deseas eliminar",
+			irreversibleAction: "Esta acción es irreversible.",
+			defaultVersionName: "esta versión",
+			deleting: "Eliminando versión...",
+			cannotDeleteLast: "No se puede eliminar la única versión.",
+		},
 		newQuery: {
 			title: "Nueva consulta",
 			queryLabel: "Consulta:",
@@ -103,6 +111,7 @@ export const es = {
 	// Header
 	header: {
 		duplicateVersion: "Duplicar versión",
+		addNewVersion: "Agregar nueva versión",
 	},
 
 	// Toasts
@@ -111,6 +120,10 @@ export const es = {
 		errorSavingCanvas: "Error al guardar el canvas.",
 		versionDuplicated: "Versión duplicada correctamente.",
 		errorDuplicatingVersion: "Error al duplicar la versión.",
+		versionDeleted: "Versión eliminada correctamente.",
+		errorDeletingVersion: "Error al eliminar la versión.",
+		versionCreated: "Nueva versión creada correctamente.",
+		errorCreatingVersion: "Error al crear la versión.",
 	},
 
 	errors: {
