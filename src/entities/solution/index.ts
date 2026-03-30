@@ -27,3 +27,4 @@ export {
 	type SolutionStore,
 } from "./model/state/solutionStore";
 export { solutionSelector } from "./model/state/selectors";
+export { useDiagramConnectionUiStore } from "./model/state/diagram-connection-ui-store";
