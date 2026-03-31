@@ -1,14 +1,28 @@
 "use client";
 
+import { useState } from "react";
 import { Handle, Position } from "@xyflow/react";
 import type { NodeTypes } from "@xyflow/react";
 
-import type { TableNodeProps } from "@fsd/entities/solution";
+import {
+	type TableNodeProps,
+	useDiagramConnectionUiStore,
+} from "@fsd/entities/solution";
 import { TableNodeContainer } from "./TableNodeContainer";
 
 export const TableNode = ({ data, id }: TableNodeProps) => {
+	const [isHovered, setIsHovered] = useState(false);
+	const isConnecting = useDiagramConnectionUiStore(
+		(state) => state.isConnecting,
+	);
+	const isTargetActive = isConnecting && isHovered;
+
 	return (
-		<div className="relative w-full h-full ">
+		<div
+			className="relative w-full h-full "
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+		>
 			<Handle
 				type="target"
 				position={Position.Bottom}
@@ -22,6 +36,9 @@ export const TableNode = ({ data, id }: TableNodeProps) => {
 					transform: "translate(-77%, 0%)",
 					cursor: "crosshair",
 					zIndex: 10,
+					opacity: isTargetActive ? 1 : 0,
+					pointerEvents: isTargetActive ? "auto" : "none",
+					transition: "opacity 0.12s ease",
 				}}
 			/>
 

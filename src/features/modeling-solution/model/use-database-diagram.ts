@@ -1,8 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
-import type { Node, EdgeChange, NodeChange } from "@xyflow/react";
+import type { Connection, Node, EdgeChange, NodeChange } from "@xyflow/react";
 import type { TableData } from "@fsd/entities/solution";
 import { useShallow } from "zustand/shallow";
 import { useSolutionStore, solutionSelector } from "@fsd/entities/solution";
+import { useDiagramConnectionUiStore } from "@fsd/entities/solution";
 import { getNextAvailableSubmodelIndex } from "@fsd/entities/table/lib";
 import { generateRandomId } from "@fsd/shared/lib/ids";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
@@ -37,6 +38,9 @@ export const useDatabaseDiagram = () => {
 
 	const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
 		useState(false);
+	const setIsConnecting = useDiagramConnectionUiStore(
+		(state) => state.setIsConnecting,
+	);
 
 	const connectionConfig = useMemo(
 		() => ({
@@ -115,13 +119,31 @@ export const useDatabaseDiagram = () => {
 		[onNodesChange, handleNodeRemove, nodes],
 	);
 
+	const handleConnectStart = useCallback(() => {
+		setIsConnecting(true);
+	}, [setIsConnecting]);
+
+	const handleConnectEnd = useCallback(() => {
+		setIsConnecting(false);
+	}, [setIsConnecting]);
+
+	const handleConnectWithState = useCallback(
+		(connection: Connection) => {
+			handleConnect(connection);
+			setIsConnecting(false);
+		},
+		[handleConnect, setIsConnecting],
+	);
+
 	const reactFlowProps = useMemo(
 		() => ({
 			nodes,
 			edges,
 			onEdgesChange: handleEdgesChange,
 			onNodesChange: handleNodesChange,
-			onConnect: handleConnect,
+			onConnect: handleConnectWithState,
+			onConnectStart: handleConnectStart,
+			onConnectEnd: handleConnectEnd,
 			connectionLineStyle,
 			defaultEdgeOptions: {
 				type: "floating" as const,
@@ -135,7 +157,15 @@ export const useDatabaseDiagram = () => {
 			},
 			fitView: true,
 		}),
-		[nodes, edges, handleEdgesChange, handleNodesChange, handleConnect],
+		[
+			nodes,
+			edges,
+			handleEdgesChange,
+			handleNodesChange,
+			handleConnectWithState,
+			handleConnectStart,
+			handleConnectEnd,
+		],
 	);
 
 	return {
