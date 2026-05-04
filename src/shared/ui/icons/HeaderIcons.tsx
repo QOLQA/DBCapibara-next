@@ -20,7 +20,7 @@ export const Save = ({ className }: { className?: string }) => {
 export const Logo = ({ className }: { className?: string }) => {
 	return (
 		<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-			width="101" height="75" viewBox="0 0 745.000000 203.000000"
+			viewBox="0 0 745.000000 203.000000"
 			preserveAspectRatio="xMidYMid meet"
 			className={className}
 		>
