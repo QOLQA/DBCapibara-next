@@ -32,6 +32,9 @@ export function useLoginFlow() {
 	}, [searchParams]);
 
 	const handleSuccess = useCallback(() => {
+		// Forzar refresh del router para invalidar cache y re-evaluar autenticación
+		// Esto asegura que el proxy.ts vea la cookie recién creada
+		router.refresh();
 		router.push(getRedirectPath());
 	}, [getRedirectPath, router]);
 
@@ -62,6 +65,8 @@ export function useLoginFlow() {
 
 	useEffect(() => {
 		if (isAuthenticated) {
+			// Forzar refresh antes de redirigir para asegurar estado actualizado
+			router.refresh();
 			router.push(getRedirectPath());
 		}
 	}, [getRedirectPath, isAuthenticated, router]);
