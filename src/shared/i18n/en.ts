@@ -111,6 +111,7 @@ export const en = {
 	header: {
 		duplicateVersion: "Duplicate version",
 		addNewVersion: "Add new version",
+		editVersionName: "Edit version name",
 	},
 
 	// Toasts
@@ -123,6 +124,10 @@ export const en = {
 		errorDeletingVersion: "Error deleting version.",
 		versionCreated: "New version created successfully.",
 		errorCreatingVersion: "Error creating version.",
+		versionRenamed: "Version name updated successfully.",
+		errorRenamingVersion: "Error updating version name.",
+		versionNameEmpty: "Version name cannot be empty.",
+		versionNameTooLong: "Version name is too long (max 500 characters).",
 	},
 
 	errors: {

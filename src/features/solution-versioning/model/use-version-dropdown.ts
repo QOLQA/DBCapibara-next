@@ -4,13 +4,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/shallow";
 import { useSolutionStore, solutionSelector } from "@fsd/entities/solution";
 import type { VersionFrontend } from "@fsd/entities/solution";
+import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { toast } from "sonner";
 import { saveCanvas } from "../lib";
 import {
 	createEmptyVersion,
 	deleteVersion,
 	generateNextMajorVersion,
+	updateVersionDescription,
 } from "../lib/versions";
+
+const MAX_VERSION_DESCRIPTION_LENGTH = 500;
 
 export interface UseVersionDropdownReturn {
 	// Data
@@ -37,9 +41,19 @@ export interface UseVersionDropdownReturn {
 
 	// Guards
 	canDelete: boolean;
+
+	// Inline rename
+	editingVersionId: string | null;
+	draftDescription: string;
+	isRenamingVersion: boolean;
+	startEditVersion: (version: VersionFrontend) => void;
+	cancelEditVersion: () => void;
+	commitEditVersion: () => Promise<void>;
+	onDraftDescriptionChange: (value: string) => void;
 }
 
 export function useVersionDropdown(): UseVersionDropdownReturn {
+	const { t } = useTranslation();
 	const {
 		versions,
 		selectedVersionId,
@@ -62,6 +76,67 @@ export function useVersionDropdown(): UseVersionDropdownReturn {
 	const [versionToDelete, setVersionToDelete] =
 		useState<VersionFrontend | null>(null);
 
+	const [editingVersionId, setEditingVersionId] = useState<string | null>(
+		null,
+	);
+	const [draftDescription, setDraftDescription] = useState("");
+	const [isRenamingVersion, setIsRenamingVersion] = useState(false);
+
+	const cancelEditVersion = useCallback(() => {
+		setEditingVersionId(null);
+		setDraftDescription("");
+	}, []);
+
+	const startEditVersion = useCallback((version: VersionFrontend) => {
+		setEditingVersionId(version._id);
+		setDraftDescription(version.description);
+	}, []);
+
+	const onDraftDescriptionChange = useCallback((value: string) => {
+		setDraftDescription(value);
+	}, []);
+
+	const commitEditVersion = useCallback(async () => {
+		if (!editingVersionId || isRenamingVersion) return;
+
+		const trimmed = draftDescription.trim();
+		if (!trimmed) {
+			toast.error(t("toasts.versionNameEmpty"));
+			return;
+		}
+		if (trimmed.length > MAX_VERSION_DESCRIPTION_LENGTH) {
+			toast.error(t("toasts.versionNameTooLong"));
+			return;
+		}
+
+		const current = useSolutionStore
+			.getState()
+			.versions.find((v) => v._id === editingVersionId);
+		if (current?.description === trimmed) {
+			cancelEditVersion();
+			return;
+		}
+
+		setIsRenamingVersion(true);
+		try {
+			await updateVersionDescription(solutionId, editingVersionId, trimmed);
+			toast.success(t("toasts.versionRenamed"));
+			cancelEditVersion();
+		} catch (error) {
+			console.error("Error renaming version:", error);
+			toast.error(t("toasts.errorRenamingVersion"));
+		} finally {
+			setIsRenamingVersion(false);
+		}
+	}, [
+		editingVersionId,
+		draftDescription,
+		isRenamingVersion,
+		solutionId,
+		t,
+		cancelEditVersion,
+	]);
+
 	// Close dropdown when clicking outside
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -69,28 +144,46 @@ export function useVersionDropdown(): UseVersionDropdownReturn {
 				dropdownRef.current &&
 				!dropdownRef.current.contains(event.target as Node)
 			) {
+				cancelEditVersion();
 				setIsOpen(false);
 			}
 		};
 
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => document.removeEventListener("mousedown", handleClickOutside);
-	}, []);
+	}, [cancelEditVersion]);
 
-	// Close dropdown on Escape key
+	// Escape: cancel rename first, then close dropdown
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				setIsOpen(false);
+			if (event.key !== "Escape") return;
+
+			if (editingVersionId) {
+				event.preventDefault();
+				cancelEditVersion();
+				return;
 			}
+
+			setIsOpen(false);
 		};
 
 		document.addEventListener("keydown", handleKeyDown);
 		return () => document.removeEventListener("keydown", handleKeyDown);
-	}, []);
+	}, [editingVersionId, cancelEditVersion]);
 
-	const toggle = useCallback(() => setIsOpen((prev) => !prev), []);
-	const close = useCallback(() => setIsOpen(false), []);
+	const toggle = useCallback(() => {
+		setIsOpen((prev) => {
+			if (prev) {
+				cancelEditVersion();
+			}
+			return !prev;
+		});
+	}, [cancelEditVersion]);
+
+	const close = useCallback(() => {
+		cancelEditVersion();
+		setIsOpen(false);
+	}, [cancelEditVersion]);
 
 	const selectedVersion = versions.find((v) => v._id === selectedVersionId);
 	const selectedVersionDescription = selectedVersion?.description ?? "";
@@ -98,10 +191,12 @@ export function useVersionDropdown(): UseVersionDropdownReturn {
 	const onVersionChange = useCallback(
 		async (newVersionId: string) => {
 			if (newVersionId === selectedVersionId) {
+				cancelEditVersion();
 				setIsOpen(false);
 				return;
 			}
 
+			cancelEditVersion();
 			setIsChangingVersion(true);
 
 			try {
@@ -134,6 +229,7 @@ export function useVersionDropdown(): UseVersionDropdownReturn {
 		[
 			solutionId,
 			selectedVersionId,
+			cancelEditVersion,
 			setEdges,
 			setIsChangingVersion,
 			setNodes,
@@ -142,6 +238,7 @@ export function useVersionDropdown(): UseVersionDropdownReturn {
 	);
 
 	const onAddEmptyVersion = useCallback(async () => {
+		cancelEditVersion();
 		const currentVersions = useSolutionStore.getState().versions;
 		const description = generateNextMajorVersion(currentVersions);
 
@@ -154,13 +251,14 @@ export function useVersionDropdown(): UseVersionDropdownReturn {
 		}
 
 		setIsOpen(false);
-	}, [solutionId]);
+	}, [solutionId, cancelEditVersion]);
 
 	const openDeleteModal = useCallback((version: VersionFrontend) => {
+		cancelEditVersion();
 		setVersionToDelete(version);
 		setDeleteModalOpen(true);
 		setIsOpen(false); // Close dropdown when opening modal
-	}, []);
+	}, [cancelEditVersion]);
 
 	const closeDeleteModal = useCallback(() => {
 		setDeleteModalOpen(false);
@@ -201,5 +299,12 @@ export function useVersionDropdown(): UseVersionDropdownReturn {
 		closeDeleteModal,
 		confirmDelete,
 		canDelete,
+		editingVersionId,
+		draftDescription,
+		isRenamingVersion,
+		startEditVersion,
+		cancelEditVersion,
+		commitEditVersion,
+		onDraftDescriptionChange,
 	};
 }

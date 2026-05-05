@@ -1,6 +1,9 @@
 import { api } from "@fsd/shared/api";
 import { transformVersionToBackend } from "@fsd/entities/solution/lib/conversions";
-import { useSolutionStore } from "@fsd/entities/solution";
+import {
+	updateVersionDescriptionRequest,
+	useSolutionStore,
+} from "@fsd/entities/solution";
 import type {
 	NestedNode,
 	NodeBackend,
@@ -261,9 +264,10 @@ export async function updateVersionDescription(
 	newDescription: string
 ): Promise<VersionFrontend> {
 	try {
-		const updatedVersion = await api.patch<VersionBackend>(
-			`/solutions/${solutionId}/versions/${versionId}`,
-			{ description: newDescription }
+		const updatedVersion = await updateVersionDescriptionRequest(
+			solutionId,
+			versionId,
+			newDescription,
 		);
 
 		const transformedVersion =

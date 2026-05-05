@@ -3,3 +3,4 @@ export {
 	getSolutionsRequest,
 	deleteSolutionRequest,
 } from "./solution";
+export { updateVersionDescriptionRequest } from "./version";
