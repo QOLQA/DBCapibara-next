@@ -8,7 +8,7 @@ import {
 	useCallback,
 } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from "../../model/useAuth";
+import { useAuthContext } from "../../model/auth-context";
 import { createLoginAction, createRegisterAction } from "./actions";
 import type { LoginFormData, RegisterFormData } from "./validation";
 
@@ -20,7 +20,7 @@ type OptimisticState = {
 export function useLoginFlow() {
 	const [isSignUp, setIsSignUp] = useState(false);
 	const [serverError, setServerError] = useState<string | null>(null);
-	const { login, register, isAuthenticated } = useAuth();
+	const { login, register, isAuthenticated } = useAuthContext();
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const [optimisticState, setOptimisticState] = useOptimistic<OptimisticState>({

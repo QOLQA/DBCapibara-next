@@ -11,6 +11,25 @@ export { API_URL };
 export const API_ERROR_SESSION_EXPIRED = "errors.session_expired";
 export const API_ERROR_REQUEST_FAILED = "errors.request_failed";
 
+const AUTH_COOKIE = "access_token";
+
+function authCookieFlags(): string {
+	const isProduction = process.env.NODE_ENV === "production";
+	return ["path=/", "SameSite=Lax", isProduction ? "Secure" : ""]
+		.filter(Boolean)
+		.join("; ");
+}
+
+export const setAuthCookie = (token: string): void => {
+	if (typeof document === "undefined") return;
+	document.cookie = `${AUTH_COOKIE}=${token}; ${authCookieFlags()}; max-age=1800`;
+};
+
+export const clearAuthCookie = (): void => {
+	if (typeof document === "undefined") return;
+	document.cookie = `${AUTH_COOKIE}=; ${authCookieFlags()}; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+};
+
 export const getAuthToken = (): string | null => {
 	if (typeof window === "undefined") return null;
 	return localStorage.getItem("access_token");
@@ -41,6 +60,7 @@ export const fetchWithAuth = async (
 
 	if (token && isTokenExpired(token)) {
 		localStorage.removeItem("access_token");
+		clearAuthCookie();
 		if (typeof window !== "undefined") {
 			window.location.href = "/login";
 		}
@@ -65,6 +85,7 @@ export const fetchWithAuth = async (
 
 	if (response.status === 401) {
 		localStorage.removeItem("access_token");
+		clearAuthCookie();
 		if (typeof window !== "undefined") {
 			window.location.href = "/login";
 		}

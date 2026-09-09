@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { getAuthToken } from "@fsd/shared/api";
+import { getAuthToken, setAuthCookie, clearAuthCookie } from "@fsd/shared/api";
 
 /**
  * Syncs JWT token between localStorage and cookies
@@ -13,21 +13,9 @@ export function AuthTokenSync() {
 			const token = getAuthToken();
 
 			if (token) {
-				const isProduction = process.env.NODE_ENV === "production";
-				const cookieOptions = [
-					`access_token=${token}`,
-					"path=/",
-					"max-age=1800",
-					"SameSite=Lax",
-					isProduction ? "Secure" : "",
-				]
-					.filter(Boolean)
-					.join("; ");
-
-				document.cookie = cookieOptions;
+				setAuthCookie(token);
 			} else {
-				document.cookie =
-					"access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+				clearAuthCookie();
 			}
 		};
 

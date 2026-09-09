@@ -5,7 +5,7 @@ import { Plus, LogOut } from "lucide-react";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@fsd/shared/api";
-import { useAuth } from "@fsd/features/auth";
+import { useAuthContext } from "@fsd/features/auth";
 import { Logo } from "@fsd/shared/ui/logo";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import {
@@ -33,7 +33,7 @@ export function ProjectsPage({
     useState(false);
 
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthContext();
 
   const [isPending, startTransition] = useTransition();
   const [solutions, setSolutions] = useState(initialSolutions);
@@ -114,7 +114,6 @@ export function ProjectsPage({
   const handleLogout = () => {
     startTransition(() => {
       logout();
-      router.push("/login");
     });
   };
 

@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { handleApiError, API_URL } from "@fsd/shared/api";
+import { useRouter } from "next/navigation";
+import { handleApiError, API_URL, setAuthCookie, clearAuthCookie } from "@fsd/shared/api";
 import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import type { User, UserResponse, LoginResult, LoginCredentials, RegisterData } from "@fsd/entities/user";
 
 export const useAuth = () => {
 	const { t } = useTranslation();
+	const router = useRouter();
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -32,10 +34,12 @@ export const useAuth = () => {
 				setUser(userData);
 			} else {
 				localStorage.removeItem("access_token");
+				clearAuthCookie();
 				setUser(null);
 			}
 		} catch {
 			localStorage.removeItem("access_token");
+			clearAuthCookie();
 			setUser(null);
 		} finally {
 			setLoading(false);
@@ -73,21 +77,7 @@ export const useAuth = () => {
 
 				const data = await response.json();
 				localStorage.setItem("access_token", data.access_token);
-
-				if (typeof document !== "undefined") {
-					const isProduction = process.env.NODE_ENV === "production";
-					const cookieOptions = [
-						`access_token=${data.access_token}`,
-						"path=/",
-						"max-age=1800",
-						"SameSite=Lax",
-						isProduction ? "Secure" : "",
-					]
-						.filter(Boolean)
-						.join("; ");
-
-					document.cookie = cookieOptions;
-				}
+				setAuthCookie(data.access_token);
 
 				await checkAuth();
 
@@ -156,15 +146,12 @@ export const useAuth = () => {
 	// React Compiler cannot optimize: closure over setUser/setError state setters
 	const logout = useCallback(() => {
 		localStorage.removeItem("access_token");
-
-		if (typeof document !== "undefined") {
-			document.cookie =
-				"access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-		}
-
+		clearAuthCookie();
 		setUser(null);
 		setError(null);
-	}, []);
+		router.push("/login");
+		router.refresh();
+	}, [router]);
 
 	// React Compiler cannot optimize: async function passed as stable ref to AuthContext consumers
 	const refreshUser = useCallback(async (): Promise<void> => {
