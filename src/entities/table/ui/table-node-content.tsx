@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@fsd/shared/ui/dropdown-menu";
 import { MoreButton } from "@fsd/shared/ui/MoreButton";
+import { cn } from "@fsd/shared/lib/classnames";
 import { getSubmodelColor } from "@fsd/shared/lib/xyflow";
 import {
   AddDocument,
@@ -22,6 +23,7 @@ import { useTranslation } from "@fsd/shared/i18n/use-translation";
 import { NestedTableCardinality } from "./nested-table-cardinality";
 import { AttributeNode } from "./attribute-node";
 import type { CardinalityType } from "@fsd/entities/solution";
+import { getNestedTableLayout } from "../lib/nested-layout";
 
 interface TableNodeContentProps extends TableNodeProps {
   isNested?: boolean;
@@ -110,6 +112,11 @@ export const TableNodeContent = React.memo(
       return getSubmodelColor(submodelIndex);
     }, [data.submodelIndex]);
 
+    const nestedLayout = getNestedTableLayout(
+      data.columns?.length ?? 0,
+      data.nestedTables?.length ?? 0,
+    );
+
     return (
       <>
         <div className={isNested ? "table nested-table" : "table"}>
@@ -174,10 +181,24 @@ export const TableNodeContent = React.memo(
               </DropdownMenuContent>
             </ManagedDropdownMenu>
           </div>
-          <div className="table-content">
+          <div
+            className={cn(
+              "table-content",
+              nestedLayout.content === "split" && "table-content--split",
+            )}
+          >
             <div className="table-attributes">{attributeNodes}</div>
             {data.nestedTables && data.nestedTables.length > 0 && (
-              <div className="table-nesteds">{nestedTableNodes}</div>
+              <div
+                className={cn(
+                  "table-nesteds",
+                  nestedLayout.nesteds === "grid" && "table-nesteds--grid",
+                  nestedLayout.nesteds === "grid" &&
+                    `table-nesteds--cols-${nestedLayout.gridColumns}`,
+                )}
+              >
+                {nestedTableNodes}
+              </div>
             )}
           </div>
         </div>

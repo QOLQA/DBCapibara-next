@@ -488,6 +488,23 @@
 	border-radius: 0 0 0.75rem 0.75rem;
 }
 
+.table-content--split {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+}
+
+.table-content--split .table-attributes {
+	flex: 0 1 auto;
+	min-width: 18rem;
+	border-right: 1px solid var(--color-gray);
+}
+
+.table-content--split .table-nesteds {
+	flex: 0 0 auto;
+	padding: 0.75rem 1.25rem 1.25rem;
+}
+
 .table-attribute {
 	padding: 0.625rem 0.25rem 0.625rem 1.25rem;
 	display: flex;
@@ -518,6 +535,32 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.625rem;
+}
+
+.table-nesteds--grid {
+	display: grid;
+	align-items: start;
+	gap: 0.625rem;
+}
+
+.table-nesteds--cols-2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	min-width: 32rem;
+}
+
+.table-nesteds--cols-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	min-width: 48rem;
+}
+
+.table-nesteds--grid > .nested-table {
+	min-width: 0;
+	width: 100%;
+	height: fit-content;
+}
+
+.table-nesteds--cols-3 > .nested-table:last-child:nth-child(3n + 1) {
+	grid-column: 2;
 }
 
 .table-attribute:last-child {
