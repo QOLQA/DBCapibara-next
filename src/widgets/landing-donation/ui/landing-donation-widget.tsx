@@ -26,7 +26,7 @@ export const LandingDonationWidget = () => {
 
           <a
             ref={buttonRef}
-            href="https://paypal.me/your-paypal-link"
+            href="https://www.paypal.com/donate/?hosted_button_id=LF7NX3KCMKBH8"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-8 py-3.5 rounded-md bg-blue text-[#ffffff] dark:text-white font-medium hover:bg-blue/90 transition-colors shadow-lg shadow-blue/25"
